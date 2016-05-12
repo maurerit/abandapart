@@ -25,6 +25,16 @@ Micro services and a message bus.  Plain and simple and very scalable.  Simply p
 
 ---
 
+### The Data ###
+
+[Fetching Metadata](DATA.md#FetchingMetadata)
+
+[Salary Config]((DATA.md#SalaryConfig)
+
+[Products Of Interest](DATA.md#ProductsOfInterest)
+
+---
+
 ### Contributing ###
 
 I recommend forking this repository and submitting merge requests
