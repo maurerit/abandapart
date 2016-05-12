@@ -6,23 +6,14 @@
 		<artifactId>aba-industry</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>industry-common-bus</artifactId>
+	<artifactId>aba-industry-data</artifactId>
 
 	<dependencies>
 		<!-- Internal Dependencies -->
 		<dependency>
 			<groupId>com.abandapart</groupId>
-			<artifactId>aba-industry-data</artifactId>
+			<artifactId>aba-data</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zeromq</groupId>
-			<artifactId>jeromq</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

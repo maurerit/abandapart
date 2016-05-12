@@ -5,6 +5,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>aba-industry</module>
+		<module>aba-data</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -21,6 +22,15 @@
 		<eve-api.version>4.0</eve-api.version>
 		<ehcache.version>1.0.1</ehcache.version>
 	</properties>
+
+	<dependencies>
+		<!-- TEST Dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
