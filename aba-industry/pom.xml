@@ -16,7 +16,7 @@
     <modules>
     	<module>industry-calc</module>
     	<module>industry-price-fetcher</module>
-    	<module>emdr-filter</module>
+    	
     	<module>industry-director</module>
     	<module>industry-config</module>
     	<module>industry-common-bus</module>
