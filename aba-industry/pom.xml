@@ -20,6 +20,7 @@
     	<module>industry-director</module>
     	<module>industry-config</module>
     	<module>industry-common-bus</module>
+    	<module>aba-industry-data</module>
     </modules>
     
     <dependencies>
