@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+	<modules>
+		<module>aba-industry</module>
+	</modules>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.5.RELEASE</version>
+	</parent>
+	<groupId>com.abandapart</groupId>
+	<artifactId>aba-eve-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<jeromq-version>0.3.5</jeromq-version>
+		<java.version>1.8</java.version>
+		<eve-api.version>4.0</eve-api.version>
+		<ehcache.version>1.0.1</ehcache.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.zeromq</groupId>
+				<artifactId>jeromq</artifactId>
+				<version>${jeromq-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.tlabs.eve</groupId>
+				<artifactId>eve-api</artifactId>
+				<version>${eve-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.ehcache</groupId>
+				<artifactId>jcache</artifactId>
+				<version>${ehcache.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>lucrh.internal</id>
+			<name>Lucifer's Hammer Maven Repo</name>
+			<url>http://mvn.lucrh.com/maven</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+</project>

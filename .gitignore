@@ -1,0 +1,10 @@
+#IDE crap
+.classpath
+.factorypath
+.name
+.project
+.idea
+.settings
+
+#Maven transient folders
+target
