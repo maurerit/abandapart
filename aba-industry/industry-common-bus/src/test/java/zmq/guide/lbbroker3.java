@@ -41,7 +41,7 @@ import java.util.Queue;
 public class lbbroker3
 {
     private static final int NBR_CLIENTS = 1;
-    private static final int NBR_WORKERS = 1;
+    private static final int NBR_WORKERS = 20;
     private static final int NUMBER_OF_MESSAGES = 20000;
     private static byte[] WORKER_READY = { '\001' };
 

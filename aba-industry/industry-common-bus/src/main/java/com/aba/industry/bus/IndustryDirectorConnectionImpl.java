@@ -12,6 +12,10 @@ import org.springframework.util.Assert;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Socket;
 
+import com.aba.data.TypedJsonMessage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Initializes and manages connections to the Industry Director.
  * 
@@ -23,6 +27,8 @@ import org.zeromq.ZMQ.Socket;
 @ConfigurationProperties("aba.industry.director")
 public class IndustryDirectorConnectionImpl implements IndustryDirectorConnection {
 	private static final Logger logger = LoggerFactory.getLogger(IndustryDirectorConnection.class);
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
 	/**
 	 * The dns location of the industry director
 	 */
@@ -49,28 +55,28 @@ public class IndustryDirectorConnectionImpl implements IndustryDirectorConnectio
 	
 	private ZContext context = new ZContext();
 	
-	private Socket sender;
+	private Socket pushToDirector;
 	
-	private Socket receiver;
+	private Socket subscriptionReceive;
 	
-	public String requestReply ( String message ) {
+	public String requestReply ( TypedJsonMessage message ) {
 		return null;
 	}
 	
-	public void sendMessage ( String topic, Object messageBody ) {
+	public void sendMessage ( String topic, TypedJsonMessage messageBody ) throws JsonProcessingException {
 		Assert.notNull(messageBody, "Message Body is null, cannot send that");
 		
-		sendMessage(topic, messageBody.toString());
+		sendMessage(topic, objectMapper.writeValueAsString(messageBody));
 	}
 	
 	private void sendMessage ( String topic, String messageBody ) {
-		sender.sendMore(topic);
-		sender.send(messageBody);
+		pushToDirector.sendMore(topic);
+		pushToDirector.send(messageBody);
 	}
 	
 	public void subscribe ( String topic, IndustryMessageHandler handler ) {
 		Assert.notNull(handler, "Handler cannot be null");
-		receiver.subscribe(topic.getBytes());
+		subscriptionReceive.subscribe(topic.getBytes());
 	}
 	
 	@PostConstruct
@@ -80,19 +86,19 @@ public class IndustryDirectorConnectionImpl implements IndustryDirectorConnectio
 		Assert.notNull(directorreceiverPort, "Port for director to receive not set");
 		Assert.notNull(directorPublishPort, "Port for director to send from not set");
 		
-		this.sender = context.createSocket(zmq.ZMQ.ZMQ_PUSH);
-		this.receiver = context.createSocket(zmq.ZMQ.ZMQ_SUB);
+		this.pushToDirector = context.createSocket(zmq.ZMQ.ZMQ_PUSH);
+		this.subscriptionReceive = context.createSocket(zmq.ZMQ.ZMQ_SUB);
 		
-		this.sender.connect(protocol + "://" + location + ":" + directorreceiverPort);
+		this.pushToDirector.connect(protocol + "://" + location + ":" + directorreceiverPort);
 		logger.info("Bound sender using: {}", protocol + "://" + location + ":" + directorreceiverPort);
-		this.receiver.connect(protocol + "://" + location + ":" + directorPublishPort);
+		this.subscriptionReceive.connect(protocol + "://" + location + ":" + directorPublishPort);
 		logger.info("Bound receiver using: {}", protocol + "://" + location + ":" + directorPublishPort);
 	}
 	
 	@PreDestroy
 	public void destroy ( ) {
-		sender.close();
-		receiver.close();
+		pushToDirector.close();
+		subscriptionReceive.close();
 		context.close();
 	}
 }
