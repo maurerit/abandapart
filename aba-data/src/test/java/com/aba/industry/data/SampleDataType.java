@@ -2,9 +2,9 @@ package com.aba.industry.data;
 
 import java.util.Map;
 
-import com.aba.data.TypedJson;
+import com.aba.data.TypedJsonMessage;
 
-public class SampleDataType extends TypedJson {
+public class SampleDataType extends TypedJsonMessage {
 	private String id;
 	private int quantity;
 	private double amount;

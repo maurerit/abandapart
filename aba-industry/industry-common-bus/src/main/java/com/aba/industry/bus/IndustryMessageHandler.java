@@ -1,5 +1,7 @@
 package com.aba.industry.bus;
 
-public interface IndustryMessageHandler {
+import com.aba.data.TypedJsonMessage;
 
+public interface IndustryMessageHandler {
+	public void messageReceived ( String topic, TypedJsonMessage messageBody );
 }

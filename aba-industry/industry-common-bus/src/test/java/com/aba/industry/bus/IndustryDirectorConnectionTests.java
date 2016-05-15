@@ -2,6 +2,8 @@ package com.aba.industry.bus;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
+import org.zeromq.ZMsg;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(IndustryDirectorConnectionTests.class)
@@ -22,6 +27,8 @@ import org.zeromq.ZMQ.Socket;
 @ComponentScan("com.aba")
 public class IndustryDirectorConnectionTests {
 
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
 	@Autowired
 	private IndustryDirectorConnection connection;
 	
@@ -42,12 +49,15 @@ public class IndustryDirectorConnectionTests {
 	private String publishPort;
 	
 	@Test
-	public void testSendMessage() {
-		String expectedMessage = "TEST BODY";
+	public void testSendMessage() throws IOException {
+		TestJsonString expectedMessage = new TestJsonString("TEST BODY");
 		
 		connection.sendMessage("TEST BODY", expectedMessage);
 		
-		String receivedMessage = new String(receiver.recv(0), ZMQ.CHARSET).trim();
+		ZMsg msg = ZMsg.recvMsg(receiver);
+		String message = new String(msg.getLast().getData(), ZMQ.CHARSET).trim();
+		
+		TestJsonString receivedMessage = objectMapper.readValue(message, TestJsonString.class);
 		
 		assertEquals("Messages should be the same", expectedMessage, receivedMessage);
 	}
