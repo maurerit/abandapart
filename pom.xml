@@ -6,6 +6,9 @@
 	<modules>
 		<module>aba-industry</module>
 		<module>aba-data</module>
+		<module>aba-web</module>
+		<module>aba-server</module>
+		<module>eve-sde</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

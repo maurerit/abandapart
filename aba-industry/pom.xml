@@ -29,4 +29,11 @@
     		<artifactId>spring-boot-starter</artifactId>
     	</dependency>
     </dependencies>
+    <name>ABA Industry Backends</name>
+    <description>Backend applications that may not tie directly to running web applications but provide support in one way or another.  Examples include:
+
+Listeners for Market data
+API Pollers
+Decision makers
+etc.</description>
 </project>
