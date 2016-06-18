@@ -9,6 +9,12 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * A unit test just to illustrate the usage of deserializing a json object that has a property
+ * within it that specifies what the java class it implements is.
+ * 
+ * @author maurerit
+ */
 public class SerializeAndDeserialzeUsingJacksonTests {
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	
