@@ -70,24 +70,24 @@ CREATE TABLE `apicorpmembers` (
 );
 
 CREATE TABLE `apicorps` (
-  `corporation_id` int(11) NOT NULL,
+  `corporation_id` bigint(11) NOT NULL,
   `corporation_name` varchar(255) NOT NULL,
   `character_id` int(11) NOT NULL,
   `character_name` varchar(255) NOT NULL,
-  `keyID` varchar(255) NOT NULL
+  `key_id` varchar(255) NOT NULL
 );
 
 CREATE TABLE `apicorpsheet` (
-  `corporation_id` int(11) NOT NULL,
+  `corporation_id` bigint(11) NOT NULL,
   `corporation_name` varchar(255) NOT NULL,
   `ticker` varchar(6) NOT NULL,
-  `ceo_id` int(11) NOT NULL,
+  `ceo_id` bigint(11) NOT NULL,
   `ceo_name` varchar(255) NOT NULL,
   `station_id` bigint(11) NOT NULL,
   `station_name` varchar(1024) NOT NULL,
   `description` varchar(2048) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `alliance_id` int(11) NOT NULL,
+  `alliance_id` bigint(11) NOT NULL,
   `tax_rate` int(11) NOT NULL,
   `member_count` int(11) NOT NULL,
   `member_limit` int(11) NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE `apiindustryjobs` (
   `installed_item_type_id` int(11) NOT NULL,
   `output_type_id` int(11) NOT NULL,
   `container_type_id` int(11) NOT NULL,
-  `isntalled_item_copy` int(11) NOT NULL,
+  `installed_item_copy` int(11) NOT NULL,
   `completed` int(11) NOT NULL,
   `completed_successfully` int(11) NOT NULL,
   `successful_runs` int(11) DEFAULT NULL,
