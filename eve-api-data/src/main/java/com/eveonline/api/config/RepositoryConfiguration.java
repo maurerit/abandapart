@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"eve"})
-@EnableJpaRepositories(basePackages = {"eve.repository"})
+@EntityScan(basePackages = {"com.eveonline.api"})
+@EnableJpaRepositories(basePackages = {"com.eveonline.api.repo"})
 @EnableTransactionManagement
 public class RepositoryConfiguration {
 }
