@@ -5,7 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-
 @Entity
 @Table(name = "apicorpmembers")
 public class CorpMembers
@@ -22,55 +21,43 @@ public class CorpMembers
     public int getCharacterId() {
         return characterId;
     }
-
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getStartDateTime() {
         return startDateTime;
     }
-
-    public void setStartDateTime(Date startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
     public int getBaseId() {
         return baseId;
     }
-
-    public void setBaseId(int baseId) {
-        this.baseId = baseId;
-    }
-
     public String getBase() {
         return base;
     }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getCorporationId() {
         return corporationId;
     }
 
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setStartDateTime(Date startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+    public void setBaseId(int baseId) {
+        this.baseId = baseId;
+    }
+    public void setBase(String base) {
+        this.base = base;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
     public void setCorporationId(int corporationId) {
         this.corporationId = corporationId;
     }
