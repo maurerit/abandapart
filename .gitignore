@@ -5,6 +5,7 @@
 .project
 .idea
 .settings
+*.iml
 
 #Maven transient folders
 target
