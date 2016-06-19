@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "apiindustryjobscrius", schema = "eve")
+@Table(name = "apiindustryjobscrius")
 public class IndustryJobsCrius
 {
     private int jobID;

@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@Table(name="apiaccountbalance")
 public class AccountBalance
 {
     private int accountId;

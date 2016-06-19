@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "apicontracts", schema = "eve")
+@Table(name = "apicontracts")
 public class Contracts
 {
     private int contractId;

@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "apicorpmembers", schema = "eve")
+@Table(name = "apicorpmembers")
 public class CorpMembers
 {
     private int characterId;
