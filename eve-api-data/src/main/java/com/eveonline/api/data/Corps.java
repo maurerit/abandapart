@@ -18,39 +18,31 @@ public class Corps
     public int getCorporationID() {
         return corporationID;
     }
-
-    public void setCorporationID(int corporationID) {
-        this.corporationID = corporationID;
-    }
-
     public String getCorporationName() {
         return corporationName;
     }
-
-    public void setCorporationName(String corporationName) {
-        this.corporationName = corporationName;
-    }
-
     public int getCharacterId() {
         return characterId;
     }
-
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
-    }
-
     public String getCharacterName() {
         return characterName;
     }
-
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
-    }
-
     public String getKeyId() {
         return keyId;
     }
 
+    public void setCorporationID(int corporationID) {
+        this.corporationID = corporationID;
+    }
+    public void setCorporationName(String corporationName) {
+        this.corporationName = corporationName;
+    }
+    public void setCharacterId(int characterId) {
+        this.characterId = characterId;
+    }
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
+    }
     public void setKeyId(String keyId) {
         this.keyId = keyId;
     }
