@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "apicorpsheet", schema = "eve")
+@Table(name = "apicorpsheet")
 public class Corpsheet
 {
     private int corporationId;
