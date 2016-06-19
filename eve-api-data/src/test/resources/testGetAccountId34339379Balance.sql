@@ -1,0 +1,1 @@
+insert into apiaccountbalance values ( 34339379, 1000, 200000.35, 1 );

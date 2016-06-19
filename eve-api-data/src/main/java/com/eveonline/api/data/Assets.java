@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "apiassets", schema = "eve")
+@Table(name = "apiassets")
 public class Assets
 {
     private int itemId;
