@@ -17,8 +17,8 @@ CREATE TABLE `apiassets` (
   `location_id` bigint(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `flag` tinyint(4) NOT NULL,
-  `singleton` tinyint(4) NOT NULL,
+  `flag` int(11) NOT NULL,
+  `singleton` int(11) NOT NULL,
   `raw_quantity` int(11) DEFAULT NULL,
   `corporation_id` bigint(11) NOT NULL
 );
