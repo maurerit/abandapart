@@ -9,6 +9,7 @@
 		<module>aba-web</module>
 		<module>aba-server</module>
 		<module>eve-sde</module>
+		<module>eve-api-data</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
