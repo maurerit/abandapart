@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  profiles:
+    active: unittest
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:sampletest;MODE=MySQL
+    initialize: true
+
+logging:
+  level:
+    com.eveonline.api: DEBUG
+    com.springframework: INFO
