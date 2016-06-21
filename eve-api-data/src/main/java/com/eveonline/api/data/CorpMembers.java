@@ -9,16 +9,16 @@ import java.util.Date;
 @Table(name = "apicorpmembers")
 public class CorpMembers
 {
-    private int characterId;
+    private long characterId;
     private String name;
     private Date startDateTime;
-    private int baseId;
+    private long baseId;
     private String base;
     private String title;
-    private int corporationId;
+    private long corporationId;
 
     @Id
-    public int getCharacterId() {
+    public long getCharacterId() {
         return characterId;
     }
     public String getName() {
@@ -27,7 +27,7 @@ public class CorpMembers
     public Date getStartDateTime() {
         return startDateTime;
     }
-    public int getBaseId() {
+    public long getBaseId() {
         return baseId;
     }
     public String getBase() {
@@ -36,11 +36,11 @@ public class CorpMembers
     public String getTitle() {
         return title;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
 
-    public void setCharacterId(int characterId) {
+    public void setCharacterId(long characterId) {
         this.characterId = characterId;
     }
     public void setName(String name) {
@@ -49,7 +49,7 @@ public class CorpMembers
     public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
-    public void setBaseId(int baseId) {
+    public void setBaseId(long baseId) {
         this.baseId = baseId;
     }
     public void setBase(String base) {
@@ -58,7 +58,7 @@ public class CorpMembers
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
 }

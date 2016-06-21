@@ -3,19 +3,20 @@ package com.eveonline.api.data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "apicontracts")
 public class Contracts
 {
-    private int contractId;
-    private int issuerId;
-    private int issuerCorpId;
-    private int assigneeId;
-    private int acceptorId;
-    private int startStationId;
-    private int endStationId;
+    private long contractId;
+    private long issuerId;
+    private long issuerCorpId;
+    private long assigneeId;
+    private long acceptorId;
+    private long startStationId;
+    private long endStationId;
     private String type;
     private String status;
     private String title;
@@ -26,33 +27,33 @@ public class Contracts
     private Date dateAccepted;
     private int numDays;
     private Date dateCompleted;
-    private double price;
-    private double reward;
-    private double collateral;
-    private double buyout;
-    private double volume;
-    private int corporationId;
+    private BigDecimal price;
+    private BigDecimal reward;
+    private BigDecimal collateral;
+    private BigDecimal buyout;
+    private BigDecimal volume;
+    private long corporationId;
 
     @Id
-    public int getContractId() {
+    public long getContractId() {
         return contractId;
     }
-    public int getIssuerId() {
+    public long getIssuerId() {
         return issuerId;
     }
-    public int getIssuerCorpId() {
+    public long getIssuerCorpId() {
         return issuerCorpId;
     }
-    public int getAssigneeId() {
+    public long getAssigneeId() {
         return assigneeId;
     }
-    public int getAcceptorId() {
+    public long getAcceptorId() {
         return acceptorId;
     }
-    public int getStartStationId() {
+    public long getStartStationId() {
         return startStationId;
     }
-    public int getEndStationId() {
+    public long getEndStationId() {
         return endStationId;
     }
     public String getType() {
@@ -85,44 +86,44 @@ public class Contracts
     public Date getDateCompleted() {
         return dateCompleted;
     }
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public double getReward() {
+    public BigDecimal getReward() {
         return reward;
     }
-    public double getCollateral() {
+    public BigDecimal getCollateral() {
         return collateral;
     }
-    public double getBuyout() {
+    public BigDecimal getBuyout() {
         return buyout;
     }
-    public double getVolume() {
+    public BigDecimal getVolume() {
         return volume;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
 
-    public void setContractId(int contractId) {
+    public void setContractId(long contractId) {
         this.contractId = contractId;
     }
-    public void setIssuerId(int issuerId) {
+    public void setIssuerId(long issuerId) {
         this.issuerId = issuerId;
     }
-    public void setIssuerCorpId(int issuerCorpId) {
+    public void setIssuerCorpId(long issuerCorpId) {
         this.issuerCorpId = issuerCorpId;
     }
-    public void setAssigneeId(int assigneeId) {
+    public void setAssigneeId(long assigneeId) {
         this.assigneeId = assigneeId;
     }
-    public void setAcceptorId(int acceptorId) {
+    public void setAcceptorId(long acceptorId) {
         this.acceptorId = acceptorId;
     }
-    public void setStartStationId(int startStationId) {
+    public void setStartStationId(long startStationId) {
         this.startStationId = startStationId;
     }
-    public void setEndStationId(int endStationId) {
+    public void setEndStationId(long endStationId) {
         this.endStationId = endStationId;
     }
     public void setType(String type) {
@@ -155,22 +156,22 @@ public class Contracts
     public void setDateCompleted(Date dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public void setReward(double reward) {
+    public void setReward(BigDecimal reward) {
         this.reward = reward;
     }
-    public void setCollateral(double collateral) {
+    public void setCollateral(BigDecimal collateral) {
         this.collateral = collateral;
     }
-    public void setBuyout(double buyout) {
+    public void setBuyout(BigDecimal buyout) {
         this.buyout = buyout;
     }
-    public void setVolume(double volume) {
+    public void setVolume(BigDecimal volume) {
         this.volume = volume;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
 }

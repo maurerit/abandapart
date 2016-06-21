@@ -3,31 +3,32 @@ package com.eveonline.api.data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "apiindustryjobs")
 public class IndustryJobs
 {
-    private int jobId;
-    private int assemblyLineId;
-    private int containerId;
-    private int installedItemId;
-    private int installedItemLocationId;
-    private int installedItemQuantity;
-    private int installedItemProductivityLevel;
-    private int installedItemMaterialLevel;
-    private int installedItemLicensedProductionRunsRemaining;
-    private int outputLocationId;
-    private int installerId;
+    private long jobId;
+    private long assemblyLineId;
+    private long containerId;
+    private long installedItemId;
+    private long installedItemLocationId;
+    private long installedItemQuantity;
+    private long installedItemProductivityLevel;
+    private long installedItemMaterialLevel;
+    private long installedItemLicensedProductionRunsRemaining;
+    private long outputLocationId;
+    private long installerId;
     private int runs;
     private int licensedProductionRuns;
-    private int installedInSolarSystemId;
-    private int containerLocationId;
-    private double materialMultiplier;
-    private double charMaterialMultiplier;
-    private double timeMultiplier;
-    private double charTimeMultiplier;
+    private long installedInSolarSystemId;
+    private long containerLocationId;
+    private BigDecimal materialMultiplier;
+    private BigDecimal charMaterialMultiplier;
+    private BigDecimal timeMultiplier;
+    private BigDecimal charTimeMultiplier;
     private int installedItemTypeId;
     private int outputTypeId;
     private int containerTypeId;
@@ -43,40 +44,40 @@ public class IndustryJobs
     private Date beginProductionTime;
     private Date endProductionTime;
     private Date pauseProductionTime;
-    private int corporationId;
+    private long corporationId;
 
     @Id
-    public int getJobId() {
+    public long getJobId() {
         return jobId;
     }
-    public int getAssemblyLineId() {
+    public long getAssemblyLineId() {
         return assemblyLineId;
     }
-    public int getContainerId() {
+    public long getContainerId() {
         return containerId;
     }
-    public int getInstalledItemId() {
+    public long getInstalledItemId() {
         return installedItemId;
     }
-    public int getInstalledItemLocationId() {
+    public long getInstalledItemLocationId() {
         return installedItemLocationId;
     }
-    public int getInstalledItemQuantity() {
+    public long getInstalledItemQuantity() {
         return installedItemQuantity;
     }
-    public int getInstalledItemProductivityLevel() {
+    public long getInstalledItemProductivityLevel() {
         return installedItemProductivityLevel;
     }
-    public int getInstalledItemMaterialLevel() {
+    public long getInstalledItemMaterialLevel() {
         return installedItemMaterialLevel;
     }
-    public int getInstalledItemLicensedProductionRunsRemaining() {
+    public long getInstalledItemLicensedProductionRunsRemaining() {
         return installedItemLicensedProductionRunsRemaining;
     }
-    public int getOutputLocationId() {
+    public long getOutputLocationId() {
         return outputLocationId;
     }
-    public int getInstallerId() {
+    public long getInstallerId() {
         return installerId;
     }
     public int getRuns() {
@@ -85,22 +86,22 @@ public class IndustryJobs
     public int getLicensedProductionRuns() {
         return licensedProductionRuns;
     }
-    public int getInstalledInSolarSystemId() {
+    public long getInstalledInSolarSystemId() {
         return installedInSolarSystemId;
     }
-    public int getContainerLocationId() {
+    public long getContainerLocationId() {
         return containerLocationId;
     }
-    public double getMaterialMultiplier() {
+    public BigDecimal getMaterialMultiplier() {
         return materialMultiplier;
     }
-    public double getCharMaterialMultiplier() {
+    public BigDecimal getCharMaterialMultiplier() {
         return charMaterialMultiplier;
     }
-    public double getTimeMultiplier() {
+    public BigDecimal getTimeMultiplier() {
         return timeMultiplier;
     }
-    public double getCharTimeMultiplier() {
+    public BigDecimal getCharTimeMultiplier() {
         return charTimeMultiplier;
     }
     public int getInstalledItemTypeId() {
@@ -148,41 +149,41 @@ public class IndustryJobs
     public Date getEndProductionTime() {
         return endProductionTime;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(long jobId) {
         this.jobId = jobId;
     }
-    public void setAssemblyLineId(int assemblyLineId) {
+    public void setAssemblyLineId(long assemblyLineId) {
         this.assemblyLineId = assemblyLineId;
     }
-    public void setContainerId(int containerId) {
+    public void setContainerId(long containerId) {
         this.containerId = containerId;
     }
-    public void setInstalledItemId(int installedItemId) {
+    public void setInstalledItemId(long installedItemId) {
         this.installedItemId = installedItemId;
     }
-    public void setInstalledItemLocationId(int installedItemLocationId) {
+    public void setInstalledItemLocationId(long installedItemLocationId) {
         this.installedItemLocationId = installedItemLocationId;
     }
-    public void setInstalledItemQuantity(int installedItemQuantity) {
+    public void setInstalledItemQuantity(long installedItemQuantity) {
         this.installedItemQuantity = installedItemQuantity;
     }
-    public void setInstalledItemProductivityLevel(int installedItemProductivityLevel) {
+    public void setInstalledItemProductivityLevel(long installedItemProductivityLevel) {
         this.installedItemProductivityLevel = installedItemProductivityLevel;
     }
-    public void setInstalledItemMaterialLevel(int installedItemMaterialLevel) {
+    public void setInstalledItemMaterialLevel(long installedItemMaterialLevel) {
         this.installedItemMaterialLevel = installedItemMaterialLevel;
     }
-    public void setInstalledItemLicensedProductionRunsRemaining(int installedItemLicensedProductionRunsRemaining) {
+    public void setInstalledItemLicensedProductionRunsRemaining(long installedItemLicensedProductionRunsRemaining) {
         this.installedItemLicensedProductionRunsRemaining = installedItemLicensedProductionRunsRemaining;
     }
-    public void setOutputLocationId(int outputLocationId) {
+    public void setOutputLocationId(long outputLocationId) {
         this.outputLocationId = outputLocationId;
     }
-    public void setInstallerId(int installerId) {
+    public void setInstallerId(long installerId) {
         this.installerId = installerId;
     }
     public void setRuns(int runs) {
@@ -191,22 +192,22 @@ public class IndustryJobs
     public void setLicensedProductionRuns(int licensedProductionRuns) {
         this.licensedProductionRuns = licensedProductionRuns;
     }
-    public void setInstalledInSolarSystemId(int installedInSolarSystemId) {
+    public void setInstalledInSolarSystemId(long installedInSolarSystemId) {
         this.installedInSolarSystemId = installedInSolarSystemId;
     }
-    public void setContainerLocationId(int containerLocationId) {
+    public void setContainerLocationId(long containerLocationId) {
         this.containerLocationId = containerLocationId;
     }
-    public void setMaterialMultiplier(double materialMultiplier) {
+    public void setMaterialMultiplier(BigDecimal materialMultiplier) {
         this.materialMultiplier = materialMultiplier;
     }
-    public void setCharMaterialMultiplier(double charMaterialMultiplier) {
+    public void setCharMaterialMultiplier(BigDecimal charMaterialMultiplier) {
         this.charMaterialMultiplier = charMaterialMultiplier;
     }
-    public void setTimeMultiplier(double timeMultiplier) {
+    public void setTimeMultiplier(BigDecimal timeMultiplier) {
         this.timeMultiplier = timeMultiplier;
     }
-    public void setCharTimeMultiplier(double charTimeMultiplier) {
+    public void setCharTimeMultiplier(BigDecimal charTimeMultiplier) {
         this.charTimeMultiplier = charTimeMultiplier;
     }
     public void setInstalledItemTypeId(int installedItemTypeId) {
@@ -254,7 +255,7 @@ public class IndustryJobs
     public void setEndProductionTime(Date endProductionTime) {
         this.endProductionTime = endProductionTime;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
 }
