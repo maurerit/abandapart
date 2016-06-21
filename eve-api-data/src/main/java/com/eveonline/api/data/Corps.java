@@ -8,15 +8,15 @@ import javax.persistence.Table;
 @Table(name = "apicorps")
 public class Corps
 {
-    private int corporationID;
+    private long corporationId;
     private String corporationName;
     private int characterId;
     private String characterName;
     private String keyId;
 
     @Id
-    public int getCorporationID() {
-        return corporationID;
+    public long getCorporationId() {
+        return corporationId;
     }
     public String getCorporationName() {
         return corporationName;
@@ -31,8 +31,8 @@ public class Corps
         return keyId;
     }
 
-    public void setCorporationID(int corporationID) {
-        this.corporationID = corporationID;
+    public void setCorporationId(long corporationID) {
+        this.corporationId = corporationId;
     }
     public void setCorporationName(String corporationName) {
         this.corporationName = corporationName;

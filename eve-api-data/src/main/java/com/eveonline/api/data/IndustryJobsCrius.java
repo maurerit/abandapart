@@ -3,30 +3,31 @@ package com.eveonline.api.data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "apiindustryjobscrius")
 public class IndustryJobsCrius
 {
-    private int jobID;
-    private int installerId;
+    private long jobId;
+    private long installerId;
     private String installerName;
-    private int facilityId;
+    private long facilityId;
     private int solarSystemId;
     private String solarSystemName;
-    private int stationId;
+    private long stationId;
     private int activityId;
-    private int blueprintId;
+    private long blueprintId;
     private int blueprintTypeId;
     private String blueprintTypeName;
-    private int blueprintLocationId;
-    private int outputLocationId;
+    private long blueprintLocationId;
+    private long outputLocationId;
     private int runs;
-    private double cost;
-    private int teamId;
+    private BigDecimal cost;
+    private long teamId;
     private int licensedRuns;
-    private double probability;
+    private BigDecimal probability;
     private int productTypeId;
     private String productTypeName;
     private int status;
@@ -35,21 +36,21 @@ public class IndustryJobsCrius
     private Date endDate;
     private Date pauseDate;
     private Date completedDate;
-    private int completedCharacterId;
+    private long completedCharacterId;
     private int successfulRuns;
-    private int corporationId;
+    private long corporationId;
 
     @Id
-    public int getJobID() {
-        return jobID;
+    public long getJobId() {
+        return jobId;
     }
-    public int getInstallerId() {
+    public long getInstallerId() {
         return installerId;
     }
     public String getInstallerName() {
         return installerName;
     }
-    public int getFacilityId() {
+    public long getFacilityId() {
         return facilityId;
     }
     public int getSolarSystemId() {
@@ -58,13 +59,13 @@ public class IndustryJobsCrius
     public String getSolarSystemName() {
         return solarSystemName;
     }
-    public int getStationId() {
+    public long getStationId() {
         return stationId;
     }
     public int getActivityId() {
         return activityId;
     }
-    public int getBlueprintId() {
+    public long getBlueprintId() {
         return blueprintId;
     }
     public int getBlueprintTypeId() {
@@ -73,25 +74,25 @@ public class IndustryJobsCrius
     public String getBlueprintTypeName() {
         return blueprintTypeName;
     }
-    public int getBlueprintLocationId() {
+    public long getBlueprintLocationId() {
         return blueprintLocationId;
     }
-    public int getOutputLocationId() {
+    public long getOutputLocationId() {
         return outputLocationId;
     }
     public int getRuns() {
         return runs;
     }
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
-    public int getTeamId() {
+    public long getTeamId() {
         return teamId;
     }
     public int getLicensedRuns() {
         return licensedRuns;
     }
-    public double getProbability() {
+    public BigDecimal getProbability() {
         return probability;
     }
     public int getProductTypeId() {
@@ -118,26 +119,26 @@ public class IndustryJobsCrius
     public Date getCompletedDate() {
         return completedDate;
     }
-    public int getCompletedCharacterId() {
+    public long getCompletedCharacterId() {
         return completedCharacterId;
     }
     public int getSuccessfulRuns() {
         return successfulRuns;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
 
-    public void setJobID(int jobID) {
-        this.jobID = jobID;
+    public void setJobId(long jobId) {
+        this.jobId = jobId;
     }
-    public void setInstallerId(int installerId) {
+    public void setInstallerId(long installerId) {
         this.installerId = installerId;
     }
     public void setInstallerName(String installerName) {
         this.installerName = installerName;
     }
-    public void setFacilityId(int facilityId) {
+    public void setFacilityId(long facilityId) {
         this.facilityId = facilityId;
     }
     public void setSolarSystemId(int solarSystemId) {
@@ -146,13 +147,13 @@ public class IndustryJobsCrius
     public void setSolarSystemName(String solarSystemName) {
         this.solarSystemName = solarSystemName;
     }
-    public void setStationId(int stationId) {
+    public void setStationId(long stationId) {
         this.stationId = stationId;
     }
     public void setActivityId(int activityId) {
         this.activityId = activityId;
     }
-    public void setBlueprintId(int blueprintId) {
+    public void setBlueprintId(long blueprintId) {
         this.blueprintId = blueprintId;
     }
     public void setBlueprintTypeId(int blueprintTypeId) {
@@ -161,25 +162,25 @@ public class IndustryJobsCrius
     public void setBlueprintTypeName(String blueprintTypeName) {
         this.blueprintTypeName = blueprintTypeName;
     }
-    public void setBlueprintLocationId(int blueprintLocationId) {
+    public void setBlueprintLocationId(long blueprintLocationId) {
         this.blueprintLocationId = blueprintLocationId;
     }
-    public void setOutputLocationId(int outputLocationId) {
+    public void setOutputLocationId(long  outputLocationId) {
         this.outputLocationId = outputLocationId;
     }
     public void setRuns(int runs) {
         this.runs = runs;
     }
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-    public void setTeamId(int teamId) {
+    public void setTeamId(long teamId) {
         this.teamId = teamId;
     }
     public void setLicensedRuns(int licensedRuns) {
         this.licensedRuns = licensedRuns;
     }
-    public void setProbability(double probability) {
+    public void setProbability(BigDecimal probability) {
         this.probability = probability;
     }
     public void setProductTypeId(int productTypeId) {
@@ -206,13 +207,13 @@ public class IndustryJobsCrius
     public void setCompletedDate(Date completedDate) {
         this.completedDate = completedDate;
     }
-    public void setCompletedCharacterId(int completedCharacterId) {
+    public void setCompletedCharacterId(long completedCharacterId) {
         this.completedCharacterId = completedCharacterId;
     }
     public void setSuccessfulRuns(int successfulRuns) {
         this.successfulRuns = successfulRuns;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
 }

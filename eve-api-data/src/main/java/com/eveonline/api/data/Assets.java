@@ -8,24 +8,24 @@ import javax.persistence.Table;
 @Table(name = "apiassets")
 public class Assets
 {
-    private int itemId;
-    private int parentItemId;
-    private int locationId;
+    private long itemId;
+    private long parentItemId;
+    private long locationId;
     private int typeId;
     private int quantity;
     private int flag;
     private int singleton;
     private int rawQuantity;
-    private int corporationId;
+    private long corporationId;
 
     @Id
-    public int getItemId() {
+    public long getItemId() {
         return itemId;
     }
-    public int getParentItemId() {
+    public long getParentItemId() {
         return parentItemId;
     }
-    public int getLocationId() {
+    public long getLocationId() {
         return locationId;
     }
     public int getTypeId() {
@@ -37,7 +37,7 @@ public class Assets
     public int getFlag() {
         return flag;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
     public int getSingleton() {
@@ -47,13 +47,13 @@ public class Assets
         return rawQuantity;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
-    public void setParentItemId(int parentItemId) {
+    public void setParentItemId(long parentItemId) {
         this.parentItemId = parentItemId;
     }
-    public void setLocationId(int locationId) {
+    public void setLocationId(long locationId) {
         this.locationId = locationId;
     }
     public void setTypeId(int typeId) {
@@ -65,7 +65,7 @@ public class Assets
     public void setFlag(int flag) {
         this.flag = flag;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
     public void setSingleton(int singleton) {

@@ -8,16 +8,16 @@ import javax.persistence.Table;
 @Table(name = "apicorpsheet")
 public class Corpsheet
 {
-    private int corporationId;
+    private long corporationId;
     private String corporationName;
     private String ticker;
-    private int ceoId;
+    private long ceoId;
     private String ceoName;
-    private int stationId;
+    private long stationId;
     private String stationName;
     private String description;
     private String url;
-    private int allianceId;
+    private long allianceId;
     private int taxRate;
     private int memberCount;
     private int memberLimit;
@@ -31,7 +31,7 @@ public class Corpsheet
     private int color3;
 
     @Id
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
     public String getCorporationName() {
@@ -40,13 +40,13 @@ public class Corpsheet
     public String getTicker() {
         return ticker;
     }
-    public int getCeoId() {
+    public long getCeoId() {
         return ceoId;
     }
     public String getCeoName() {
         return ceoName;
     }
-    public int getStationId() {
+    public long getStationId() {
         return stationId;
     }
     public String getStationName() {
@@ -58,7 +58,7 @@ public class Corpsheet
     public String getUrl() {
         return url;
     }
-    public int getAllianceId() {
+    public long getAllianceId() {
         return allianceId;
     }
     public int getTaxRate() {
@@ -95,7 +95,7 @@ public class Corpsheet
         return color3;
     }
 
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
     public void setCorporationName(String corporationName) {
@@ -104,13 +104,13 @@ public class Corpsheet
     public void setTicker(String ticker) {
         this.ticker = ticker;
     }
-    public void setCeoId(int ceoId) {
+    public void setCeoId(long ceoId) {
         this.ceoId = ceoId;
     }
     public void setCeoName(String ceoName) {
         this.ceoName = ceoName;
     }
-    public void setStationId(int stationId) {
+    public void setStationId(long stationId) {
         this.stationId = stationId;
     }
     public void setStationName(String stationName) {
@@ -122,7 +122,7 @@ public class Corpsheet
     public void setUrl(String url) {
         this.url = url;
     }
-    public void setAllianceId(int allianceId) {
+    public void setAllianceId(long allianceId) {
         this.allianceId = allianceId;
     }
     public void setTaxRate(int taxRate) {

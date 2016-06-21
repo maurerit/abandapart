@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ActiveProfiles("unittest")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(TestApplication.class)
-@ContextConfiguration(locations = {"classpath:**/application-context.xml"})
 public abstract class BaseApiTestCase {
 
 }
