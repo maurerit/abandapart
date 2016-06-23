@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 public class AccountBalanceTests extends BaseApiTestCase {
 
 	@Autowired
-	private AccountBalanceRepository repo;
+	private AccountBalanceRepository repo; //Test
 	
 	@Test
 	@Sql({"/testGetAccountId34339379Balance.sql"})
