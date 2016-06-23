@@ -8,6 +8,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ActiveProfiles("unittest")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(TestApplication.class)
-public class BaseApiTestCase {
+public abstract class BaseApiTestCase {
 
 }

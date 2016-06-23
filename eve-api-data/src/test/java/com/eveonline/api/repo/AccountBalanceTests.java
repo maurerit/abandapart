@@ -24,5 +24,4 @@ public class AccountBalanceTests extends BaseApiTestCase {
 		expected = expected.setScale(2, BigDecimal.ROUND_HALF_UP);
 		assertEquals("Incorrect balance for corp and account key", expected, balance.getBalance());
 	}
-
 }
