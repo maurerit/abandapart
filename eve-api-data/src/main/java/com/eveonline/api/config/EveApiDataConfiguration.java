@@ -11,5 +11,5 @@ import com.eveonline.api.repo.ApiDataRepositoryPackage;
 @EntityScan(basePackages = {"com.eveonline.api"})
 @EnableJpaRepositories(basePackageClasses = ApiDataRepositoryPackage.class)
 @EnableTransactionManagement
-public class RepositoryConfiguration {
+public class EveApiDataConfiguration {
 }
