@@ -7,6 +7,12 @@ Being competitive in a situation where you are reliant on purchasing from the op
 
 ---
 
+# Submodules #
+
+There are now two submodules within this git repository.  If you're unsure how to work with submodules see the [git documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for them.  These will need to build by executing the respective gradlew executables in their folders with an argument of install.  This will build the modules and install their artifacts in your local m2 repository.
+
+---
+
 ### Java Migration ###
 
 I spent a lot of time on this readme and the node version of this project.  However, I'm far more comfortable in Java and no one wanted to contribute.  Therefore I'm dumping the node version as it has proved itself useful and implementing this in pure Java.  Got a problem with that?  Too damn bad, I don't see you coding up anything and making it available to the alliance for use.
@@ -29,7 +35,7 @@ Micro services and a message bus.  Plain and simple and very scalable.  Simply p
 
 [Fetching Metadata](DATA.md#FetchingMetadata)
 
-[Salary Config]((DATA.md#SalaryConfig)
+[Salary Config](DATA.md#SalaryConfig)
 
 [Products Of Interest](DATA.md#ProductsOfInterest)
 
