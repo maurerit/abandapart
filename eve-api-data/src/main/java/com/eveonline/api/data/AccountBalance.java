@@ -3,40 +3,41 @@ package com.eveonline.api.data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="apiaccountbalance")
 public class AccountBalance
 {
-    private int accountId;
+    private long accountId;
     private int accountKey;
-    private double balance;
-    private int corporationId;
+    private BigDecimal balance;
+    private long corporationId;
 
     @Id
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
     public int getAccountKey() {
         return accountKey;
     }
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
     public void setAccountKey(int accountKey) {
         this.accountKey = accountKey;
     }
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
 }

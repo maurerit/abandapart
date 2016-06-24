@@ -14,7 +14,7 @@ import com.eveonline.api.data.AccountBalance;
 public class AccountBalanceTests extends BaseApiTestCase {
 
 	@Autowired
-	private AccountBalanceRepository repo;
+	private AccountBalanceRepository repo; //Test
 	
 	@Test
 	@Sql({"/testGetAccountKey1000Balance.sql"})

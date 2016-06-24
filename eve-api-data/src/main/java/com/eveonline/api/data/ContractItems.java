@@ -8,19 +8,19 @@ import javax.persistence.Table;
 @Table(name = "apicontractitems")
 public class ContractItems
 {
-    private int contractId;
-    private int recordId;
+    private long contractId;
+    private long recordId;
     private int typeId;
     private int quantity;
     private int singleton;
     private int included;
-    private int corporationId;
+    private long corporationId;
 
     @Id
-    public int getRecordId() {
+    public long getRecordId() {
         return recordId;
     }
-    public int getContractId() {
+    public long getContractId() {
         return contractId;
     }
     public int getTypeId() {
@@ -29,7 +29,7 @@ public class ContractItems
     public int getQuantity() {
         return quantity;
     }
-    public int getCorporationId() {
+    public long getCorporationId() {
         return corporationId;
     }
     public int getSingleton() {
@@ -39,10 +39,10 @@ public class ContractItems
         return included;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(long recordId) {
         this.recordId = recordId;
     }
-    public void setContractId(int contractId) {
+    public void setContractId(long contractId) {
         this.contractId = contractId;
     }
     public void setTypeId(int typeId) {
@@ -51,7 +51,7 @@ public class ContractItems
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public void setCorporationId(int corporationId) {
+    public void setCorporationId(long corporationId) {
         this.corporationId = corporationId;
     }
     public void setSingleton(int singleton) {
