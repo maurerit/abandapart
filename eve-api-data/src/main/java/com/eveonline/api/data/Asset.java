@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "apiassets")
-public class Assets
+public class Asset
 {
     private long itemId;
     private long parentItemId;

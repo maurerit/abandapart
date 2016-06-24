@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "apicorps")
-public class Corps
+public class Corporation
 {
     private long corporationId;
     private String corporationName;

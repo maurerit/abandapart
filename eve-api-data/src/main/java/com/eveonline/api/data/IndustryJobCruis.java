@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "apiindustryjobscrius")
-public class IndustryJobsCrius
+public class IndustryJobCruis
 {
     private long jobId;
     private long installerId;

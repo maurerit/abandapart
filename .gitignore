@@ -9,3 +9,6 @@
 
 #Maven transient folders
 target
+node_modules
+dist
+node
