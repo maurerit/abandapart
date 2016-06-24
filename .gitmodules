@@ -1,0 +1,6 @@
+[submodule "eve-api-java"]
+	path = eve-api-java
+	url = https://github.com/maurerit/eve-api-java.git
+[submodule "eve-crest-java"]
+	path = eve-crest-java
+	url = https://github.com/maurerit/eve-crest-java.git
