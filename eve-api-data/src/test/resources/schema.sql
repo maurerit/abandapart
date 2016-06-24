@@ -170,3 +170,40 @@ CREATE TABLE `apiindustryjobscrius` (
   `successful_runs` int(11) DEFAULT NULL,
   `corporation_id` bigint(11) DEFAULT NULL
 );
+
+CREATE TABLE `apiwallettransactions` (
+  `transaction_date_time` datetime NOT NULL,
+  `transaction_id` bigint(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `type_name` varchar(255) DEFAULT NULL,
+  `type_id` int(11) NOT NULL,
+  `price` decimal(20,2) NOT NULL,
+  `client_id` bigint(11) NOT NULL,
+  `client_name` varchar(255) DEFAULT NULL,
+  `character_id` bigint(11) NOT NULL,
+  `character_name` varchar(255) DEFAULT NULL,
+  `station_id` int(11) NOT NULL,
+  `station_name` varchar(255) DEFAULT NULL,
+  `transaction_type` varchar(255) DEFAULT NULL,
+  `transaction_for` varchar(255) DEFAULT NULL,
+  `journal_transaction_id` bigint(11) NOT NULL,
+  `account_key` int(11) NOT NULL,
+  `corporation_id` bigint(11) NOT NULL
+);
+
+CREATE TABLE `apiwalletjournal` (
+  `date` datetime NOT NULL,
+  `ref_id` bigint(11) NOT NULL,
+  `ref_type_id` int(11) NOT NULL,
+  `owner_name_one` varchar(255) DEFAULT NULL,
+  `owner_id_one` int(11) NOT NULL,
+  `owner_name_two` varchar(255) DEFAULT NULL,
+  `owner_id_two` int(11) NOT NULL,
+  `arg_name_one` varchar(255) DEFAULT NULL,
+  `arg_id_one` int(11) NOT NULL,
+  `amount` decimal(20,2) NOT NULL,
+  `balance` decimal(20,2) NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `corporation_id` bigint(11) NOT NULL,
+  `account_key` int(11) NOT NULL DEFAULT '1000'
+);

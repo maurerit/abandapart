@@ -8,4 +8,7 @@
   <artifactId>aba-web</artifactId>
   <packaging>pom</packaging>
   <name>Web Clients for ABA</name>
+  <modules>
+  	<module>reporting-client</module>
+  </modules>
 </project>
