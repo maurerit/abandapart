@@ -1,8 +1,8 @@
 package com.eveonline.api.repo;
 
 
-import com.eveonline.api.data.IndustryJobsCrius;
+import com.eveonline.api.data.IndustryJobCruis;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IndustryJobsCriusRepository  extends JpaRepository<IndustryJobsCrius, Long> {
+public interface IndustryJobsCriusRepository  extends JpaRepository<IndustryJobCruis, Long> {
 }
