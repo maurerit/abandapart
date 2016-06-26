@@ -3,12 +3,10 @@ import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
 
 let homeModule = angular.module('home', [
-  uiRouter
+  'ui.router'
 ])
 
-.config(($stateProvider, $urlRouterProvider) => {
-  "ngInject";
-
+.config(/*@ngInject*/($stateProvider, $urlRouterProvider) => {
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
