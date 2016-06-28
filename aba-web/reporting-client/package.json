@@ -49,7 +49,9 @@
     "webpack": "^1.9.5",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0",
-    "yargs": "^3.9.0"
+    "yargs": "^3.9.0",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0"
   },
   "scripts": {
     "test": "karma start",
