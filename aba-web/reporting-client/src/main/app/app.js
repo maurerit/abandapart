@@ -14,6 +14,7 @@ angular.module('app', [
     "ngInject";
     // @see: https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions
     // #how-to-configure-your-server-to-work-with-html5mode
+    //TODO: Figure this little bit out later...
     $locationProvider.html5Mode(true).hashPrefix('!');
   })
 
