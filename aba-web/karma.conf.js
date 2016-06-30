@@ -30,10 +30,21 @@ module.exports = function (config) {
       devtool: 'inline-source-map',
       module: {
         loaders: [
-          { test: /\.js/, exclude: [/app\/lib/, /node_modules/], loader: 'babel' },
-          { test: /\.html/, loader: 'raw' },
+          { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
+          { test: /\.html$/, loader: 'raw' },
           { test: /\.styl$/, loader: 'style!css!stylus' },
-          { test: /\.css$/, loader: 'style!css' }
+          { test: /\.less$/, loader: 'style!css!less' },
+          { test: /\.css$/, loader: 'style!css' },
+          { test: /\.(png|jpg|gif)$/, loader: "file-loader?name=images/[name].[ext]" },
+          //Most libraries use semantic versioning, however kendo has some .ttf's matching 1.0 instead of 1.0.0
+          { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?(\?v=[0-9]\.[0-9])?$/, loader: "file-loader?name=fonts/[name].[ext]" },
+          { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader?name=fonts/[name].[ext]" },
+          //kendo has some wierd ones that look like this KendoUIGlyphs.eot?-wd8xpd
+          { test: /\.(ttf|eot|svg)(\?-)(.+)$/, loader: "file-loader?name=fonts/[name].[ext]" },
+          { test: /\.woff(2)?(\?-)(.+)$/, loader: "file-loader?name=fonts/[name].[ext]" },
+          { test: /lodash\.min\.js$/, loader: 'expose?_' },
+          { test: /jquery\.min\.js$/, loader: 'expose?$!expose?jQuery!expose?window.jQuery' },
+          { test: /angular\.min\.js/, loader: "expose?angular!exports?window.angular" },
         ]
       }
     },
