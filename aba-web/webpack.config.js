@@ -3,7 +3,14 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var node_modules_dir = path.join(__dirname, 'node_modules');
 
-module.exports = {
+// When you have a dep with a package.json that has a 'main' that points at a minified non-webpack friendly distribution
+// try adding it to the list here (relative to node_modules). See README for more information.
+// angular-locker is one such example somebody has encountered. It would look like shown below.
+var deps = [
+    //'angular-locker/dist/angular-locker.min.js'
+];
+
+var config = {
   devtool: 'sourcemap',
   entry: {
     app: [
@@ -55,3 +62,11 @@ module.exports = {
     })
   ]
 };
+
+deps.forEach(function (dep) {
+    var depPath = path.resolve(node_modules_dir, dep);
+    config.resolve.alias[dep.split(path.sep)[0]] = depPath;
+    config.module.noParse.push(depPath);
+});
+
+module.exports = config;
