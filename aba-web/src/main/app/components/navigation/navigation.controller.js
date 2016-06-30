@@ -6,12 +6,10 @@ class NavigationController {
 		this.navItems = [
 			{
 				"link": "/home",
-				"class": "active",
 				"name": "Home"
 			},
 			{
 				"link": "/about",
-				"class": "none",
 				"name": "About"
 			}
 		];
