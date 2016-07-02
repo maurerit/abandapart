@@ -9,17 +9,33 @@
 @import "~font-awesome/less/stacked";
 
 
+
+@background-color: #4d4d4d;
+@text-color: #FFFFFF;
+
+
+
 /* make sidebar nav vertical */ 
 @media (min-width: 768px) {
   .sidebar-nav .navbar .navbar-collapse {
-    padding: 0;
-    max-height: none;
+        position: fixed;
+        top: 51px;
+        left: 225px;
+        width: 225px;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+        background-color: @background-color;
+        bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
   }
   .sidebar-nav .navbar ul {
     float: none;
   }
   .sidebar-nav .navbar ul:not {
-    display: block;
+
   }
   .sidebar-nav .navbar li {
     float: none;
@@ -29,4 +45,24 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
+}
+
+ul
+{
+  background-color: @background-color;
+}
+
+
+.sidebar-nav .navbar .nav > li > a
+{
+    color: #FFFFFF;
+    &:hover
+    {
+      color: #ffcc00;
+    }
+    &:focus
+    {
+      color: #ffcc00;
+      background: #666666;
+    }
 }
