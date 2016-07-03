@@ -23,8 +23,7 @@
         left: 225px;
         width: 225px;
         margin-left: -225px;
-        border: none;
-        border-radius: 0;
+        .box-shadow(7px, 7px, 7px, 0.3);
         overflow-y: auto;
         background-color: @background-color;
         bottom: 0;
@@ -58,11 +57,19 @@ ul
     color: #FFFFFF;
     &:hover
     {
-      color: #ffcc00;
+      color: #FFCC00;
     }
     &:focus
     {
-      color: #ffcc00;
-      background: #666666;
+      color: #FFCC00;
     }
 }
+
+
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5)
+{
+	-webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+	-moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+	box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
