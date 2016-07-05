@@ -9,6 +9,7 @@
     "bootstrap": "3.3.6",
     "bootstrap-less": "3.3.8",
     "bootstrap-styl": "5.0.5",
+    "font-awesome": "^4.6.3",
     "jquery": "2.1.4",
     "normalize.css": "^3.0.3"
   },
