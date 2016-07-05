@@ -5,7 +5,11 @@
 			<div class="navbar-collapse collapse sidebar-navbar-collapse">
 				<ul class="nav navbar-nav">
 
-					<li ng-class="{ active: isActive('/home')}"><a href="/"><i class="fa fa-home"></i>  Home</a></li>
+					<li ng-class="{ active: isActive('/home')}"><a href="/home"><i class="fa fa-home"></i>  Home</a></li>
+					<li ng-class="{ active: isActive('/timesheet')}"><a href="/timesheet"><i class="fa fa-calendar"></i> Timesheet</a></li>
+					<li ng-class="{ active: isActive('/wallet')}"><a href="/wallet"><i class="fa fa-credit-card"></i> Wallet</a></li>
+					<li ng-class="{ active: isActive('/queue')}"><a href="/queue"><i class="fa fa-bars"></i> Queue</a></li>
+					<li ng-class="{ active: isActive('/points')}"><a href="/points"><i class="fa fa-cogs"></i> Points</a></li>
 					<li ng-class="{ active: isActive('/about')}"><a href="/about"><i class="fa fa-info"></i>  About</a></li>
 
 					<!--<li class="dropdown">
