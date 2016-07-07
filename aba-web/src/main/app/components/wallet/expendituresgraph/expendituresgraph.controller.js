@@ -1,8 +1,8 @@
 class ExpendituresgraphController {
   constructor($scope) {
     this.name = 'expendituresgraph';
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.data = [65, 59, 80, 81, 56, 55, 40];
+    $scope.labels = ["Jita", "Amarr", "Rens", "Dodixie"];
+    $scope.data = [12000000000,1000000000,100000000,200000000];
   }
 }
 
