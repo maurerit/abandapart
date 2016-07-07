@@ -1,27 +1,15 @@
 class WalletController {
-  constructor() {
+  constructor($scope) {
     this.name = 'wallet';
-	this.someData = {
-		labels: [
-        'Apr', 
-        'May', 
-        'Jun'
-      ],
-      datasets: [
-        {
-          data: [1, 7, 15, 19, 31, 40]
-        },
-        {
-          data: [6, 12, 18, 24, 30, 36]
-        }
-      ]
-	};
-
-	this.someOptions = {
-		segementStrokeWidth: 20,
-		segmentStrokeColor: '#000'
-	};
+    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];
   }
 }
+
+WalletController.$inject = ['$scope'];
 
 export default WalletController;
