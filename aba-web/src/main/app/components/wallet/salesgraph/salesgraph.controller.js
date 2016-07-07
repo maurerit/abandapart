@@ -1,8 +1,8 @@
 class SalesgraphController {
   constructor($scope) {
     this.name = 'salesgraph';
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.data = [28, 48, 40, 19, 86, 27, 90];
+    $scope.labels = ["Jita", "Amarr", "Rens", "Dodixie"];
+    $scope.data = [15000000000,8000000000,600000000,400000000];
   }
 }
 
