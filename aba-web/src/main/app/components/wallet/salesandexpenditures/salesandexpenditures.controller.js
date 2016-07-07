@@ -1,11 +1,11 @@
 class SalesandexpendituresController {
   constructor($scope) {
     this.name = 'salesandexpenditures';
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
+    $scope.labels = ['Jita', 'Amarr', 'Rens', 'Dodixie'];
+    $scope.series = ['Sales', 'Expenses'];
     $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
+    	[15000000000, 8000000000, 600000000, 400000000],
+    	[12000000000, 1000000000, 100000000, 200000000],
     ];
   }
 }
