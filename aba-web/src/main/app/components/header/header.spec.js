@@ -29,8 +29,8 @@ describe('Header', () => {
   describe('Template', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(HeaderTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+    it('has a navbar', () => {
+      expect(HeaderTemplate).to.match(/div class="navbar/g);
     });
   });
 
