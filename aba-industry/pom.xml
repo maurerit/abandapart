@@ -14,13 +14,12 @@
 
 
     <modules>
-    	<module>industry-calc</module>
-    	<module>industry-price-fetcher</module>
-    	
+    	<module>industry-fetcher</module>
     	<module>industry-director</module>
     	<module>industry-config</module>
     	<module>industry-common-bus</module>
-    	<module>aba-industry-data</module>
+    	<module>industry-data</module>
+    	<module>industry-calculator</module>
     </modules>
     
     <dependencies>

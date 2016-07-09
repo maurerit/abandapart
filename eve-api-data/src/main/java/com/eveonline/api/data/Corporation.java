@@ -32,7 +32,7 @@ public class Corporation
     }
 
     public void setCorporationId(long corporationID) {
-        this.corporationId = corporationId;
+        this.corporationId = corporationID;
     }
     public void setCorporationName(String corporationName) {
         this.corporationName = corporationName;

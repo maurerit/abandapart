@@ -1,26 +1,20 @@
-package com.abandapart.industry.price;
+package com.abandapart.industry.fetch;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestDictionary;
 import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.retrofit.CrestClient;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CrestTests {
 	private static final Logger LOG = LoggerFactory.getLogger(CrestTests.class);
@@ -34,6 +28,7 @@ public class CrestTests {
 
 	
 	@Test
+	@Ignore
     public void testGetAllMarketOrders ( ) {
         NumberFormat format = new DecimalFormat("###,###.##");
         final long start = System.currentTimeMillis();
