@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class IndustryDirectorModule {
 	public static void main ( String[ ] args ) {
+		@SuppressWarnings("unused")
 		ApplicationContext ctx = SpringApplication.run(IndustryDirectorModule.class, args);
 	}
 }
