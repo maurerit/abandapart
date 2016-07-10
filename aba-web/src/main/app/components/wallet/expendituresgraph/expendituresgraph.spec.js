@@ -10,7 +10,7 @@ describe('Expendituresgraph', () => {
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new ExpendituresgraphController();
+      return new ExpendituresgraphController({});
     };
   }));
 
@@ -30,7 +30,7 @@ describe('Expendituresgraph', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(ExpendituresgraphTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect(ExpendituresgraphTemplate).to.match(/<p>Expenses by System<\/p>/g);
     });
   });
 

@@ -1,3 +1,6 @@
+var path    = require('path');
+var node_modules_dir = path.join(__dirname, 'node_modules');
+
 module.exports = function (config) {
   config.set({
     // base path used to resolve all patterns
@@ -46,6 +49,18 @@ module.exports = function (config) {
           { test: /jquery\.min\.js$/, loader: 'expose?$!expose?jQuery!expose?window.jQuery' },
           { test: /angular\.min\.js/, loader: "expose?angular!exports?window.angular" },
         ]
+      },
+      resolve: {
+        alias: {
+          common: path.join(__dirname, 'src/main/app/common'),
+          components: path.join(__dirname, 'src/main/app/components'),
+          nodeModules: node_modules_dir,
+
+          'jquery': path.join(node_modules_dir, 'jquery/dist/jquery.min.js'),
+          'angular': path.join(node_modules_dir, 'angular/angular.min.js'),
+          'angular-ui-router': path.join(node_modules_dir, 'angular-ui-router/release/angular-ui-router.min.js'),
+          'bootstrap': path.join(node_modules_dir, 'bootstrap/dist/js/bootstrap.min.js'),
+        }
       }
     },
 
