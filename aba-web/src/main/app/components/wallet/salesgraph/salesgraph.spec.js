@@ -10,7 +10,7 @@ describe('Salesgraph', () => {
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new SalesgraphController();
+      return new SalesgraphController({});
     };
   }));
 
@@ -30,7 +30,7 @@ describe('Salesgraph', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(SalesgraphTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect(SalesgraphTemplate).to.match(/<p>Sales by System<\/p>/g);
     });
   });
 

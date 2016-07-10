@@ -10,7 +10,7 @@ describe('Salesandexpenditures', () => {
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new SalesandexpendituresController();
+      return new SalesandexpendituresController({});
     };
   }));
 
@@ -30,7 +30,7 @@ describe('Salesandexpenditures', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(SalesandexpendituresTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect(SalesandexpendituresTemplate).to.match(/<p>Sales &amp; Expenses<\/p>/g);
     });
   });
 
