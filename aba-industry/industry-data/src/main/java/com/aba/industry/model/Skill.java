@@ -1,4 +1,4 @@
-package com.aba.industry.model.fuzzysteve;
+package com.aba.industry.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

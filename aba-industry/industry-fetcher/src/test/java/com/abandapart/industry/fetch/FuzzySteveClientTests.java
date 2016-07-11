@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.aba.industry.fetch.FuzzySteveClient;
+import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 
 public class FuzzySteveClientTests {
@@ -25,6 +26,11 @@ public class FuzzySteveClientTests {
 		assertNotNull(bpData.getDecryptors());
 		assertNotNull(bpData.getRequestedId());
 		assertTrue(bpData.getRequestedId() > 0);
+		
+		for ( ActivityMaterial material : bpData.getDecryptors() ) {
+			assertNotNull("Decryptor name should not be null", material.getName());
+			assertNotNull("Decryptor typeId should not be null", material.getTypeId());
+		}
 	}
 
 }

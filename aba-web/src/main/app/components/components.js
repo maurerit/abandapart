@@ -9,6 +9,7 @@ import Points from 'components/points/points';
 import Queue from 'components/queue/queue';
 import Timesheet from 'components/timesheet/timesheet';
 import Wallet from 'components/wallet/wallet';
+import Watch from 'components/watch/watch';
 
 let componentModule = angular.module('app.components', [
   Header.name,
@@ -20,7 +21,8 @@ let componentModule = angular.module('app.components', [
   Points.name,
   Queue.name,
   Timesheet.name,
-  Wallet.name
+  Wallet.name,
+  Watch.name
 ]);
 
 export default componentModule;

@@ -9,4 +9,30 @@
 	<artifactId>industry-calculator</artifactId>
 	<name>Industry Calculator</name>
 	<description>Various Calculators for industrial purposes</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.abandapart</groupId>
+			<artifactId>industry-data</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.abandapart</groupId>
+			<artifactId>aba-data</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.abandapart</groupId>
+			<artifactId>industry-config</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.abandapart</groupId>
+			<artifactId>industry-fetcher</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+	</dependencies>
 </project>

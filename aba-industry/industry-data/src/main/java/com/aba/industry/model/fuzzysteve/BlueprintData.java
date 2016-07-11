@@ -3,6 +3,8 @@ package com.aba.industry.model.fuzzysteve;
 import java.util.List;
 import java.util.Map;
 
+import com.aba.industry.model.Decryptor;
+import com.aba.industry.model.Skill;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
