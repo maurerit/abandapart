@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.eveonline.api.BaseApiTestCase;
-import com.eveonline.api.data.AccountBalance;
+import com.eveonline.api.domain.AccountBalance;
 
 public class AccountBalanceTests extends BaseApiTestCase {
 

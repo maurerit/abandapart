@@ -1,4 +1,4 @@
-package com.eveonline.api.data;
+package com.eveonline.api.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

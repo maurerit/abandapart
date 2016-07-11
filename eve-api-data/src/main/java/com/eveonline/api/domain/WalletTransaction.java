@@ -1,15 +1,17 @@
-package com.eveonline.api.data;
+package com.eveonline.api.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "apiwallettransactions")
 public class WalletTransaction {
 	private Date transactionDateTime;
+	@Id
 	private long transactionId;
 	private long quantity;
 	private String typeName;

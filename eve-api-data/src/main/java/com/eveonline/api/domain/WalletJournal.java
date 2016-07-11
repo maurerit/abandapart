@@ -1,17 +1,22 @@
-package com.eveonline.api.data;
+package com.eveonline.api.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "apiwalletjournal")
+@IdClass(WalletJournalId.class)
 public class WalletJournal {
 	@Column(name = "date")
+	@Id
 	private Date entryDate;
+	@Id
 	private long refId;
 	private int refTypeId;
 	private String ownerNameOne;

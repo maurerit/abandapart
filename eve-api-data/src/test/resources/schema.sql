@@ -174,7 +174,7 @@ CREATE TABLE `apiindustryjobscrius` (
 CREATE TABLE `apiwallettransactions` (
   `transaction_date_time` datetime NOT NULL,
   `transaction_id` bigint(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` bigint(11) NOT NULL,
   `type_name` varchar(255) DEFAULT NULL,
   `type_id` int(11) NOT NULL,
   `price` decimal(20,2) NOT NULL,
