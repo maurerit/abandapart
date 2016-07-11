@@ -1,18 +1,19 @@
-package com.aba.industry.fetch;
+package com.aba.industry.fetch.client;
 
 import java.io.IOException;
 
+import com.aba.industry.fetch.service.FuzzySteveService;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class FuzzySteveClient {
+public class FuzzySteveClientImpl implements BuildRequirementsProvider {
 	private static final String fuzzysDomain = "www.fuzzwork.co.uk";
 	private FuzzySteveService client;
 	
-	public FuzzySteveClient ( ) {
+	public FuzzySteveClientImpl ( ) {
 		OkHttpClient.Builder bob = new OkHttpClient.Builder();
 		this.client = new Retrofit.Builder()
 						  .baseUrl("https://" + fuzzysDomain)
