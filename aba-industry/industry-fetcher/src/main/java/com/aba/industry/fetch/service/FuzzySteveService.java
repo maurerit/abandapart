@@ -1,4 +1,4 @@
-package com.aba.industry.fetch;
+package com.aba.industry.fetch.service;
 
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 

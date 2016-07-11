@@ -33,6 +33,7 @@ public interface IndustryCalculationService {
 	BuildCalculationResult calculateBuildCosts ( Long outputTypeId,
 			IndustrySkillConfiguration industrySkills,
 			InventionSkillConfiguration inventionSkills,
+			Integer meLevel,
 			boolean findCurrentPrices,
 			boolean useBuildOrBuyConfigurations);
 }

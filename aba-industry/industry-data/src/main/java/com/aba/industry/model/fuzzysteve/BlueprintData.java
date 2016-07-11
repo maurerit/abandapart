@@ -13,10 +13,16 @@ import lombok.Data;
 public class BlueprintData {
 	@JsonProperty("requestedid")
 	long requestedId;
+	/**
+	 * A map of {@link com.aba.industry.model.Activities#activityId} to a list of the {@link Skill} requirements.
+	 */
 	@JsonProperty
 	Map<Integer, List<Skill>> blueprintSkills;
 	@JsonProperty
 	BlueprintDetails blueprintDetails;
+	/**
+	 * A map of {@link com.aba.industry.model.Activities#activityId} to {@link ActivityMaterial}.
+	 */
 	@JsonProperty
 	Map<Integer, List<ActivityMaterial>> activityMaterials;
 	@JsonProperty

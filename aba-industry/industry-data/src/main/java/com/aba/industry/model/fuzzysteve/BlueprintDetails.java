@@ -16,6 +16,9 @@ public class BlueprintDetails {
 	private String productName;
 	@JsonProperty
 	private Integer productQuantity;
+	/**
+	 * A map of {@link com.aba.industry.model.Activities#activityId} to times in seconds unmodified.
+	 */
 	@JsonProperty("times")
 	private Map<Integer, Long> timesInSeconds;
 	@JsonProperty

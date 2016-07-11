@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.aba.industry.fetch.FuzzySteveClient;
+import com.aba.industry.fetch.client.FuzzySteveClient;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 
