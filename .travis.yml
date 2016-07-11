@@ -1,6 +1,6 @@
 language: java
 
 script:
-  bundle exec eve-api-java/gradlew install
-  bundle exec eve-crest-java/gradlew install
-  bundle exec mvn install
+  - bundle exec eve-api-java/gradlew install
+  - bundle exec eve-crest-java/gradlew install
+  - bundle exec mvn install
