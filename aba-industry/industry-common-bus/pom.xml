@@ -12,8 +12,8 @@
 		<!-- Internal Dependencies -->
 		<dependency>
 			<groupId>com.abandapart</groupId>
-			<artifactId>aba-industry-data</artifactId>
-			<version>${project.version}</version>
+			<artifactId>industry-data</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zeromq</groupId>
