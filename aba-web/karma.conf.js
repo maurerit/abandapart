@@ -22,7 +22,8 @@ module.exports = function (config) {
       require("karma-mocha"),
       require("karma-mocha-reporter"),
       require("karma-sourcemap-loader"),
-      require("karma-webpack")
+      require("karma-webpack"),
+      require("karma-phantomjs-launcher")
     ],
 
     // preprocess matching files before serving them to the browser
