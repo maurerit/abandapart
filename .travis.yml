@@ -1,7 +1,7 @@
 language: java
 
 before_install:
-  - bundle exec chmod +x eve-api-java/gradlew
-  - bundle exec chmod +x eve-crest-java/gradlew
-  - bundle exec eve-api-java/gradlew install
-  - bundle exec eve-crest-java/gradlew install
+  - chmod +x eve-api-java/gradlew
+  - chmod +x eve-crest-java/gradlew
+  - eve-api-java/gradlew install
+  - eve-crest-java/gradlew install
