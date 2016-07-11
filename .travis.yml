@@ -7,4 +7,3 @@ before_install:
   - cd eve-crest-java && ./gradlew install && cd ..
 jdk:
   - oraclejdk8
-  - openjdk8

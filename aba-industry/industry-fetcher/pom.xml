@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.abandapart</groupId>
 			<artifactId>industry-data</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 </project>
