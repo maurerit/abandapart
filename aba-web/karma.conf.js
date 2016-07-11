@@ -89,7 +89,7 @@ module.exports = function (config) {
     browsers: ['PhantomJS'],
 
     // if true, Karma runs tests once and exits
-    singleRun: true
+    singleRun: true,
 
     phantomjsLauncher: {
       // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
