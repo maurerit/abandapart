@@ -65,7 +65,8 @@
   },
   "scripts": {
     "test": "karma start",
-    "build:dist": "npm run test && webpack -p --progress --colors --config webpack.dist.config.js"
+    "build": "webpack -p --progress --colors --config webpack.dist.config.js",
+    "build:dist": "npm run test && npm run build"
   },
   "keywords": [
     "angular",
