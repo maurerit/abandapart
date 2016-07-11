@@ -5,3 +5,6 @@ before_install:
   - chmod +x eve-crest-java/gradlew
   - cd eve-api-java && ./gradlew install && cd ..
   - cd eve-crest-java && ./gradlew install && cd ..
+jdk:
+  - oraclejdk8
+  - openjdk8
