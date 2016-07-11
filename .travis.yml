@@ -3,5 +3,5 @@ language: java
 before_install:
   - chmod +x eve-api-java/gradlew
   - chmod +x eve-crest-java/gradlew
-  - eve-api-java/gradlew install
-  - eve-crest-java/gradlew install
+  - cd eve-api-java && eve-api-java/gradlew install && cd ..
+  - cd eve-crest-java && eve-crest-java/gradlew install && cd ..
