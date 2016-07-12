@@ -16,4 +16,7 @@ public class InventionSkillConfiguration {
 	private Integer encryptionSkillLevel;
 	private Integer datacoreOneSkillLevel;
 	private Integer datacoreTwoSkillLevel;
+	private Double encryptionSkillLevelMultiplier;
+	private Double datacoreOneSkillLevelMultiplier;
+	private Double datacoreTwoSkillLevelMultiplier;
 }

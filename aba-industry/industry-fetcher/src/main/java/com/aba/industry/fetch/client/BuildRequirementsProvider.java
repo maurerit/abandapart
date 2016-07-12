@@ -8,5 +8,5 @@ import java.io.IOException;
  * @author maurerit
  */
 public interface BuildRequirementsProvider {
-    BlueprintData getBlueprintData ( Long typeId ) throws IOException
+    BlueprintData getBlueprintData ( Long typeId ) throws IOException;
 }
