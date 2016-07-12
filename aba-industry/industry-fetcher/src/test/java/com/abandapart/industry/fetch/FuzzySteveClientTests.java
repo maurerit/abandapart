@@ -7,13 +7,13 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.aba.industry.fetch.client.FuzzySteveClient;
+import com.aba.industry.fetch.client.FuzzySteveClientImpl;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 
 public class FuzzySteveClientTests {
 
-	private FuzzySteveClient client = new FuzzySteveClient();
+	private FuzzySteveClientImpl client = new FuzzySteveClientImpl();
 	
 	@Test
 	public void testGetSleipnirBlueprintDetails() throws IOException {

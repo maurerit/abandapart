@@ -1,6 +1,5 @@
 package com.aba.industry.model;
 
-import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
@@ -8,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Decryptor extends ActivityMaterial {
+public class Decryptor extends ActivityMaterialWithCost {
 	@JsonProperty
 	private Double multiplier;
 	@JsonProperty

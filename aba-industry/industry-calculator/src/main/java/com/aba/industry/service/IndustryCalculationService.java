@@ -24,11 +24,14 @@ public interface IndustryCalculationService {
 	 * current stock prices or download them from the web.  Can also dive as deep into the supply chain as is specified
 	 * by a dependent service provided by a {@link com.aba.industry.config.BuildOrBuyConfigurationService}
 	 * 
-	 * @param outputTypeId
-	 * @param industrySkills
-	 * @param inventionSkills
-	 * @param findCurrentPrices
-	 * @return
+	 * @param outputTypeId The final output type for which this build calculation is being performed
+	 * @param industrySkills The industry skill configuration to use for determining times and therefore salaries
+	 * @param inventionSkills The invention skills configuration to use for determining probability and total invention costs
+	 * @param findCurrentPrices Whether to reach out to the internet or used store material prices
+	 * @param meLevel The Material Efficiency level of the blue being used
+	 * @param useBuildOrBuyConfigurations Whether to traverse the entire build tree or ask a configuration service to find
+	 * what is and is not being build
+	 * @return A final 'report' representing all relevant data for this calculated build.
 	 */
 	BuildCalculationResult calculateBuildCosts ( Long outputTypeId,
 			IndustrySkillConfiguration industrySkills,

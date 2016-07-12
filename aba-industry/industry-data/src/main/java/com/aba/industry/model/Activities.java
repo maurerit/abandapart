@@ -1,13 +1,13 @@
 package com.aba.industry.model;
 
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * Static enumeration to hold all available industrial activities.
  * 
  * @author maurerit
  */
-@Data
+@Getter
 public enum Activities {
     INVENTION("Invention", 8),
     MANUFACTURING("Manufacturing", 1)
