@@ -20,6 +20,7 @@
     	<module>industry-common-bus</module>
     	<module>industry-data</module>
     	<module>industry-calculator</module>
+    	<module>industry-common</module>
     </modules>
     
     <dependencies>
