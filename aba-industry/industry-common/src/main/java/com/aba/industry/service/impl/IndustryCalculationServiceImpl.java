@@ -3,6 +3,7 @@ package com.aba.industry.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
@@ -37,8 +38,22 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 	
 	@Override
 	public BuildCalculationResult calculateBuildCosts(Long outputTypeId) {
-		// TODO Auto-generated method stub
-		return null;
+		IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
+		industrySkills.setAdvancedIndustrySkillLevel(5);
+		industrySkills.setAdvancedIndustrySkillLevelMultiplier(0.0);
+		industrySkills.setIndustrySkillLevel(5);
+		industrySkills.setIndustrySkillLevelMultiplier(0.0);
+		industrySkills.setPreference(ConfigurationType.PREFERED);
+		
+		InventionSkillConfiguration inventionSkills = new InventionSkillConfiguration();
+		inventionSkills.setDatacoreOneSkillLevel(3);
+		inventionSkills.setDatacoreOneSkillLevelMultiplier(0.0);
+		inventionSkills.setDatacoreTwoSkillLevel(3);
+		inventionSkills.setDatacoreTwoSkillLevelMultiplier(0.0);
+		inventionSkills.setEncryptionSkillLevel(4);
+		inventionSkills.setEncryptionSkillLevelMultiplier(0.0);
+		inventionSkills.setPreference(ConfigurationType.PREFERED);
+		return this.calculateBuildCosts(outputTypeId, industrySkills, inventionSkills, 10, true, false);
 	}
 	
 	@Override
