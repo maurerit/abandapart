@@ -5,16 +5,9 @@ import walletComponent from './wallet.component';
 import chartJs from 'chart.js';
 import angularCharts from 'angular-chart.js';
 
-import SalesGraph from 'components/wallet/salesgraph/salesgraph';
-import SalesAndExpenditures from 'components/wallet/salesandexpenditures/salesandexpenditures';
-import ExpendituresGraph from 'components/wallet/expendituresgraph/expendituresgraph';
-
 let walletModule = angular.module('wallet', [
   uiRouter,
   'chart.js',
-  SalesGraph.name,
-  SalesAndExpenditures.name,
-  ExpendituresGraph.name
 ])
 .config(/*@ngInject*/($stateProvider, $urlRouterProvider, ChartJsProvider) => {
   $urlRouterProvider.otherwise('/');

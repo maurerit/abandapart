@@ -4,12 +4,25 @@
 
 <div class="row">
 	<div class="col-sm-4">
-		<salesgraph></salesgraph>
+		<canvas class="chart chart-pie"
+				chart-data="salesPieData"
+				chart-labels="salesPieLabels">
+		</canvas>
 	</div>
 	<div class="col-sm-4">
-		<salesandexpenditures></salesandexpenditures>
+		<canvas class="chart chart-bar"
+				chart-data="barData"
+				chart-labels="barLabels"
+				chart-legend="false"
+				chart-click="onClick"
+				chart-hover="onHover"
+				chart-series="barSeries">
+		</canvas>
 	</div>
 	<div class="col-sm-4">
-		<expendituresgraph></expendituresgraph>
+		<canvas class="chart chart-pie"
+				chart-data="expensesPieData"
+				chart-labels="expensesPieLabels">
+		</canvas>
 	</div>
 </div>
