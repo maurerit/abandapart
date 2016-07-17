@@ -22,7 +22,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 	private BuildOrBuyConfigurationService buildOrBuyService;
 	
 	@Autowired
-	private OverheadConfigurationService overheadService;
+	private BuildRequirementsProvider buildReqProvider;
 	
 	@Autowired
 	private InventionCalculator inventionCalc;
@@ -31,10 +31,10 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 	private ManufacturingCalculator manufacturingCalc;
 	
 	@Autowired
-	private OverheadCalculator overheadCalculator;
+	private OverheadConfigurationService overheadService;
 	
 	@Autowired
-	private BuildRequirementsProvider buildReqProvider;
+	private OverheadCalculator overheadCalculator;
 	
 	@Override
 	public BuildCalculationResult calculateBuildCosts(Long outputTypeId) {

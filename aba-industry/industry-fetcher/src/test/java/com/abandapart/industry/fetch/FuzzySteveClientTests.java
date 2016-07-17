@@ -10,13 +10,14 @@ import org.junit.Test;
 import com.aba.industry.fetch.client.FuzzySteveClientImpl;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
+import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 
 public class FuzzySteveClientTests {
 
 	private FuzzySteveClientImpl client = new FuzzySteveClientImpl();
 	
 	@Test
-	public void testGetSleipnirBlueprintDetails() throws IOException {
+	public void testGetSleipnirBlueprintDetails ( ) throws IOException {
 		BlueprintData bpData = client.getBlueprintData(22444l);
 		
 		assertNotNull("Blueprint Details should not be null", bpData);
@@ -31,6 +32,16 @@ public class FuzzySteveClientTests {
 			assertNotNull("Decryptor name should not be null", material.getName());
 			assertNotNull("Decryptor typeId should not be null", material.getTypeId());
 		}
+	}
+	
+	@Test
+	public void testGetAtreenCostIndexes ( ) throws IOException {
+		SystemCostIndexes costIndexes = client.getSystemCostIndexes("Atreen");
+		
+		assertNotNull(costIndexes);
+		assertNotNull(costIndexes.getSolarSystemName());
+		assertNotNull(costIndexes.getSolarSystemId());
+		assertNotNull(costIndexes.getCostIndexes());
 	}
 
 }
