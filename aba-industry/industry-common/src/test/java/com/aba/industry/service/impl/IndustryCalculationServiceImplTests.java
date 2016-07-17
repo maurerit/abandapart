@@ -26,6 +26,9 @@ public class IndustryCalculationServiceImplTests {
 	private BuildOrBuyConfigurationService buildOrBuyService;
 	
 	@Mock
+	private BuildRequirementsProvider buildReqProvider;
+	
+	@Mock
 	private OverheadConfigurationService overheadService;
 	
 	@Mock
@@ -36,9 +39,6 @@ public class IndustryCalculationServiceImplTests {
 	
 	@Mock
 	private OverheadCalculator overheadCalculator;
-	
-	@Mock
-	private BuildRequirementsProvider buildReqProvider;
 	
 	@Test
 	public void testCalculateBuildCostsLong() {

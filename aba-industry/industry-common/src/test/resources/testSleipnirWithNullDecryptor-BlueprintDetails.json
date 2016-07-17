@@ -1,0 +1,320 @@
+{
+  "requestedid": 22444,
+  "blueprintSkills": {
+    "1": [
+      {
+        "typeid": 3380,
+        "name": "Industry",
+        "level": 5
+      },
+      {
+        "typeid": 3397,
+        "name": "Advanced Medium Ship Construction",
+        "level": 1
+      },
+      {
+        "typeid": 11445,
+        "name": "Minmatar Starship Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 11452,
+        "name": "Mechanical Engineering",
+        "level": 1
+      }
+    ],
+    "3": [
+      {
+        "typeid": 3403,
+        "name": "Research",
+        "level": 5
+      },
+      {
+        "typeid": 11445,
+        "name": "Minmatar Starship Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 11452,
+        "name": "Mechanical Engineering",
+        "level": 1
+      }
+    ],
+    "4": [
+      {
+        "typeid": 3409,
+        "name": "Metallurgy",
+        "level": 5
+      },
+      {
+        "typeid": 11445,
+        "name": "Minmatar Starship Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 11452,
+        "name": "Mechanical Engineering",
+        "level": 1
+      }
+    ],
+    "5": [
+      {
+        "typeid": 11445,
+        "name": "Minmatar Starship Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 11452,
+        "name": "Mechanical Engineering",
+        "level": 1
+      }
+    ],
+    "8": [
+      {
+        "typeid": 11445,
+        "name": "Minmatar Starship Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 11452,
+        "name": "Mechanical Engineering",
+        "level": 1
+      },
+      {
+        "typeid": 21791,
+        "name": "Minmatar Encryption Methods",
+        "level": 1
+      }
+    ]
+  },
+  "blueprintDetails": {
+    "maxProductionLimit": 1,
+    "productTypeID": 22444,
+    "productTypeName": "Sleipnir",
+    "productQuantity": 1,
+    "times": {
+      "1": 300000,
+      "3": 105000,
+      "4": 105000,
+      "5": 240000
+    },
+    "facilities": [
+      "Manufacturing",
+      "Advanced Medium Ship Assembly Array",
+      "Amarr Outpost Manufacturing",
+      "STATION 0.5+ Manufacturing",
+      "Amarr Outpost",
+      "Minmatar Outpost",
+      "Caldari Outpost",
+      "Gallente Outpost",
+      "Thera Manufacturing"
+    ],
+    "techLevel": 2,
+    "adjustedPrice": 175427478.21,
+    "precursorAdjustedPrice": 34958392.2,
+    "precursorTypeId": 24703,
+    "probability": 0.26
+  },
+  "activityMaterials": {
+    "4": [
+      {
+        "typeid": 9836,
+        "name": "Consumer Electronics",
+        "quantity": 30,
+        "maketype": -1
+      },
+      {
+        "typeid": 11461,
+        "name": "R.Db - Boundless Creations",
+        "quantity": 8,
+        "maketype": 11876
+      },
+      {
+        "typeid": 3814,
+        "name": "Reports",
+        "quantity": 48,
+        "maketype": -1
+      }
+    ],
+    "3": [
+      {
+        "typeid": 9836,
+        "name": "Consumer Electronics",
+        "quantity": 30,
+        "maketype": -1
+      },
+      {
+        "typeid": 11461,
+        "name": "R.Db - Boundless Creations",
+        "quantity": 8,
+        "maketype": 11876
+      },
+      {
+        "typeid": 3814,
+        "name": "Reports",
+        "quantity": 48,
+        "maketype": -1
+      }
+    ],
+    "1": [
+      {
+        "typeid": 11530,
+        "name": "Plasma Thruster",
+        "quantity": 120,
+        "maketype": 17324
+      },
+      {
+        "typeid": 11399,
+        "name": "Morphite",
+        "quantity": 300,
+        "maketype": -1
+      },
+      {
+        "typeid": 11542,
+        "name": "Fernite Carbide Composite Armor Plate",
+        "quantity": 11250,
+        "maketype": 17355
+      },
+      {
+        "typeid": 11536,
+        "name": "Ladar Sensor Cluster",
+        "quantity": 450,
+        "maketype": 17333
+      },
+      {
+        "typeid": 11538,
+        "name": "Nanomechanical Microprocessor",
+        "quantity": 1800,
+        "maketype": 17325
+      },
+      {
+        "typeid": 11555,
+        "name": "Deflection Shield Emitter",
+        "quantity": 570,
+        "maketype": 17346
+      },
+      {
+        "typeid": 3828,
+        "name": "Construction Blocks",
+        "quantity": 300,
+        "maketype": -1
+      },
+      {
+        "typeid": 11478,
+        "name": "R.A.M.- Starship Tech",
+        "quantity": 23,
+        "maketype": 11890
+      },
+      {
+        "typeid": 11548,
+        "name": "Nuclear Reactor Unit",
+        "quantity": 60,
+        "maketype": 17342
+      },
+      {
+        "typeid": 24702,
+        "name": "Hurricane",
+        "quantity": 1,
+        "maketype": 24703
+      },
+      {
+        "typeid": 11551,
+        "name": "Electrolytic Capacitor Unit",
+        "quantity": 975,
+        "maketype": 17347
+      }
+    ],
+    "5": [
+      {
+        "typeid": 3812,
+        "name": "Data Sheets",
+        "quantity": 200,
+        "maketype": -1
+      },
+      {
+        "typeid": 11461,
+        "name": "R.Db - Boundless Creations",
+        "quantity": 15,
+        "maketype": 11876
+      }
+    ],
+    "8": [
+      {
+        "typeid": 20424,
+        "name": "Datacore - Mechanical Engineering",
+        "quantity": 16
+      },
+      {
+        "typeid": 20172,
+        "name": "Datacore - Minmatar Starship Engineering",
+        "quantity": 16
+      }
+    ]
+  },
+  "decryptors": [
+    {
+      "name": "Accelerant Decryptor",
+      "typeid": 34201,
+      "multiplier": 1.2000000476837,
+      "me": 2,
+      "te": 10,
+      "runs": 1
+    },
+    {
+      "name": "Attainment Decryptor",
+      "typeid": 34202,
+      "multiplier": 1.7999999523163,
+      "me": -1,
+      "te": 4,
+      "runs": 4
+    },
+    {
+      "name": "Augmentation Decryptor",
+      "typeid": 34203,
+      "multiplier": 0.60000002384186,
+      "me": -2,
+      "te": 2,
+      "runs": 9
+    },
+    {
+      "name": "Parity Decryptor",
+      "typeid": 34204,
+      "multiplier": 1.5,
+      "me": 1,
+      "te": -2,
+      "runs": 3
+    },
+    {
+      "name": "Process Decryptor",
+      "typeid": 34205,
+      "multiplier": 1.1000000238419,
+      "me": 3,
+      "te": 6,
+      "runs": 0
+    },
+    {
+      "name": "Symmetry Decryptor",
+      "typeid": 34206,
+      "multiplier": 1,
+      "me": 1,
+      "te": 8,
+      "runs": 2
+    },
+    {
+      "name": "Optimized Attainment Decryptor",
+      "typeid": 34207,
+      "multiplier": 1.8999999761581,
+      "me": 1,
+      "te": -2,
+      "runs": 2
+    },
+    {
+      "name": "Optimized Augmentation Decryptor",
+      "typeid": 34208,
+      "multiplier": 0.89999997615814,
+      "me": 2,
+      "te": 0,
+      "runs": 7
+    }
+  ]
+}

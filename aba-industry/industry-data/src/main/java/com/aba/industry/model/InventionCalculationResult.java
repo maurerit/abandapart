@@ -12,7 +12,7 @@ public class InventionCalculationResult {
 	@JsonProperty
 	private InventionSkillConfiguration skillConfiguration;
 	@JsonProperty
-	private Double costPerRun = 0d;
+	private Double costPerInventionRun = 0d;
 	@JsonProperty
 	private Double installationFees;
 	@JsonProperty
@@ -23,6 +23,14 @@ public class InventionCalculationResult {
 	private Integer seconds;
 	@JsonProperty
 	private Long outputTypeId;
+	
+	@JsonProperty
+	private Integer resultingME;
+	@JsonProperty
+	private Integer resultingTE;
+	@JsonProperty
+	private Integer resultingRuns;
+	
 	/**
 	 * A list of {@link ActivityMaterialWithCost} excluding any {@link Decryptor} used in the process.
 	 */
@@ -33,14 +41,19 @@ public class InventionCalculationResult {
 	@JsonProperty
 	private List<Skill> requiredSkills;
 	
-	@JsonProperty
+	@JsonProperty("totalCost")
 	public Double getTotalCost ( ) {
 		Double result = 0d;
 		
-		result += costPerRun;
+		result += costPerInventionRun;
 		result += installationFees != null ? installationFees : 0d;
 		result += installationTax != null ? installationTax : 0d;
 		
 		return result;
+	}
+	
+	@JsonProperty("costPerBlueprintRun")
+	public Double getCostPerBlueprintRun ( ) {
+		return this.costPerInventionRun / this.resultingRuns;
 	}
 }
