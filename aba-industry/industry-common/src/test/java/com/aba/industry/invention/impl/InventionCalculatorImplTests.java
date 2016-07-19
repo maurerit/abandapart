@@ -44,30 +44,29 @@ public class InventionCalculatorImplTests {
 		
 		SystemCostIndexes costIndexes = mapper.readValue(costIndexesIS, SystemCostIndexes.class);
 		BlueprintData bpData = mapper.readValue(bpDetailsIS, BlueprintData.class);
-		BlueprintDetails bpDetails = bpData.getBlueprintDetails();
 		Decryptor decryptor = null;
-		List<ActivityMaterialWithCost> amWithCost = new ArrayList<>();
 		InventionSkillConfiguration skillConfiguration = new InventionSkillConfiguration();
 		
 		skillConfiguration.setDatacoreOneSkillLevel(3);
 		skillConfiguration.setDatacoreTwoSkillLevel(3);
 		skillConfiguration.setEncryptionSkillLevel(4);
 		
-		for ( ActivityMaterial am : bpData.getActivityMaterials().get(Activities.INVENTION.getActivityId()) ) {
-			ActivityMaterialWithCost newAmWithCost = new ActivityMaterialWithCost();
-			
+		for ( ActivityMaterialWithCost am : bpData.getActivityMaterials().get(Activities.INVENTION.getActivityId()) ) {
 			ItemCost ic = itemCosts.get(am.getTypeId().intValue());
 			
-			newAmWithCost.setCost(ic.getSell());
-			newAmWithCost.setTypeId(am.getTypeId());
-			
-			amWithCost.add(newAmWithCost);
+			am.setCost(ic.getSell());
 		}
 		
-		InventionCalculationResult result = calcImpl.calculateInventionCosts(costIndexes, bpDetails, decryptor, amWithCost, skillConfiguration);
+		for ( ActivityMaterialWithCost am : bpData.getActivityMaterials().get(Activities.MANUFACTURING.getActivityId()) ) {
+			ItemCost ic = itemCosts.get(am.getTypeId().intValue());
+			
+			am.setCost(ic.getAdjusted());
+		}
+		
+		InventionCalculationResult result = calcImpl.calculateInventionCosts(costIndexes, 0.0d, bpData, decryptor, skillConfiguration);
 		
 		Assert.assertNotNull("Result should not be null", result);
-		Assert.assertEquals(7598848.59, result.getTotalCost(), 0.01);
+		Assert.assertEquals(6808205.92, result.getCostPerSuccessfulInventionRun(), 0.01);
 	}
 
 }

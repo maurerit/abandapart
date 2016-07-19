@@ -3,6 +3,7 @@ package com.aba.industry.model.fuzzysteve;
 import java.util.List;
 import java.util.Map;
 
+import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.Skill;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,7 +25,7 @@ public class BlueprintData {
 	 * A map of {@link com.aba.industry.model.Activities#activityId} to {@link ActivityMaterial}.
 	 */
 	@JsonProperty
-	Map<Integer, List<ActivityMaterial>> activityMaterials;
+	Map<Integer, List<ActivityMaterialWithCost>> activityMaterials;
 	@JsonProperty
 	List<Decryptor> decryptors;
 }

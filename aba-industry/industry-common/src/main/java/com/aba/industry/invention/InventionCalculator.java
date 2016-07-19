@@ -1,12 +1,9 @@
 package com.aba.industry.invention;
 
-import java.util.List;
-
 import com.aba.data.domain.config.InventionSkillConfiguration;
-import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.InventionCalculationResult;
-import com.aba.industry.model.fuzzysteve.BlueprintDetails;
+import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 
 /**
@@ -19,8 +16,8 @@ import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 public interface InventionCalculator {
 	InventionCalculationResult calculateInventionCosts (
 			SystemCostIndexes costIndexes,
-			BlueprintDetails bpDetails,
+			Double taxRate,
+			BlueprintData bpData,
 			Decryptor decryptor,
-			List<ActivityMaterialWithCost> amWithCost,
 			InventionSkillConfiguration skillConfiguration );
 }
