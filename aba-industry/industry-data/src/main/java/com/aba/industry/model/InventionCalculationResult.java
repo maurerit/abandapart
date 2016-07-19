@@ -12,15 +12,19 @@ public class InventionCalculationResult {
 	@JsonProperty
 	private InventionSkillConfiguration skillConfiguration;
 	@JsonProperty
-	private Double costPerInventionRun = 0d;
+	private Double inventionRunCost;
+	@JsonProperty
+	private Double costPerSuccessfulInventionRun = 0d;
 	@JsonProperty
 	private Double installationFees;
 	@JsonProperty
 	private Double installationTax;
 	@JsonProperty
+	private Double blueprintCopyCost;
+	@JsonProperty
 	private Double probability;
 	@JsonProperty
-	private Integer seconds;
+	private Long seconds;
 	@JsonProperty
 	private Long outputTypeId;
 	
@@ -45,7 +49,7 @@ public class InventionCalculationResult {
 	public Double getTotalCost ( ) {
 		Double result = 0d;
 		
-		result += costPerInventionRun;
+		result += costPerSuccessfulInventionRun;
 		result += installationFees != null ? installationFees : 0d;
 		result += installationTax != null ? installationTax : 0d;
 		
@@ -54,6 +58,6 @@ public class InventionCalculationResult {
 	
 	@JsonProperty("costPerBlueprintRun")
 	public Double getCostPerBlueprintRun ( ) {
-		return this.costPerInventionRun / this.resultingRuns;
+		return this.costPerSuccessfulInventionRun / this.resultingRuns;
 	}
 }
