@@ -10,7 +10,7 @@ describe('Wallet', () => {
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
     makeController = () => {
-      return new WalletController();
+      return new WalletController({});
     };
   }));
 
