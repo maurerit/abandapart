@@ -12,7 +12,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.abaandapart</groupId>
+			<groupId>com.abandapart</groupId>
 			<artifactId>industry-common</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
