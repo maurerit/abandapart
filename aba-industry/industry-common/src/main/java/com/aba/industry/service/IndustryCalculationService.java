@@ -33,7 +33,8 @@ public interface IndustryCalculationService {
 	 * what is and is not being build
 	 * @return A final 'report' representing all relevant data for this calculated build.
 	 */
-	BuildCalculationResult calculateBuildCosts ( Long outputTypeId,
+	BuildCalculationResult calculateBuildCosts (
+			Long outputTypeId,
 			IndustrySkillConfiguration industrySkills,
 			InventionSkillConfiguration inventionSkills,
 			Integer meLevel,

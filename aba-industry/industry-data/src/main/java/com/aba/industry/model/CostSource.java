@@ -9,7 +9,11 @@ public enum CostSource {
      */
     WAREHOUSE,
     /**
-     * Prices from the live market (probably from CREST)
+     * Buy prices from the live market (probably from CREST)
      */
-    LIVE_MARKET
+    LIVE_MARKET_BUY,
+    /**
+     * Sell prices from the live market (probably from CREST)
+     */
+    LIVE_MARKET_SELL
 }

@@ -12,4 +12,5 @@ import lombok.ToString;
 public class ActivityMaterialWithCost extends ActivityMaterial {
 	private CostSource source;
 	private Double cost;
+	private Double adjustedCost;
 }

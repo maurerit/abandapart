@@ -57,8 +57,14 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 	}
 	
 	@Override
-	public BuildCalculationResult calculateBuildCosts(Long outputTypeId, IndustrySkillConfiguration industrySkills,
-			InventionSkillConfiguration inventionSkills, Integer meLevel, boolean findCurrentPrices, boolean useBuildOrBuyConfigurations) {
+	public BuildCalculationResult calculateBuildCosts(
+			Long outputTypeId,
+			IndustrySkillConfiguration industrySkills,
+			InventionSkillConfiguration inventionSkills,
+			Integer meLevel,
+			boolean findCurrentPrices,
+			boolean useBuildOrBuyConfigurations)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
