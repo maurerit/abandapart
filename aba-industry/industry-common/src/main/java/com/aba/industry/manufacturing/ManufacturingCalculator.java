@@ -2,23 +2,26 @@ package com.aba.industry.manufacturing;
 
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.model.fuzzysteve.BlueprintData;
+import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 
 public interface ManufacturingCalculator {
 	/**
 	 * Calculates the cost and materials required of the provided output with the provided skills at the provided me level.
 	 * 
-	 * @param outputTypeId
-	 * @param industrySkills
+	 * @param costIndexes
+	 * @param taxMultiplier
+	 * @param bpData
 	 * @param meLevel
-	 * @param findCurrentPrices
-	 * @param useBuildOrBuyConfigurations
+	 * @param teLevel
+	 * @param industrySkills
 	 * @return
-	 * @throws BuildCalculationFailureException
 	 */
 	BuildCalculationResult calculateBuildCost (
-			Long outputTypeId,
-			IndustrySkillConfiguration industrySkills,
+			SystemCostIndexes costIndexes,
+			Double taxMultiplier,
+			BlueprintData bpData,
 			Integer meLevel,
-			boolean findCurrentPrices,
-			boolean useBuildOrBuyConfigurations) throws BuildCalculationFailureException;
+			Integer teLevel,
+			IndustrySkillConfiguration industrySkills);
 }

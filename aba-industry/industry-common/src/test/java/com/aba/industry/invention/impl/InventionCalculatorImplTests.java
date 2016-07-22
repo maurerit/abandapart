@@ -2,9 +2,7 @@ package com.aba.industry.invention.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -16,9 +14,7 @@ import com.aba.industry.model.Activities;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.InventionCalculationResult;
-import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
-import com.aba.industry.model.fuzzysteve.BlueprintDetails;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -55,12 +51,14 @@ public class InventionCalculatorImplTests {
 			ItemCost ic = itemCosts.get(am.getTypeId().intValue());
 			
 			am.setCost(ic.getSell());
+			am.setAdjustedCost(ic.getAdjusted());
 		}
 		
 		for ( ActivityMaterialWithCost am : bpData.getActivityMaterials().get(Activities.MANUFACTURING.getActivityId()) ) {
 			ItemCost ic = itemCosts.get(am.getTypeId().intValue());
 			
-			am.setCost(ic.getAdjusted());
+			am.setCost(ic.getSell());
+			am.setAdjustedCost(ic.getAdjusted());
 		}
 		
 		InventionCalculationResult result = calcImpl.calculateInventionCosts(costIndexes, 0.0d, bpData, decryptor, skillConfiguration);

@@ -32,7 +32,7 @@ public class CrestTests {
     public void testGetAllMarketOrders ( ) {
         NumberFormat format = new DecimalFormat("###,###.##");
         final long start = System.currentTimeMillis();
-        final List<CrestMarketBulkOrder> bo = service.getAllOrders(10000002);
+        final List<CrestMarketBulkOrder> bo = service.getAllMarketOrders(10000002);
         final long end = System.currentTimeMillis();
         Assert.assertFalse(bo.isEmpty());
 

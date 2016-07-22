@@ -42,7 +42,7 @@ public class InventionCalculatorImpl implements InventionCalculator {
 		//Build up the cost of building the actual output, this will factor into determining the install cost of invention
 		Double adjustedManufacturingCost = 0d;
 		for ( ActivityMaterialWithCost prodAdjustedCost : productionMaterials ) {
-			adjustedManufacturingCost += prodAdjustedCost.getCost() * prodAdjustedCost.getQuantity();
+			adjustedManufacturingCost += prodAdjustedCost.getAdjustedCost() * prodAdjustedCost.getQuantity();
 		}
 		
 		Double inventionRunCost = 0d;
