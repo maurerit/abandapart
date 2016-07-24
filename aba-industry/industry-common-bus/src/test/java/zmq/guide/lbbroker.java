@@ -1,110 +1,28 @@
 /*
-    Copyright (c) 2007-2014 Contributors as noted in the AUTHORS file
-
-    This file is part of 0MQ.
-
-    0MQ is free software; you can redistribute it and/or modify it under
-    the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
-
-    0MQ is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ * Copyright 2016 maurerit
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
 
 package zmq.guide;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQ.Socket;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class lbbroker {
 
-    private static final int NBR_CLIENTS = 10;
-    private static final int NBR_WORKERS = 3;
+    private static final int NBR_CLIENTS      = 10;
+    private static final int NBR_WORKERS      = 3;
     private static final int MESSAGES_TO_SEND = 20000;
-
-    /**
-     * Basic request-reply client using REQ socket
-     */
-    private static class ClientTask extends Thread
-    {
-        public void run()
-        {
-        	Context context = ZMQ.context(1);
-        	
-            //  Prepare our context and sockets
-            Socket client  = context.socket(ZMQ.REQ);
-            ZHelper.setId (client);     //  Set a printable identity
-
-            client.connect("ipc://frontend.ipc");
-        	
-        	for ( int idx = 0; idx < MESSAGES_TO_SEND; idx++ ) {
-	            //  Send request, get reply
-	            client.send("HELLO");
-	            String reply = client.recvStr ();
-	            System.out.println("Client: " + reply);
-	            
-	            try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        	}
-        	
-        	client.close();
-            context.term();
-        }
-    }
-
-    /**
-     * While this example runs in a single process, that is just to make
-     * it easier to start and stop the example. Each thread has its own
-     * context and conceptually acts as a separate process.
-     * This is the worker task, using a REQ socket to do load-balancing.
-     */
-    private static class WorkerTask extends Thread
-    {
-        public void run()
-        {
-            Context context = ZMQ.context(1);
-            //  Prepare our context and sockets
-            Socket worker  = context.socket(ZMQ.REQ);
-            ZHelper.setId (worker);     //  Set a printable identity
-
-            worker.connect("ipc://backend.ipc");
-
-            //  Tell backend we're ready for work
-            worker.send("READY");
-
-            while(!Thread.currentThread ().isInterrupted ())
-            {
-                String address = worker.recvStr ();
-                String empty = worker.recvStr ();
-                assert (empty.length() == 0);
-
-                //  Get request, send reply
-                String request = worker.recvStr ();
-                System.out.println("Worker: " + request);
-
-                worker.sendMore (address);
-                worker.sendMore ("");
-                worker.send("OK");
-            }
-            worker.close ();
-            context.term ();
-        }
-    }
 
     /**
      * This is the main task. It starts the clients and workers, and then
@@ -113,19 +31,19 @@ public class lbbroker {
      * a response back to a client. The load-balancing data structure is
      * just a queue of next available workers.
      */
-    public static void main (String[] args) {
-        Context context = ZMQ.context(1);
+    public static void main ( String[] args ) {
+        Context context = ZMQ.context( 1 );
         //  Prepare our context and sockets
-        Socket frontend  = context.socket(ZMQ.ROUTER);
-        Socket backend  = context.socket(ZMQ.ROUTER);
-        frontend.bind("ipc://frontend.ipc");
-        backend.bind("ipc://backend.ipc");
+        Socket frontend = context.socket( ZMQ.ROUTER );
+        Socket backend = context.socket( ZMQ.ROUTER );
+        frontend.bind( "ipc://frontend.ipc" );
+        backend.bind( "ipc://backend.ipc" );
 
         int clientNbr;
-        for (clientNbr = 0; clientNbr < NBR_CLIENTS; clientNbr++)
+        for ( clientNbr = 0; clientNbr < NBR_CLIENTS; clientNbr++ )
             new ClientTask().start();
 
-        for (int workerNbr = 0; workerNbr < NBR_WORKERS; workerNbr++)
+        for ( int workerNbr = 0; workerNbr < NBR_WORKERS; workerNbr++ )
             new WorkerTask().start();
 
         //  Here is the main loop for the least-recently-used queue. It has two
@@ -142,72 +60,76 @@ public class lbbroker {
         Queue<String> workerQueue = new LinkedList<String>();
         int messageCount = 0;
 
-        while (!Thread.currentThread().isInterrupted()) {
+        while ( !Thread.currentThread()
+                       .isInterrupted() ) {
 
             //  Initialize poll set
-            Poller items = new Poller (2);
+            Poller items = new Poller( 2 );
 
             //  Always poll for worker activity on backend
-            items.register(backend, Poller.POLLIN);
+            items.register( backend, Poller.POLLIN );
 
             //  Poll front-end only if we have available workers
-            if(workerQueue.size() > 0)
-                items.register(frontend, Poller.POLLIN);
+            if ( workerQueue.size() > 0 ) {
+                items.register( frontend, Poller.POLLIN );
+            }
 
-            if (items.poll() < 0)
+            if ( items.poll() < 0 ) {
                 break;      //  Interrupted
+            }
 
             //  Handle worker activity on backend
-            if (items.pollin(0)) {
+            if ( items.pollin( 0 ) ) {
 
                 //  Queue worker address for LRU routing
-                workerQueue.add (backend.recvStr ());
+                workerQueue.add( backend.recvStr() );
 
                 //  Second frame is empty
-                String empty = backend.recvStr ();
-                assert (empty.length() == 0);
+                String empty = backend.recvStr();
+                assert ( empty.length() == 0 );
 
                 //  Third frame is READY or else a client reply address
-                String clientAddr = backend.recvStr ();
+                String clientAddr = backend.recvStr();
 
                 //  If client reply, send rest back to frontend
-                if (!clientAddr.equals("READY")) {
+                if ( !clientAddr.equals( "READY" ) ) {
 
-                    empty = backend.recvStr ();
-                    assert (empty.length() == 0);
+                    empty = backend.recvStr();
+                    assert ( empty.length() == 0 );
 
-                    String reply = backend.recvStr ();
-                    frontend.sendMore(clientAddr);
-                    frontend.sendMore("");
-                    frontend.send(reply);
+                    String reply = backend.recvStr();
+                    frontend.sendMore( clientAddr );
+                    frontend.sendMore( "" );
+                    frontend.send( reply );
 
-                    if (--clientNbr == 0)
+                    if ( --clientNbr == 0 ) {
                         break;
+                    }
                 }
 
             }
 
-            if (items.pollin(1)) {
+            if ( items.pollin( 1 ) ) {
                 //  Now get next client request, route to LRU worker
                 //  Client request is [address][empty][request]
-                String clientAddr = frontend.recvStr ();
+                String clientAddr = frontend.recvStr();
 
-                String empty = frontend.recvStr ();
-                assert (empty.length() == 0);
+                String empty = frontend.recvStr();
+                assert ( empty.length() == 0 );
 
-                String request = frontend.recvStr ();
+                String request = frontend.recvStr();
 
                 String workerAddr = workerQueue.poll();
 
-                backend.sendMore (workerAddr);
-                backend.sendMore ("");
-                backend.sendMore (clientAddr );
-                backend.sendMore ("");
-                backend.send (request);
+                backend.sendMore( workerAddr );
+                backend.sendMore( "" );
+                backend.sendMore( clientAddr );
+                backend.sendMore( "" );
+                backend.send( request );
                 messageCount++;
-                
+
                 if ( messageCount % 1000 == 1 ) {
-                	System.out.println("Broker passed: " + messageCount + " messages.");
+                    System.out.println( "Broker passed: " + messageCount + " messages." );
                 }
 
             }
@@ -217,6 +139,76 @@ public class lbbroker {
         backend.close();
         context.term();
 
+    }
+
+    /**
+     * Basic request-reply client using REQ socket
+     */
+    private static class ClientTask extends Thread {
+        public void run ( ) {
+            Context context = ZMQ.context( 1 );
+
+            //  Prepare our context and sockets
+            Socket client = context.socket( ZMQ.REQ );
+            ZHelper.setId( client );     //  Set a printable identity
+
+            client.connect( "ipc://frontend.ipc" );
+
+            for ( int idx = 0; idx < MESSAGES_TO_SEND; idx++ ) {
+                //  Send request, get reply
+                client.send( "HELLO" );
+                String reply = client.recvStr();
+                System.out.println( "Client: " + reply );
+
+                try {
+                    Thread.sleep( 500 );
+                }
+                catch ( InterruptedException e ) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            client.close();
+            context.term();
+        }
+    }
+
+    /**
+     * While this example runs in a single process, that is just to make
+     * it easier to start and stop the example. Each thread has its own
+     * context and conceptually acts as a separate process.
+     * This is the worker task, using a REQ socket to do load-balancing.
+     */
+    private static class WorkerTask extends Thread {
+        public void run ( ) {
+            Context context = ZMQ.context( 1 );
+            //  Prepare our context and sockets
+            Socket worker = context.socket( ZMQ.REQ );
+            ZHelper.setId( worker );     //  Set a printable identity
+
+            worker.connect( "ipc://backend.ipc" );
+
+            //  Tell backend we're ready for work
+            worker.send( "READY" );
+
+            while ( !Thread.currentThread()
+                           .isInterrupted() ) {
+                String address = worker.recvStr();
+                String empty = worker.recvStr();
+                assert ( empty.length() == 0 );
+
+                //  Get request, send reply
+                String request = worker.recvStr();
+                System.out.println( "Worker: " + request );
+
+                worker.sendMore( address );
+                worker.sendMore( "" );
+                worker.send( "OK" );
+            }
+            worker.close();
+            context.term();
+        }
     }
 
 }
