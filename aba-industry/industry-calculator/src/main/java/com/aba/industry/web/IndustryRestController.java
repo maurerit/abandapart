@@ -8,8 +8,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.eveonline.api.model;
+package com.aba.industry.web;
 
-public class DivisionWallet {
-    private Division division;
+import com.aba.industry.model.BuildCalculationResult;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Created by maurerit on 7/23/16.
+ */
+@RestController
+public class IndustryRestController {
+    @RequestMapping( path = "/calculateBuild", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+    public BuildCalculationResult calculateBuild ( ) {
+        return null;
+    }
 }
