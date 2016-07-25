@@ -8,21 +8,23 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.overhead.impl;
+package com.aba.industry.domain;
 
-import com.aba.industry.model.Activity;
-import com.aba.industry.model.FreightDetails;
-import com.aba.industry.overhead.OverheadCalculator;
+import lombok.Data;
 
-public class OverheadCalculatorImpl implements OverheadCalculator {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-    @Override
-    public FreightDetails getFreightDetails ( String fromSystemName, String toSystemName ) {
-        return null;
-    }
-
-    @Override
-    public Double getSalary ( Activity activity, Long seconds ) {
-        return null;
-    }
+/**
+ * Created by maurerit on 7/24/16.
+ */
+@Entity
+@MappedSuperclass
+@Data
+public class WarehouseItem {
+    @Id
+    private Integer typeId;
+    private Integer quantity;
+    private Double  cost;
 }

@@ -15,7 +15,7 @@ import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.ItemCost;
 import com.aba.industry.invention.impl.InventionCalculatorImplTests;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activities;
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
@@ -62,7 +62,7 @@ public class ManufacturingCalculatorImplTests {
         industrySkills.setPreference( ConfigurationType.EXCEPTIONAL );
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activities.MANUFACTURING.getActivityId() ) ) {
+                                                  .get( Activity.MANUFACTURING.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 

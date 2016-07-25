@@ -10,12 +10,15 @@
 
 package com.aba.industry.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties( allowGetters = true, value = "totalCost" )
 public abstract class CalculationResult {
     /**
      * A list of {@link ActivityMaterialWithCost} excluding any {@link Decryptor} used in the process.
@@ -33,7 +36,7 @@ public abstract class CalculationResult {
     @JsonProperty
     private Double salaryCost = 0d;
 
-    @JsonProperty( "totalCost" )
+    @JsonProperty
     public Double getTotalCost ( ) {
         Double result = 0d;
 
@@ -48,4 +51,7 @@ public abstract class CalculationResult {
     }
 
     protected abstract Double getTotalCostInternal ( );
+
+    @JsonIgnore
+    public void setTotalCost ( ) { }
 }

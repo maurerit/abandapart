@@ -12,7 +12,7 @@ package com.aba.industry.invention.impl;
 
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.invention.InventionCalculator;
-import com.aba.industry.model.Activities;
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.InventionCalculationResult;
@@ -38,9 +38,9 @@ public class InventionCalculatorImpl implements InventionCalculator {
     {
         BlueprintDetails bpDetails = bpData.getBlueprintDetails();
         List<ActivityMaterialWithCost> inventionMaterials = bpData.getActivityMaterials()
-                                                                  .get( Activities.INVENTION.getActivityId() );
+                                                                  .get( Activity.INVENTION.getActivityId() );
         List<ActivityMaterialWithCost> productionMaterials = bpData.getActivityMaterials()
-                                                                   .get( Activities.MANUFACTURING.getActivityId() );
+                                                                   .get( Activity.MANUFACTURING.getActivityId() );
 
         InventionCalculationResult result = fillInResultDetails( bpData, decryptor, inventionMaterials,
                                                                  skillConfiguration,
@@ -64,12 +64,12 @@ public class InventionCalculatorImpl implements InventionCalculator {
 
         //The run cost for the manufacturing portion of this invention job
         adjustedManufacturingCost *= 0.02 * costIndexes.getCostIndexes()
-                                                       .get( Activities.INVENTION.getActivityId() ) * taxMultiplier;
+                                                       .get( Activity.INVENTION.getActivityId() ) * taxMultiplier;
 
         Double blueprintCopyCost = bpData.getBlueprintDetails()
                                          .getPrecursorAdjustedPrice() *
                 costIndexes.getCostIndexes()
-                           .get( Activities.INVENTION.getActivityId() ) *
+                           .get( Activity.INVENTION.getActivityId() ) *
                 .02;
 
         result.setInstallationFees( adjustedManufacturingCost );
@@ -104,11 +104,11 @@ public class InventionCalculatorImpl implements InventionCalculator {
         result.setDecryptor( decryptor );
         result.setMaterialsWithCost( amWithCost );
         result.setRequiredSkills( bpData.getBlueprintSkills()
-                                        .get( Activities.INVENTION.getActivityId() ) );
+                                        .get( Activity.INVENTION.getActivityId() ) );
         result.setSkillConfiguration( skillConfiguration );
         result.setSeconds( bpData.getBlueprintDetails()
                                  .getTimesInSeconds()
-                                 .get( Activities.INVENTION.getActivityId() ) );
+                                 .get( Activity.INVENTION.getActivityId() ) );
 
         if ( decryptor == null ) {
             result.setResultingME( 2 );

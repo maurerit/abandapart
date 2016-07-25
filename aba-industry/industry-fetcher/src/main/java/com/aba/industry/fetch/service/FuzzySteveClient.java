@@ -8,21 +8,18 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.overhead.impl;
+package com.aba.industry.fetch.service;
 
-import com.aba.industry.model.Activity;
-import com.aba.industry.model.FreightDetails;
-import com.aba.industry.overhead.OverheadCalculator;
+import com.aba.industry.model.fuzzysteve.BlueprintData;
+import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public class OverheadCalculatorImpl implements OverheadCalculator {
+public interface FuzzySteveClient {
+    @GET( "/blueprint/api/blueprint.php" )
+    Call<BlueprintData> getBlueprintData ( @Query( "typeid" ) Long typeId );
 
-    @Override
-    public FreightDetails getFreightDetails ( String fromSystemName, String toSystemName ) {
-        return null;
-    }
-
-    @Override
-    public Double getSalary ( Activity activity, Long seconds ) {
-        return null;
-    }
+    @GET( "/blueprint/api/costIndexes.php" )
+    Call<SystemCostIndexes> getSystemCostIndexes ( @Query( "solarsystem" ) String solarSystem );
 }

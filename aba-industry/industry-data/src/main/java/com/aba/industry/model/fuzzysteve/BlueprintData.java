@@ -10,6 +10,7 @@
 
 package com.aba.industry.model.fuzzysteve;
 
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.Skill;
@@ -24,14 +25,14 @@ public class BlueprintData {
     @JsonProperty( "requestedid" )
     long                                         requestedId;
     /**
-     * A map of {@link com.aba.industry.model.Activities#activityId} to a list of the {@link Skill} requirements.
+     * A map of {@link Activity#activityId} to a list of the {@link Skill} requirements.
      */
     @JsonProperty
     Map<Integer, List<Skill>>                    blueprintSkills;
     @JsonProperty
     BlueprintDetails                             blueprintDetails;
     /**
-     * A map of {@link com.aba.industry.model.Activities#activityId} to {@link ActivityMaterial}.
+     * A map of {@link Activity#activityId} to {@link ActivityMaterial}.
      */
     @JsonProperty
     Map<Integer, List<ActivityMaterialWithCost>> activityMaterials;

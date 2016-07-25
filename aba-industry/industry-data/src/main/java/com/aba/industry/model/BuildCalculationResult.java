@@ -14,11 +14,15 @@ import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.devfleet.crest.model.CrestMarketOrder;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @EqualsAndHashCode( callSuper = true )
+@ToString( callSuper = true )
 public class BuildCalculationResult extends CalculationResult {
     /**
      * The {@link IndustrySkillConfiguration} used to calculate this result.
@@ -29,13 +33,17 @@ public class BuildCalculationResult extends CalculationResult {
     @JsonProperty
     private Double buildCost = 0d;
     @JsonProperty
-    private FreightDetails               toBuildLocationFreight;
+    private Map<Integer, CrestMarketOrder> lowestSellOrders;
     @JsonProperty
-    private FreightDetails               fromBuildLocationFreight;
+    private Map<Integer, CrestMarketOrder> highestSellOrders;
     @JsonProperty
-    private InventionCalculationResult   inventionResult;
+    private FreightDetails                 toBuildLocationFreight;
     @JsonProperty
-    private List<BuildCalculationResult> childBuilds;
+    private FreightDetails                 fromBuildLocationFreight;
+    @JsonProperty
+    private InventionCalculationResult     inventionResult;
+    @JsonProperty
+    private List<BuildCalculationResult>   childBuilds;
 
     protected Double getTotalCostInternal ( ) {
         Double result = 0d;

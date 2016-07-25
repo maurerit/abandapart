@@ -8,21 +8,22 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.overhead.impl;
+package com.aba;
 
-import com.aba.industry.model.Activity;
-import com.aba.industry.model.FreightDetails;
-import com.aba.industry.overhead.OverheadCalculator;
-
-public class OverheadCalculatorImpl implements OverheadCalculator {
-
-    @Override
-    public FreightDetails getFreightDetails ( String fromSystemName, String toSystemName ) {
-        return null;
+/**
+ * Created by maurerit on 7/24/16.
+ */
+public class ApplicationException extends RuntimeException {
+    public ApplicationException ( String message, Throwable cause ) {
+        super( message, cause );
     }
 
-    @Override
-    public Double getSalary ( Activity activity, Long seconds ) {
-        return null;
+    public ApplicationException ( String message ) {
+
+        super( message );
+    }
+
+    public ApplicationException ( Throwable cause ) {
+        super( cause );
     }
 }

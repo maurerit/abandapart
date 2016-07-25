@@ -12,7 +12,7 @@ package com.aba.industry.invention.impl;
 
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.ItemCost;
-import com.aba.industry.model.Activities;
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.InventionCalculationResult;
@@ -60,7 +60,7 @@ public class InventionCalculatorImplTests {
         skillConfiguration.setEncryptionSkillLevel( 4 );
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activities.INVENTION.getActivityId() ) ) {
+                                                  .get( Activity.INVENTION.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 
@@ -69,7 +69,7 @@ public class InventionCalculatorImplTests {
         }
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activities.MANUFACTURING.getActivityId() ) ) {
+                                                  .get( Activity.MANUFACTURING.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 

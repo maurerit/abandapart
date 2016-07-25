@@ -10,6 +10,18 @@
 
 package com.aba.industry.overhead;
 
-public interface OverheadCalculator {
+import com.aba.industry.model.Activity;
+import com.aba.industry.model.FreightDetails;
 
+public interface OverheadCalculator {
+    FreightDetails getFreightDetails ( String fromSystemName, String toSystemName );
+
+    /**
+     * Convenience method for {@link com.aba.data.domain.config.ConfigurationType#PREFERED} of the {@link Activity}
+     *
+     * @param activity The activity being performed which needs salary calculated
+     * @param seconds  The number of seconds it takes to perform the activity
+     * @return A double representing the amount in isk to paid to the individual performing the task
+     */
+    Double getSalary ( Activity activity, Long seconds );
 }

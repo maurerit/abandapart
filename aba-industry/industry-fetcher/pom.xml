@@ -34,5 +34,10 @@
             <artifactId>industry-data</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>aba-exceptions</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>
