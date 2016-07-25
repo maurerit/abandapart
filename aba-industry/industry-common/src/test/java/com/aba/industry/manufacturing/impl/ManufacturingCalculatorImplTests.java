@@ -72,7 +72,7 @@ public class ManufacturingCalculatorImplTests {
 
         BuildCalculationResult result = calc.calculateBuildCost( costIndexes, 1d, bpData, 2, 4, industrySkills );
 
-        Assert.assertEquals( 312429715.96, result.getBuildCost(), 0.01 );
+        Assert.assertEquals( 312429715.96, result.getMaterialCost(), 0.01 );
         Assert.assertEquals( 20036519.59, result.getInstallationFees(), 0.01 );
     }
 

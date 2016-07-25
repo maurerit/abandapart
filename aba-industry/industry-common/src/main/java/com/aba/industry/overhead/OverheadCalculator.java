@@ -14,7 +14,7 @@ import com.aba.industry.model.Activity;
 import com.aba.industry.model.FreightDetails;
 
 public interface OverheadCalculator {
-    FreightDetails getFreightDetails ( String fromSystemName, String toSystemName );
+    FreightDetails getFreightDetails ( String fromSystemName, String toSystemName, Double collateral );
 
     /**
      * Convenience method for {@link com.aba.data.domain.config.ConfigurationType#PREFERED} of the {@link Activity}

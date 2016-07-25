@@ -31,7 +31,7 @@ public class BuildCalculationResult extends CalculationResult {
     private IndustrySkillConfiguration skillConfiguration;
 
     @JsonProperty
-    private Double buildCost = 0d;
+    private Double materialCost = 0d;
     @JsonProperty
     private Map<Integer, CrestMarketOrder> lowestSellOrders;
     @JsonProperty
@@ -48,7 +48,7 @@ public class BuildCalculationResult extends CalculationResult {
     protected Double getTotalCostInternal ( ) {
         Double result = 0d;
 
-        result += buildCost;
+        result += materialCost;
         result += inventionResult != null ? inventionResult.getTotalCost() : 0d;
         result += toBuildLocationFreight != null ? toBuildLocationFreight.getCharge() : 0d;
         result += fromBuildLocationFreight != null ? fromBuildLocationFreight.getCharge() : 0d;

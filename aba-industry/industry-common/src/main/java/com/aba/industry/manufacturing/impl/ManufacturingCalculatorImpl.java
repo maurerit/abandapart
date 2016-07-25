@@ -50,7 +50,7 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
     	 */
 
         List<ActivityMaterialWithCost> materialsReduced = new ArrayList<>();
-        Double buildCost = 0d;
+        Double materialCost = 0d;
         Double runCost = 0d;
         for ( ActivityMaterialWithCost material : bpData.getActivityMaterials()
                                                         .get( Activity.MANUFACTURING.getActivityId() ) ) {
@@ -66,10 +66,10 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
 
             materialsReduced.add( materialReduced );
 
-            buildCost += materialReduced.getCost() * materialReduced.getQuantity();
+            materialCost += materialReduced.getCost() * materialReduced.getQuantity();
             runCost += materialReduced.getAdjustedCost() == null ? 0d : materialReduced.getAdjustedCost() * material.getQuantity();
         }
-        result.setBuildCost( buildCost );
+        result.setMaterialCost( materialCost );
         result.setMaterialsWithCost( materialsReduced );
         runCost = ( runCost * costIndexes.getCostIndexes()
                                          .get( Activity.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
