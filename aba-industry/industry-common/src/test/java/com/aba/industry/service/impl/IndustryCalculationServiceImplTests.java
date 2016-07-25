@@ -19,10 +19,7 @@ import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
 import com.aba.industry.invention.InventionCalculator;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activity;
-import com.aba.industry.model.ActivityMaterialWithCost;
-import com.aba.industry.model.BuildCalculationResult;
-import com.aba.industry.model.InventionCalculationResult;
+import com.aba.industry.model.*;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
@@ -67,6 +64,7 @@ public class IndustryCalculationServiceImplTests {
     private InventionSkillConfiguration inventionSkills;
     private InventionCalculationResult  inventionCalculationResult;
     private BuildCalculationResult      buildCalculationResult;
+    private FreightDetails freightDetails;
     @InjectMocks
     private IndustryCalculationService service = new IndustryCalculationServiceImpl();
 
@@ -122,6 +120,11 @@ public class IndustryCalculationServiceImplTests {
 
         inventionCalculationResult = new InventionCalculationResult();
         inventionCalculationResult.setSeconds( 2000l );
+
+        freightDetails = new FreightDetails();
+
+        freightDetails.setCharge(13000000d);
+        freightDetails.setJumps(15);
     }
 
     @Test
@@ -143,6 +146,7 @@ public class IndustryCalculationServiceImplTests {
         Mockito.when( overheadCalculator.getSalary( Activity.MANUFACTURING, buildCalculationResult.getSeconds() ) )
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
+        Mockito.when(overheadCalculator.getFreightDetails("Jita", "Atreen", 334469887.51))
         Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 0.0d, bpData, 2, 4, industrySkills ) )
                .thenReturn( buildCalculationResult );
 
@@ -160,7 +164,6 @@ public class IndustryCalculationServiceImplTests {
                                    .getSalaryCost(), 0.01 );
         Assert.assertNotNull( buildCalculationResult.getFromBuildLocationFreight() );
         Assert.assertNotNull( buildCalculationResult.getToBuildLocationFreight() );
-
     }
 
 }
