@@ -18,14 +18,14 @@ import lombok.Getter;
  * @author maurerit
  */
 @Getter
-public enum Activities {
+public enum Activity {
     INVENTION( "Invention", 8 ),
     MANUFACTURING( "Manufacturing", 1 );
 
     private final String  activityName;
     private final Integer activityId;
 
-    Activities ( String activityName, Integer activityId ) {
+    Activity ( String activityName, Integer activityId ) {
         this.activityName = activityName;
         this.activityId = activityId;
     }

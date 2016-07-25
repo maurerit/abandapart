@@ -12,7 +12,7 @@ package com.aba.industry.manufacturing.impl;
 
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activities;
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
@@ -53,7 +53,7 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
         Double buildCost = 0d;
         Double runCost = 0d;
         for ( ActivityMaterialWithCost material : bpData.getActivityMaterials()
-                                                        .get( Activities.MANUFACTURING.getActivityId() ) ) {
+                                                        .get( Activity.MANUFACTURING.getActivityId() ) ) {
             ActivityMaterialWithCost materialReduced = new ActivityMaterialWithCost();
 
             materialReduced.setBlueprintTypeId( material.getBlueprintTypeId() );
@@ -72,13 +72,21 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
         result.setBuildCost( buildCost );
         result.setMaterialsWithCost( materialsReduced );
         runCost = ( runCost * costIndexes.getCostIndexes()
-                                         .get( Activities.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
+                                         .get( Activity.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
 
-        //Once the loop is done
-        //$('#installCost').number((runCost*indexData.costIndexes["1"])*taxmultiplier*(1+(salary/100)),2);
+        //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)/100))*facilityte[facility]*runs*dcmultiplier;
+        Long buildTime = Math.round( bpData.getBlueprintDetails()
+                                           .getTimesInSeconds()
+                                           .get( Activity.MANUFACTURING.getActivityId() ) *
+                                             ( 1 - ( teLevel.doubleValue() / 100d ) ) *
+                                             ( 1 - ( ( industrySkills.getIndustrySkillLevel()
+                                                                     .doubleValue() * 4 ) / 100d ) ) *
+                                             ( 1 - ( ( industrySkills.getAdvancedIndustrySkillLevel()
+                                                                     .doubleValue() * 3d ) / 100d ) ) );
 
         result.setInstallationFees( runCost );
         result.setInstallationTax( runCost * .1d );
+        result.setSeconds( buildTime );
 
         return result;
     }

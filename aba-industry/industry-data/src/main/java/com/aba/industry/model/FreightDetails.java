@@ -25,6 +25,8 @@ public class FreightDetails {
     @JsonProperty
     private String               endStationName;
     @JsonProperty
+    private Integer              jumps;
+    @JsonProperty
     private Double               charge;
     @JsonProperty
     private FreightConfiguration freightConfigUsed;

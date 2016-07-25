@@ -10,6 +10,7 @@
 
 package com.aba.industry.model.fuzzysteve;
 
+import com.aba.industry.model.Activity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -26,7 +27,7 @@ public class BlueprintDetails {
     @JsonProperty
     private Integer            productQuantity;
     /**
-     * A map of {@link com.aba.industry.model.Activities#activityId} to times in seconds unmodified.
+     * A map of {@link Activity#activityId} to times in seconds unmodified.
      */
     @JsonProperty( "times" )
     private Map<Integer, Long> timesInSeconds;

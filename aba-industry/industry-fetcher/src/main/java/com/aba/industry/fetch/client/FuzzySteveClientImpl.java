@@ -10,7 +10,7 @@
 
 package com.aba.industry.fetch.client;
 
-import com.aba.industry.fetch.service.FuzzySteveService;
+import com.aba.industry.fetch.service.FuzzySteveClient;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import okhttp3.OkHttpClient;
@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class FuzzySteveClientImpl implements BuildRequirementsProvider, CostIndexProvider {
     private static final String fuzzysDomain = "www.fuzzwork.co.uk";
-    private FuzzySteveService client;
+    private FuzzySteveClient client;
 
     public FuzzySteveClientImpl ( ) {
         OkHttpClient.Builder bob = new OkHttpClient.Builder();
@@ -30,7 +30,7 @@ public class FuzzySteveClientImpl implements BuildRequirementsProvider, CostInde
                 .addConverterFactory( JacksonConverterFactory.create() )
                 .client( bob.build() )
                 .build()
-                .create( FuzzySteveService.class );
+                .create( FuzzySteveClient.class );
     }
 
     public BlueprintData getBlueprintData ( Long typeId ) throws IOException {
