@@ -8,13 +8,23 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.eveonline.api.repo;
+package com.aba.industry.config.impl;
 
+import com.aba.data.domain.config.FreightConfiguration;
+import com.aba.data.domain.config.SalaryConfiguration;
+import com.aba.industry.config.OverheadConfigurationService;
 
-import com.eveonline.api.domain.ContractItems;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+/**
+ * Created by maurerit on 7/26/2016.
+ */
+public class NullOverheadConfigurationServiceImpl implements OverheadConfigurationService {
+    @Override
+    public SalaryConfiguration getSalaryConfiguration() {
+        return null;
+    }
 
-@Repository
-public interface ContractItemsRepository extends JpaRepository<ContractItems, Long> {
+    @Override
+    public FreightConfiguration getFreightConfiguration() {
+        return null;
+    }
 }

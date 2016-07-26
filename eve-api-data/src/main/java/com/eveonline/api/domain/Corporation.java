@@ -10,57 +10,20 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table( name = "apicorps" )
+@Data
 public class Corporation {
+    @Id
     private long   corporationId;
     private String corporationName;
     private int    characterId;
     private String characterName;
     private String keyId;
-
-    @Id
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationID ) {
-        this.corporationId = corporationID;
-    }
-
-    public String getCorporationName ( ) {
-        return corporationName;
-    }
-
-    public void setCorporationName ( String corporationName ) {
-        this.corporationName = corporationName;
-    }
-
-    public int getCharacterId ( ) {
-        return characterId;
-    }
-
-    public void setCharacterId ( int characterId ) {
-        this.characterId = characterId;
-    }
-
-    public String getCharacterName ( ) {
-        return characterName;
-    }
-
-    public void setCharacterName ( String characterName ) {
-        this.characterName = characterName;
-    }
-
-    public String getKeyId ( ) {
-        return keyId;
-    }
-
-    public void setKeyId ( String keyId ) {
-        this.keyId = keyId;
-    }
 }

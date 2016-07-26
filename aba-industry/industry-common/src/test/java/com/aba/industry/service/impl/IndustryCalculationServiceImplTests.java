@@ -179,9 +179,10 @@ public class IndustryCalculationServiceImplTests {
                .thenReturn( 21l );
         //</editor-fold>
         //<editor-fold desc="Market Fetcher mocks">
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 22444 ) )
+        //TODO: Fill this in with a valid location
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 0 , 22444) )
                .thenReturn( 345000000d );
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 22444 ) )
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 0 , 22444) )
                .thenReturn( 355000000d );
         //</editor-fold>
 

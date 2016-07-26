@@ -10,6 +10,8 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,7 +20,9 @@ import java.util.Date;
 
 @Entity
 @Table( name = "apicontracts" )
+@Data
 public class Contracts {
+    @Id
     private long       contractId;
     private long       issuerId;
     private long       issuerCorpId;
@@ -42,189 +46,4 @@ public class Contracts {
     private BigDecimal buyout;
     private BigDecimal volume;
     private long       corporationId;
-
-    @Id
-    public long getContractId ( ) {
-        return contractId;
-    }
-
-    public void setContractId ( long contractId ) {
-        this.contractId = contractId;
-    }
-
-    public long getIssuerId ( ) {
-        return issuerId;
-    }
-
-    public void setIssuerId ( long issuerId ) {
-        this.issuerId = issuerId;
-    }
-
-    public long getIssuerCorpId ( ) {
-        return issuerCorpId;
-    }
-
-    public void setIssuerCorpId ( long issuerCorpId ) {
-        this.issuerCorpId = issuerCorpId;
-    }
-
-    public long getAssigneeId ( ) {
-        return assigneeId;
-    }
-
-    public void setAssigneeId ( long assigneeId ) {
-        this.assigneeId = assigneeId;
-    }
-
-    public long getAcceptorId ( ) {
-        return acceptorId;
-    }
-
-    public void setAcceptorId ( long acceptorId ) {
-        this.acceptorId = acceptorId;
-    }
-
-    public long getStartStationId ( ) {
-        return startStationId;
-    }
-
-    public void setStartStationId ( long startStationId ) {
-        this.startStationId = startStationId;
-    }
-
-    public long getEndStationId ( ) {
-        return endStationId;
-    }
-
-    public void setEndStationId ( long endStationId ) {
-        this.endStationId = endStationId;
-    }
-
-    public String getType ( ) {
-        return type;
-    }
-
-    public void setType ( String type ) {
-        this.type = type;
-    }
-
-    public String getStatus ( ) {
-        return status;
-    }
-
-    public void setStatus ( String status ) {
-        this.status = status;
-    }
-
-    public String getTitle ( ) {
-        return title;
-    }
-
-    public void setTitle ( String title ) {
-        this.title = title;
-    }
-
-    public int getForCorp ( ) {
-        return forCorp;
-    }
-
-    public void setForCorp ( int forCorp ) {
-        this.forCorp = forCorp;
-    }
-
-    public String getAvailability ( ) {
-        return availability;
-    }
-
-    public void setAvailability ( String availability ) {
-        this.availability = availability;
-    }
-
-    public Date getDateIssued ( ) {
-        return dateIssued;
-    }
-
-    public void setDateIssued ( Date dateIssued ) {
-        this.dateIssued = dateIssued;
-    }
-
-    public Date getDateExpired ( ) {
-        return dateExpired;
-    }
-
-    public void setDateExpired ( Date dateExpired ) {
-        this.dateExpired = dateExpired;
-    }
-
-    public Date getDateAccepted ( ) {
-        return dateAccepted;
-    }
-
-    public void setDateAccepted ( Date dateAccepted ) {
-        this.dateAccepted = dateAccepted;
-    }
-
-    public int getNumDays ( ) {
-        return numDays;
-    }
-
-    public void setNumDays ( int numDays ) {
-        this.numDays = numDays;
-    }
-
-    public Date getDateCompleted ( ) {
-        return dateCompleted;
-    }
-
-    public void setDateCompleted ( Date dateCompleted ) {
-        this.dateCompleted = dateCompleted;
-    }
-
-    public BigDecimal getPrice ( ) {
-        return price;
-    }
-
-    public void setPrice ( BigDecimal price ) {
-        this.price = price;
-    }
-
-    public BigDecimal getReward ( ) {
-        return reward;
-    }
-
-    public void setReward ( BigDecimal reward ) {
-        this.reward = reward;
-    }
-
-    public BigDecimal getCollateral ( ) {
-        return collateral;
-    }
-
-    public void setCollateral ( BigDecimal collateral ) {
-        this.collateral = collateral;
-    }
-
-    public BigDecimal getBuyout ( ) {
-        return buyout;
-    }
-
-    public void setBuyout ( BigDecimal buyout ) {
-        this.buyout = buyout;
-    }
-
-    public BigDecimal getVolume ( ) {
-        return volume;
-    }
-
-    public void setVolume ( BigDecimal volume ) {
-        this.volume = volume;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
 }

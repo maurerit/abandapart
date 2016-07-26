@@ -10,13 +10,17 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table( name = "apiassets" )
+@Data
 public class Asset {
+    @Id
     private long itemId;
     private long parentItemId;
     private long locationId;
@@ -26,77 +30,4 @@ public class Asset {
     private int  singleton;
     private int  rawQuantity;
     private long corporationId;
-
-    @Id
-    public long getItemId ( ) {
-        return itemId;
-    }
-
-    public void setItemId ( long itemId ) {
-        this.itemId = itemId;
-    }
-
-    public long getParentItemId ( ) {
-        return parentItemId;
-    }
-
-    public void setParentItemId ( long parentItemId ) {
-        this.parentItemId = parentItemId;
-    }
-
-    public long getLocationId ( ) {
-        return locationId;
-    }
-
-    public void setLocationId ( long locationId ) {
-        this.locationId = locationId;
-    }
-
-    public int getTypeId ( ) {
-        return typeId;
-    }
-
-    public void setTypeId ( int typeId ) {
-        this.typeId = typeId;
-    }
-
-    public int getQuantity ( ) {
-        return quantity;
-    }
-
-    public void setQuantity ( int quantity ) {
-        this.quantity = quantity;
-    }
-
-    public int getFlag ( ) {
-        return flag;
-    }
-
-    public void setFlag ( int flag ) {
-        this.flag = flag;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
-
-    public int getSingleton ( ) {
-        return singleton;
-    }
-
-    public void setSingleton ( int singleton ) {
-        this.singleton = singleton;
-    }
-
-    public int getRawQuantity ( ) {
-        return rawQuantity;
-    }
-
-    public void setRawQuantity ( int rawQuantity ) {
-        this.rawQuantity = rawQuantity;
-    }
 }

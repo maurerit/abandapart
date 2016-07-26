@@ -10,6 +10,8 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,42 +19,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table( name = "apiaccountbalance" )
+@Data
 public class AccountBalance {
+    @Id
     private long       accountId;
     private int        accountKey;
     private BigDecimal balance;
     private long       corporationId;
-
-    @Id
-    public long getAccountId ( ) {
-        return accountId;
-    }
-
-    public void setAccountId ( long accountId ) {
-        this.accountId = accountId;
-    }
-
-    public int getAccountKey ( ) {
-        return accountKey;
-    }
-
-    public void setAccountKey ( int accountKey ) {
-        this.accountKey = accountKey;
-    }
-
-    public BigDecimal getBalance ( ) {
-        return balance;
-    }
-
-    public void setBalance ( BigDecimal balance ) {
-        this.balance = balance;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
 }
