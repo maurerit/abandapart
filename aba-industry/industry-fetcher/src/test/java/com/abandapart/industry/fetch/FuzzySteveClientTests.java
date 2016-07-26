@@ -10,11 +10,10 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.client.FuzzySteveClientImpl;
+import com.aba.industry.fetch.client.impl.FuzzySteveClientImpl;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -27,7 +26,6 @@ public class FuzzySteveClientTests {
     private FuzzySteveClientImpl client = new FuzzySteveClientImpl();
 
     @Test
-    @Ignore
     public void testGetSleipnirBlueprintDetails ( ) throws IOException {
         BlueprintData bpData = client.getBlueprintData( 22444l );
 
@@ -46,7 +44,6 @@ public class FuzzySteveClientTests {
     }
 
     @Test
-    @Ignore
     public void testGetAtreenCostIndexes ( ) throws IOException {
         SystemCostIndexes costIndexes = client.getSystemCostIndexes( "Atreen" );
 

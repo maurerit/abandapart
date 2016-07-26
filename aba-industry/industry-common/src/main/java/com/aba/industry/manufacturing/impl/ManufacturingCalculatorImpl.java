@@ -87,6 +87,8 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
         result.setInstallationFees( runCost );
         result.setInstallationTax( runCost * .1d );
         result.setSeconds( buildTime );
+        result.setProductId( bpData.getBlueprintDetails()
+                                   .getProductTypeId() );
 
         return result;
     }

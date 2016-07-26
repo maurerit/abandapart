@@ -15,37 +15,13 @@
     <diskStore path="java.io.tmpdir"/>
     <!--<diskStore path="~/cache" />-->
 
-    <cache name="crest-inventory-items"
-           maxEntriesLocalHeap="3000"
+    <cache name="crest-sell-orders"
+           maxEntriesLocalHeap="500"
            maxEntriesLocalDisk="40000"
            eternal="false"
            diskSpoolBufferSizeMB="0"
-           timeToIdleSeconds="86400"
-           timeToLiveSeconds="86400"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-        <persistence strategy="localRestartable"/>
-    </cache>
-
-    <cache name="crest-region-id"
-           maxEntriesLocalHeap="3000"
-           maxEntriesLocalDisk="40000"
-           eternal="false"
-           diskSpoolBufferSizeMB="0"
-           timeToIdleSeconds="86400"
-           timeToLiveSeconds="86400"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-        <persistence strategy="localRestartable"/>
-    </cache>
-
-    <cache name="crest-regions"
-           maxEntriesLocalHeap="3000"
-           maxEntriesLocalDisk="40000"
-           eternal="false"
-           diskSpoolBufferSizeMB="0"
-           timeToIdleSeconds="86400"
-           timeToLiveSeconds="86400"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
         <persistence strategy="localRestartable"/>

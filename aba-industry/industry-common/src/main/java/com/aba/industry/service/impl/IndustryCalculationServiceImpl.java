@@ -12,6 +12,7 @@ package com.aba.industry.service.impl;
 
 import com.aba.ApplicationException;
 import com.aba.data.domain.config.*;
+import com.aba.eveonline.crest.repo.RegionRepository;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -26,7 +27,7 @@ import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.IndustryCalculationService;
-import lombok.Getter;
+import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-@Getter
 @Setter
 public class IndustryCalculationServiceImpl implements IndustryCalculationService {
     private static final Logger logger = LoggerFactory.getLogger( IndustryCalculationService.class );
@@ -61,6 +61,12 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 
     @Autowired
     private OverheadCalculator overheadCalculator;
+
+    @Autowired
+    private MarketOrderFetcher marketOrderFetcher;
+
+    @Autowired
+    private RegionRepository regionRepository;
 
     @Override
     public BuildCalculationResult calculateBuildCosts ( String systemName, Long outputTypeId ) {
@@ -98,7 +104,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
             boolean findCurrentPrices,
             boolean useBuildOrBuyConfigurations )
     {
-        BuildCalculationResult result = new BuildCalculationResult();
+        BuildCalculationResult result;
 
         //TODO: Tax Rate should be determined by builders standing with station holder
         Double taxRate = 0.0d;
@@ -136,6 +142,44 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 
         result.setInventionResult( inventionCalculationResult );
         result.setSalaryCost( overheadCalculator.getSalary( Activity.MANUFACTURING, result.getSeconds() ) );
+
+        //TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
+        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
+        Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
+                                                                       result.getProductId() );
+
+        Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
+                                                                        result.getProductId() );
+        result.getToBuildLocationFreight()
+              .put( "Jita", overheadCalculator.getFreightDetails( "Jita", systemName,
+                                                                  (double) Math.round(
+                                                                          result.getMaterialCost() ) ) );
+        result.getToBuildLocationFreight()
+              .put( "Amarr", overheadCalculator.getFreightDetails( "Amarr", systemName,
+                                                                   (double) Math.round(
+                                                                           result.getMaterialCost() ) ) );
+
+        if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
+            result.getFromBuildLocationFreight()
+                  .put( "Jita", overheadCalculator.getFreightDetails( "Jita", systemName,
+                                                                      (double) Math.round(
+                                                                              result.getMaterialCost() ) ) );
+        }
+        else {
+            result.getFromBuildLocationFreight()
+                  .put( "Jita", overheadCalculator.getFreightDetails( "Jita", systemName, jitaLowestSell ) );
+        }
+
+        if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
+            result.getFromBuildLocationFreight()
+                  .put( "Amarr", overheadCalculator.getFreightDetails( "Amarr", systemName,
+                                                                       (double) Math.round(
+                                                                               result.getMaterialCost() ) ) );
+        }
+        else {
+            result.getFromBuildLocationFreight()
+                  .put( "Amarr", overheadCalculator.getFreightDetails( "Amarr", systemName, amarrLowestSell ) );
+        }
 
         return result;
     }

@@ -11,119 +11,145 @@
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<packaging>pom</packaging>
-	<modules>
-		<module>aba-industry</module>
-		<module>aba-data</module>
-		<module>aba-web</module>
-		<module>aba-server</module>
-		<module>eve-sde</module>
-		<module>eve-api-data</module>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>aba-industry</module>
+        <module>aba-data</module>
+        <module>aba-web</module>
+        <module>aba-server</module>
+        <module>eve-sde</module>
+        <module>eve-api-data</module>
         <module>aba-exceptions</module>
         <module>spring-eve-crest</module>
         <module>aba-market</module>
     </modules>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.5.RELEASE</version>
-	</parent>
-	<groupId>com.abandapart</groupId>
-	<artifactId>aba-eve-parent</artifactId>
-	<version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.3.5.RELEASE</version>
+    </parent>
+    <groupId>com.abandapart</groupId>
+    <artifactId>aba-eve-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-	<properties>
-		<jeromq-version>0.3.5</jeromq-version>
-		<java.version>1.8</java.version>
-		<eve-api.version>4.0</eve-api.version>
-		<ehcache.version>1.0.1</ehcache.version>
-	</properties>
+    <properties>
+        <jeromq-version>0.3.5</jeromq-version>
+        <java.version>1.8</java.version>
+        <eve-api.version>4.0</eve-api.version>
+        <jcache.version>1.0.1</jcache.version>
+    </properties>
 
-	<dependencies>
-		<!-- TEST Dependencies -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <!-- TEST Dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.1-api</artifactId>
-				<version>1.0.0.Final</version>
-			</dependency>
-			<dependency>
-				<groupId>org.zeromq</groupId>
-				<artifactId>jeromq</artifactId>
-				<version>${jeromq-version}</version>
-			</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+        </dependency>
+    </dependencies>
 
-			<dependency>
-				<groupId>com.tlabs.eve</groupId>
-				<artifactId>eve-api</artifactId>
-				<version>${eve-api.version}</version>
-			</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.1-api</artifactId>
+                <version>1.0.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zeromq</groupId>
+                <artifactId>jeromq</artifactId>
+                <version>${jeromq-version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.ehcache</groupId>
-				<artifactId>jcache</artifactId>
-				<version>${ehcache.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>com.tlabs.eve</groupId>
+                <artifactId>eve-api</artifactId>
+                <version>${eve-api.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.devfleet.crest</groupId>
-				<artifactId>retrofit</artifactId>
-				<version>0.1</version>
+            <dependency>
+                <groupId>org.ehcache</groupId>
+                <artifactId>jcache</artifactId>
+                <version>${jcache.version}</version>
+            </dependency>
 
-				<exclusions>
-					<exclusion>
-						<groupId>com.squareup.retrofit2</groupId>
-						<artifactId>converter-jackson</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+            <dependency>
+                <groupId>org.devfleet.crest</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>0.1</version>
 
-			<!--
-			The above library is a gradle managed lib and imports convert-jacson 2.0.+ which maven doesn't like.
-			At the time of this writing the current version was 2.0.2.
-			 -->
-			<dependency>
-				<groupId>com.squareup.retrofit2</groupId>
-				<artifactId>converter-jackson</artifactId>
-				<version>2.0.2</version>
-			</dependency>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.squareup.retrofit2</groupId>
+                        <artifactId>converter-jackson</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-			<dependency>
-				<groupId>com.tlabs.eve</groupId>
-				<artifactId>eve-api-java</artifactId>
-				<version>5.0</version>
-				<exclusions>
-					<!-- I'm not even going to worry about this dependency as we should be importing it elsewhere -->
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <!--
+            The above library is a gradle managed lib and imports convert-jacson 2.0.+ which maven doesn't like.
+            At the time of this writing the current version was 2.0.2.
+             -->
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-jackson</artifactId>
+                <version>2.0.2</version>
+            </dependency>
 
-	<repositories>
-		<repository>
-			<id>lucrh.internal</id>
-			<name>Lucifer's Hammer Maven Repo</name>
-			<url>http://mvn.lucrh.com/maven</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
+            <dependency>
+                <groupId>com.tlabs.eve</groupId>
+                <artifactId>eve-api-java</artifactId>
+                <version>5.0</version>
+                <exclusions>
+                    <!-- I'm not even going to worry about this dependency as we should be importing it elsewhere -->
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <check/>
+                        <formats>
+                            <format>html</format>
+                            <format>xml</format>
+                        </formats>
+                        <aggregate>true</aggregate>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>lucrh.internal</id>
+            <name>Lucifer's Hammer Maven Repo</name>
+            <url>http://mvn.lucrh.com/maven</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 </project>
