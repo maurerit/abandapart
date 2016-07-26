@@ -10,6 +10,8 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ import java.util.Date;
 
 @Entity
 @Table( name = "apiwallettransactions" )
+@Data
 public class WalletTransaction {
     private Date       transactionDateTime;
     @Id
@@ -35,124 +38,4 @@ public class WalletTransaction {
     private long       journalTransactionId;
     private int        accountKey;
     private long       corporationId;
-
-    public Date getTransactionDateTime ( ) {
-        return transactionDateTime;
-    }
-
-    public void setTransactionDateTime ( Date transactionDateTime ) {
-        this.transactionDateTime = transactionDateTime;
-    }
-
-    public long getTransactionId ( ) {
-        return transactionId;
-    }
-
-    public void setTransactionId ( long transactionId ) {
-        this.transactionId = transactionId;
-    }
-
-    public long getQuantity ( ) {
-        return quantity;
-    }
-
-    public void setQuantity ( long quantity ) {
-        this.quantity = quantity;
-    }
-
-    public String getTypeName ( ) {
-        return typeName;
-    }
-
-    public void setTypeName ( String typeName ) {
-        this.typeName = typeName;
-    }
-
-    public int getTypeId ( ) {
-        return typeId;
-    }
-
-    public void setTypeId ( int typeId ) {
-        this.typeId = typeId;
-    }
-
-    public BigDecimal getPrice ( ) {
-        return price;
-    }
-
-    public void setPrice ( BigDecimal price ) {
-        this.price = price;
-    }
-
-    public long getClientId ( ) {
-        return clientId;
-    }
-
-    public void setClientId ( long clientId ) {
-        this.clientId = clientId;
-    }
-
-    public String getClientName ( ) {
-        return clientName;
-    }
-
-    public void setClientName ( String clientName ) {
-        this.clientName = clientName;
-    }
-
-    public int getStationId ( ) {
-        return stationId;
-    }
-
-    public void setStationId ( int stationId ) {
-        this.stationId = stationId;
-    }
-
-    public String getStationName ( ) {
-        return stationName;
-    }
-
-    public void setStationName ( String stationName ) {
-        this.stationName = stationName;
-    }
-
-    public String getTransactionType ( ) {
-        return transactionType;
-    }
-
-    public void setTransactionType ( String transactionType ) {
-        this.transactionType = transactionType;
-    }
-
-    public String getTransactionFor ( ) {
-        return transactionFor;
-    }
-
-    public void setTransactionFor ( String transactionFor ) {
-        this.transactionFor = transactionFor;
-    }
-
-    public long getJournalTransactionId ( ) {
-        return journalTransactionId;
-    }
-
-    public void setJournalTransactionId ( long journalTransactionId ) {
-        this.journalTransactionId = journalTransactionId;
-    }
-
-    public int getAccountKey ( ) {
-        return accountKey;
-    }
-
-    public void setAccountKey ( int accountKey ) {
-        this.accountKey = accountKey;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
 }

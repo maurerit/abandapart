@@ -10,6 +10,8 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,7 +19,9 @@ import java.util.Date;
 
 @Entity
 @Table( name = "apicorpmembers" )
+@Data
 public class CorpMembers {
+    @Id
     private long   characterId;
     private String name;
     private Date   startDateTime;
@@ -25,61 +29,4 @@ public class CorpMembers {
     private String base;
     private String title;
     private long   corporationId;
-
-    @Id
-    public long getCharacterId ( ) {
-        return characterId;
-    }
-
-    public void setCharacterId ( long characterId ) {
-        this.characterId = characterId;
-    }
-
-    public String getName ( ) {
-        return name;
-    }
-
-    public void setName ( String name ) {
-        this.name = name;
-    }
-
-    public Date getStartDateTime ( ) {
-        return startDateTime;
-    }
-
-    public void setStartDateTime ( Date startDateTime ) {
-        this.startDateTime = startDateTime;
-    }
-
-    public long getBaseId ( ) {
-        return baseId;
-    }
-
-    public void setBaseId ( long baseId ) {
-        this.baseId = baseId;
-    }
-
-    public String getBase ( ) {
-        return base;
-    }
-
-    public void setBase ( String base ) {
-        this.base = base;
-    }
-
-    public String getTitle ( ) {
-        return title;
-    }
-
-    public void setTitle ( String title ) {
-        this.title = title;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
 }

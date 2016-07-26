@@ -10,26 +10,44 @@
 
 package com.aba.eveonline.crest.repo.impl;
 
-import com.aba.eveonline.crest.repo.ItemTypeRepository;
+import com.aba.eveonline.crest.repo.RegionRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestType;
+import org.devfleet.crest.model.CrestItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
- * Created by maurerit on 7/24/16.
+ * Created by maurerit on 7/25/16.
  */
-@Getter
+@Repository
 @Setter
-public class ItemTypeRepositoryImpl implements ItemTypeRepository {
+public class CrestRegionRepository implements RegionRepository {
     @Autowired
     private CrestService crestService;
 
     @Override
-    @Cacheable( "crest-inventory-items" )
-    public CrestType getItemDetails ( int itemId ) {
-        return crestService.getInventoryType( itemId );
+    @Cacheable( "crest-regions" )
+    public List<CrestItem> getRegions ( ) {
+        return crestService.getRegions();
+    }
+
+    @Override
+    @Cacheable( "crest-region-id" )
+    public long findRegionId ( String regionName ) {
+        long result = 0;
+
+        result = getRegions().stream()
+                             .filter( region -> region.getName()
+                                                      .equalsIgnoreCase( regionName ) )
+                             .mapToLong( region -> region.getId() )
+                             .findFirst()
+                             .getAsLong();
+
+        return result;
     }
 }

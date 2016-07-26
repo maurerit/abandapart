@@ -10,7 +10,7 @@
 
 package com.aba.eveonline.crest.impl;
 
-import com.aba.eveonline.crest.repo.impl.RegionRepositoryImpl;
+import com.aba.eveonline.crest.repo.impl.CrestRegionRepository;
 import org.devfleet.crest.retrofit.CrestClient;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,7 +22,7 @@ import java.io.IOException;
  * Created by maurerit on 7/25/16.
  */
 public class RegionRepositoryImplUnitTests {
-    private RegionRepositoryImpl repo = new RegionRepositoryImpl();
+    private CrestRegionRepository repo = new CrestRegionRepository();
 
     @Before
     public void setupCrestClient ( ) throws IOException {

@@ -13,6 +13,8 @@ package com.eveonline.api.repo;
 
 import com.eveonline.api.domain.IndustryJob;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface IndustryJobsRepository extends JpaRepository<IndustryJob, Long> {
 }

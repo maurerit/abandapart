@@ -10,6 +10,8 @@
 
 package com.eveonline.api.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,6 +19,7 @@ import java.util.Date;
 @Entity
 @Table( name = "apiwalletjournal" )
 @IdClass( WalletJournalId.class )
+@Data
 public class WalletJournal {
     @Column( name = "date" )
     @Id
@@ -35,116 +38,4 @@ public class WalletJournal {
     private String     reason;
     private int        accountKey;
     private long       corporationId;
-
-    public Date getEntryDate ( ) {
-        return entryDate;
-    }
-
-    public void setEntryDate ( Date entryDate ) {
-        this.entryDate = entryDate;
-    }
-
-    public long getRefId ( ) {
-        return refId;
-    }
-
-    public void setRefId ( long refId ) {
-        this.refId = refId;
-    }
-
-    public int getRefTypeId ( ) {
-        return refTypeId;
-    }
-
-    public void setRefTypeId ( int refTypeId ) {
-        this.refTypeId = refTypeId;
-    }
-
-    public String getOwnerNameOne ( ) {
-        return ownerNameOne;
-    }
-
-    public void setOwnerNameOne ( String ownerNameOne ) {
-        this.ownerNameOne = ownerNameOne;
-    }
-
-    public int getOwnerIdOne ( ) {
-        return ownerIdOne;
-    }
-
-    public void setOwnerIdOne ( int ownerIdOne ) {
-        this.ownerIdOne = ownerIdOne;
-    }
-
-    public String getOwnerNameTwo ( ) {
-        return ownerNameTwo;
-    }
-
-    public void setOwnerNameTwo ( String ownerNameTwo ) {
-        this.ownerNameTwo = ownerNameTwo;
-    }
-
-    public int getOwnerIdTwo ( ) {
-        return ownerIdTwo;
-    }
-
-    public void setOwnerIdTwo ( int ownerIdTwo ) {
-        this.ownerIdTwo = ownerIdTwo;
-    }
-
-    public String getArgNameOne ( ) {
-        return argNameOne;
-    }
-
-    public void setArgNameOne ( String argNameOne ) {
-        this.argNameOne = argNameOne;
-    }
-
-    public int getArgIdOne ( ) {
-        return argIdOne;
-    }
-
-    public void setArgIdOne ( int argIdOne ) {
-        this.argIdOne = argIdOne;
-    }
-
-    public BigDecimal getAmount ( ) {
-        return amount;
-    }
-
-    public void setAmount ( BigDecimal amount ) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getBalance ( ) {
-        return balance;
-    }
-
-    public void setBalance ( BigDecimal balance ) {
-        this.balance = balance;
-    }
-
-    public String getReason ( ) {
-        return reason;
-    }
-
-    public void setReason ( String reason ) {
-        this.reason = reason;
-    }
-
-    public int getAccountKey ( ) {
-        return accountKey;
-    }
-
-    public void setAccountKey ( int accountKey ) {
-        this.accountKey = accountKey;
-    }
-
-    public long getCorporationId ( ) {
-        return corporationId;
-    }
-
-    public void setCorporationId ( long corporationId ) {
-        this.corporationId = corporationId;
-    }
 }
