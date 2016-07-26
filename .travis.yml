@@ -11,3 +11,5 @@ jdk:
 cache:
   directories:
   - aba-web/node_modules
+after_success:
+  - mvn clean test jacoco:report coveralls:report
