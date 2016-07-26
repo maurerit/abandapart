@@ -13,6 +13,7 @@ package com.aba.industry.service.impl;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.eveonline.crest.repo.RegionRepository;
 import com.aba.industry.ItemCost;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -24,6 +25,7 @@ import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.IndustryCalculationService;
+import com.aba.market.fetch.MarketOrderFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -55,6 +57,10 @@ public class IndustryCalculationServiceImplTests {
     InventionCalculator          inventionCalculator;
     @Mock
     ManufacturingCalculator      manufacturingCalculator;
+    @Mock
+    RegionRepository             regionRepository;
+    @Mock
+    MarketOrderFetcher           marketOrderFetcher;
     private ObjectMapper mapper = new ObjectMapper();
     private MapType                     mapType;
     private Map<Integer, ItemCost>      itemCosts;
@@ -64,7 +70,8 @@ public class IndustryCalculationServiceImplTests {
     private InventionSkillConfiguration inventionSkills;
     private InventionCalculationResult  inventionCalculationResult;
     private BuildCalculationResult      buildCalculationResult;
-    private FreightDetails freightDetails;
+    private FreightDetails              jitaFreightDetails;
+    private FreightDetails              amarrFreightDetails;
     @InjectMocks
     private IndustryCalculationService service = new IndustryCalculationServiceImpl();
 
@@ -121,10 +128,15 @@ public class IndustryCalculationServiceImplTests {
         inventionCalculationResult = new InventionCalculationResult();
         inventionCalculationResult.setSeconds( 2000l );
 
-        freightDetails = new FreightDetails();
+        jitaFreightDetails = new FreightDetails();
 
-        freightDetails.setCharge(13000000d);
-        freightDetails.setJumps(15);
+        jitaFreightDetails.setCharge( 13000000d );
+        jitaFreightDetails.setJumps( 15 );
+
+        amarrFreightDetails = new FreightDetails();
+
+        amarrFreightDetails.setCharge( 6000000d );
+        amarrFreightDetails.setJumps( 9 );
     }
 
     @Test
@@ -133,22 +145,45 @@ public class IndustryCalculationServiceImplTests {
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
+        //<editor-fold desc="Invention and Manufacturing result mocks">
+        Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 0.0d, bpData, null,
+                                                                   inventionSkills ) )
+               .thenReturn( this.inventionCalculationResult );
+        Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 0.0d, bpData, 2, 4, industrySkills ) )
+               .thenReturn( buildCalculationResult );
+        //</editor-fold>
+        //<editor-fold desc="Overhead mocks">
         Mockito.when( overheadConfigurationService.getSalaryConfiguration() )
                .thenReturn( null );
         Mockito.when( overheadConfigurationService.getFreightConfiguration() )
                .thenReturn( null );
-        Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 0.0d, bpData, null,
-                                                                   inventionSkills ) )
-               .thenReturn( this.inventionCalculationResult );
+
         Mockito.when( overheadCalculator.getSalary( Activity.INVENTION, 2000l ) )
-               .thenReturn( inventionCalculationResult.getSalaryCost()
-                                                      .doubleValue() / 60 / 60 / 40 * 200000 );
+               .thenReturn( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000 );
         Mockito.when( overheadCalculator.getSalary( Activity.MANUFACTURING, buildCalculationResult.getSeconds() ) )
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
-        Mockito.when(overheadCalculator.getFreightDetails("Jita", "Atreen", 334469887.51))
-        Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 0.0d, bpData, 2, 4, industrySkills ) )
-               .thenReturn( buildCalculationResult );
+        Mockito.when( overheadCalculator.getFreightDetails( "Jita", "Atreen", 334469887d ) )
+               .thenReturn(
+                       jitaFreightDetails );
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Jita", 345000000d ) )
+               .thenReturn(
+                       jitaFreightDetails );
+        Mockito.when( overheadCalculator.getFreightDetails( "Amarr", "Atreen", 334469887d ) )
+               .thenReturn( amarrFreightDetails );
+        //</editor-fold>
+        //<editor-fold desc="Region Repo mocks">
+        Mockito.when( regionRepository.findRegionId( "The Forge" ) )
+               .thenReturn( 20l );
+        Mockito.when( regionRepository.findRegionId( "Domain" ) )
+               .thenReturn( 21l );
+        //</editor-fold>
+        //<editor-fold desc="Market Fetcher mocks">
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 22444 ) )
+               .thenReturn( 345000000d );
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 22444 ) )
+               .thenReturn( 355000000d );
+        //</editor-fold>
 
 
         BuildCalculationResult result = this.service.calculateBuildCosts( "Atreen", 22444l, industrySkills,
@@ -158,12 +193,16 @@ public class IndustryCalculationServiceImplTests {
         Assert.assertEquals( buildCalculationResult.getSeconds()
                                                    .doubleValue() / 60 / 60 / 2 * 200000, result.getSalaryCost(),
                              0.01 );
-        Assert.assertEquals( inventionCalculationResult.getSalaryCost()
-                                                       .doubleValue() / 60 / 60 / 40 * 200000,
+        Assert.assertEquals( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000,
                              result.getInventionResult()
                                    .getSalaryCost(), 0.01 );
         Assert.assertNotNull( buildCalculationResult.getFromBuildLocationFreight() );
         Assert.assertNotNull( buildCalculationResult.getToBuildLocationFreight() );
+
+        Assert.assertFalse( buildCalculationResult.getToBuildLocationFreight()
+                                                  .isEmpty() );
+        Assert.assertFalse( buildCalculationResult.getFromBuildLocationFreight()
+                                                  .isEmpty() );
     }
 
 }

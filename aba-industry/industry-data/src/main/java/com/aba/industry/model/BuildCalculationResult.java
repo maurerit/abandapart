@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.devfleet.crest.model.CrestMarketOrder;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,27 +32,33 @@ public class BuildCalculationResult extends CalculationResult {
     private IndustrySkillConfiguration skillConfiguration;
 
     @JsonProperty
+    private long productId;
+    @JsonProperty
     private Double materialCost = 0d;
     @JsonProperty
     private Map<Integer, CrestMarketOrder> lowestSellOrders;
     @JsonProperty
     private Map<Integer, CrestMarketOrder> highestSellOrders;
     @JsonProperty
-    private FreightDetails                 toBuildLocationFreight;
+    private Map<String, FreightDetails> toBuildLocationFreight   = new HashMap<>();
     @JsonProperty
-    private FreightDetails                 fromBuildLocationFreight;
+    private Map<String, FreightDetails> fromBuildLocationFreight = new HashMap<>();
     @JsonProperty
-    private InventionCalculationResult     inventionResult;
+    private InventionCalculationResult   inventionResult;
     @JsonProperty
-    private List<BuildCalculationResult>   childBuilds;
+    private List<BuildCalculationResult> childBuilds;
 
     protected Double getTotalCostInternal ( ) {
         Double result = 0d;
 
         result += materialCost;
         result += inventionResult != null ? inventionResult.getTotalCost() : 0d;
-        result += toBuildLocationFreight != null ? toBuildLocationFreight.getCharge() : 0d;
-        result += fromBuildLocationFreight != null ? fromBuildLocationFreight.getCharge() : 0d;
+        result += toBuildLocationFreight != null && toBuildLocationFreight.get(
+                "Jita" ) != null ? toBuildLocationFreight.get( "Jita" )
+                                                         .getCharge() : 0d;
+        result += fromBuildLocationFreight != null && fromBuildLocationFreight.get(
+                "Jita" ) != null ? fromBuildLocationFreight.get( "Jita" )
+                                                           .getCharge() : 0d;
 
         return result;
     }

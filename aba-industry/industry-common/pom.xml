@@ -42,5 +42,17 @@
             <artifactId>industry-fetcher</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>market-fetcher</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>spring-eve-crest</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>

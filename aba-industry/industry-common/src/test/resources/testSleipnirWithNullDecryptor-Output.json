@@ -112,12 +112,13 @@
     "industrySkillLevelMultiplier": null,
     "advancedIndustrySkillLevelMultiplier": null
   },
-  "buildCost": 3.124297159600001E8,
+  "materialCost": 3.124297159600001E8,
   "lowestSellOrders": null,
   "highestSellOrders": null,
-  "toBuildLocationFreight": null,
-  "fromBuildLocationFreight": null,
+  "toBuildLocationFreight": {},
+  "fromBuildLocationFreight": {},
   "inventionResult": null,
   "childBuilds": null,
-  "totalCost": 3.344698875142212E8
+  "totalCost": 3.344698875142212E8,
+  "productId": 22444
 }

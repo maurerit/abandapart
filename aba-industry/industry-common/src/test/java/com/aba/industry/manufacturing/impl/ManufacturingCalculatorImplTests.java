@@ -74,6 +74,7 @@ public class ManufacturingCalculatorImplTests {
 
         Assert.assertEquals( 312429715.96, result.getMaterialCost(), 0.01 );
         Assert.assertEquals( 20036519.59, result.getInstallationFees(), 0.01 );
+        Assert.assertEquals( result.getProductId(), 22444l );
     }
 
 }
