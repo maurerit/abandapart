@@ -19,12 +19,12 @@ import com.aba.industry.config.OverheadConfigurationService;
  */
 public class NullOverheadConfigurationServiceImpl implements OverheadConfigurationService {
     @Override
-    public SalaryConfiguration getSalaryConfiguration() {
+    public SalaryConfiguration getSalaryConfiguration ( ) {
         return null;
     }
 
     @Override
-    public FreightConfiguration getFreightConfiguration() {
+    public FreightConfiguration getFreightConfiguration ( ) {
         return null;
     }
 }

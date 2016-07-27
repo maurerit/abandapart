@@ -11,7 +11,6 @@
 package com.aba.eveonline.crest.repo.impl;
 
 import com.aba.eveonline.crest.repo.RegionRepository;
-import lombok.Getter;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestItem;

@@ -25,15 +25,15 @@ public class LHOverheadCalculatorImpl implements OverheadCalculator {
         switch ( fromSystemName ) {
             case "Jita":
                 reward = collateral / 1000000000 * 26000000;
-                freightDetails.setJumps(15);
+                freightDetails.setJumps( 15 );
                 break;
             case "Amarr":
                 reward = collateral / 1000000000 * 17000000;
-                freightDetails.setJumps(9);
+                freightDetails.setJumps( 9 );
                 break;
         }
 
-        freightDetails.setCharge(reward);
+        freightDetails.setCharge( reward );
 
         return freightDetails;
     }
