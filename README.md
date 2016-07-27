@@ -1,6 +1,8 @@
 ABA Industry bits and bobs
 -------------------------------
 
+[![Build Status](https://travis-ci.org/maurerit/abandapart.svg?branch=develop)](https://travis-ci.org/maurerit/abandapart) [![Coverage Status](https://coveralls.io/repos/github/maurerit/abandapart/badge.svg)](https://coveralls.io/github/maurerit/abandapart)
+
 ### The Problem ###
 
 Being competitive in a situation where you are reliant on purchasing from the open market comes with many complications.  When is the best time to buy your input materials, when should you sell your products, can you use all the hubs instead of just Jita to procure your inputs.  All of these are questions should be asked but none of them are easy to answer.  In EVE there are also things that should be monitored such as assets of the corp, purchases and sales of the corp and many other moving parts that are hard to combine on a day to day basis due to how the data is presented and what data is missed based on the state of the stuff.

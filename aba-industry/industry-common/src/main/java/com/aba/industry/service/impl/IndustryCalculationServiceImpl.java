@@ -41,7 +41,7 @@ import java.io.IOException;
 @Setter
 public class IndustryCalculationServiceImpl implements IndustryCalculationService {
     //TODO: Temporary statics to get rid of Jita and Amarr all over the place
-    public static final String JITA = "Jita";
+    public static final String JITA  = "Jita";
     public static final String AMARR = "Amarr";
 
     private static final Logger logger = LoggerFactory.getLogger( IndustryCalculationService.class );
@@ -128,76 +128,24 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         }
 
         InventionCalculationResult inventionCalculationResult =
-                getInventionCalculationResult( inventionSkills, decryptor, taxRate, blueprintData, costIndexes);
+                getInventionCalculationResult( inventionSkills, decryptor, taxRate, blueprintData, costIndexes );
         result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxRate,
-                blueprintData,
-                meLevel, teLevel,
-                industrySkills );
+                                                            blueprintData,
+                                                            meLevel, teLevel,
+                                                            industrySkills );
         result.setInventionResult( inventionCalculationResult );
 
-        calculateOverheads(systemName, result);
+        calculateOverheads( systemName, result );
 
         return result;
     }
 
-    private void calculateOverheads(String systemName, BuildCalculationResult result) {
-        SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
-        FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
-
-        //TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
-        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
-        long jitaId = solarSystemRepository.getSolarSystemId(JITA);
-        long amarrId = solarSystemRepository.getSolarSystemId(AMARR);
-        Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ), jitaId,
-                result.getProductId());
-
-        Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ), amarrId,
-                result.getProductId());
-        result.getToBuildLocationFreight()
-              .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName,
-                                                                  (double) Math.round(
-                                                                          result.getMaterialCost() ) ) );
-        result.getToBuildLocationFreight()
-              .put( AMARR, overheadCalculator.getFreightDetails( AMARR, systemName,
-                                                                   (double) Math.round(
-                                                                           result.getMaterialCost() ) ) );
-
-        if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
-            result.getFromBuildLocationFreight()
-                  .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName,
-                                                                      (double) Math.round(
-                                                                              result.getMaterialCost() ) ) );
-        }
-        else {
-            result.getFromBuildLocationFreight()
-                  .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName, jitaLowestSell ) );
-        }
-
-        if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
-            result.getFromBuildLocationFreight()
-                  .put( AMARR, overheadCalculator.getFreightDetails( AMARR, systemName,
-                                                                       (double) Math.round(
-                                                                               result.getMaterialCost() ) ) );
-        }
-        else {
-            result.getFromBuildLocationFreight()
-                  .put( AMARR, overheadCalculator.getFreightDetails( AMARR, systemName, amarrLowestSell ) );
-        }
-
-        result.setSalaryCost( overheadCalculator.getSalary( Activity.MANUFACTURING, result.getSeconds() ) );
-
-        if ( result.getInventionResult() != null ) {
-            result.getInventionResult().setSalaryCost( overheadCalculator.getSalary(
-                    Activity.INVENTION, result.getInventionResult().getSeconds() ) );
-        }
-    }
-
     private InventionCalculationResult getInventionCalculationResult (
-             InventionSkillConfiguration inventionSkills,
-             Decryptor decryptor,
-             Double taxRate,
-             BlueprintData blueprintData,
-             SystemCostIndexes costIndexes )
+            InventionSkillConfiguration inventionSkills,
+            Decryptor decryptor,
+            Double taxRate,
+            BlueprintData blueprintData,
+            SystemCostIndexes costIndexes )
     {
         InventionCalculationResult inventionCalculationResult = null;
         if ( !blueprintData.getBlueprintDetails()
@@ -211,5 +159,61 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                     overheadCalculator.getSalary( Activity.INVENTION, inventionCalculationResult.getSeconds() ) );
         }
         return inventionCalculationResult;
+    }
+
+    private void calculateOverheads ( String systemName, BuildCalculationResult result ) {
+        SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
+        FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
+
+        //TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
+        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
+        long jitaId = solarSystemRepository.getSolarSystemId( JITA );
+        long amarrId = solarSystemRepository.getSolarSystemId( AMARR );
+        Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
+                                                                       jitaId,
+                                                                       result.getProductId() );
+
+        Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
+                                                                        amarrId,
+                                                                        result.getProductId() );
+        result.getToBuildLocationFreight()
+              .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName,
+                                                                (double) Math.round(
+                                                                        result.getMaterialCost() ) ) );
+        result.getToBuildLocationFreight()
+              .put( AMARR, overheadCalculator.getFreightDetails( AMARR, systemName,
+                                                                 (double) Math.round(
+                                                                         result.getMaterialCost() ) ) );
+
+        if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
+            result.getFromBuildLocationFreight()
+                  .put( JITA, overheadCalculator.getFreightDetails( systemName, JITA,
+                                                                    (double) Math.round(
+                                                                            result.getMaterialCost() ) ) );
+        }
+        else {
+            result.getFromBuildLocationFreight()
+                  .put( JITA, overheadCalculator.getFreightDetails( systemName, JITA, jitaLowestSell ) );
+        }
+
+        if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
+            result.getFromBuildLocationFreight()
+                  .put( AMARR, overheadCalculator.getFreightDetails( systemName, AMARR,
+                                                                     (double) Math.round(
+                                                                             result.getMaterialCost() ) ) );
+        }
+        else {
+            result.getFromBuildLocationFreight()
+                  .put( AMARR, overheadCalculator.getFreightDetails( systemName, AMARR, amarrLowestSell ) );
+        }
+
+        result.setSalaryCost( overheadCalculator.getSalary( Activity.MANUFACTURING, result.getSeconds() ) );
+
+        if ( result.getInventionResult() != null ) {
+            result.getInventionResult()
+                  .setSalaryCost( overheadCalculator.getSalary(
+                          Activity.INVENTION, result.getInventionResult()
+                                                    .getSeconds() ) );
+        }
     }
 }

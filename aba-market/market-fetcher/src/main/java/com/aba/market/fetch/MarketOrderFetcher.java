@@ -20,5 +20,5 @@ import java.util.List;
 public interface MarketOrderFetcher {
     List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId );
 
-    Double getLowestSellPrice(long regionId, long systemId, long itemId);
+    Double getLowestSellPrice ( long regionId, long systemId, long itemId );
 }

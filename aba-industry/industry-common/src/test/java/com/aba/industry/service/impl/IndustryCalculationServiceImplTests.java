@@ -14,6 +14,7 @@ import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.eveonline.crest.repo.RegionRepository;
+import com.aba.eveonline.crest.repo.SolarSystemRepository;
 import com.aba.industry.ItemCost;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -61,6 +62,8 @@ public class IndustryCalculationServiceImplTests {
     RegionRepository             regionRepository;
     @Mock
     MarketOrderFetcher           marketOrderFetcher;
+    @Mock
+    private SolarSystemRepository solarSystemRepository;
     private ObjectMapper mapper = new ObjectMapper();
     private MapType                     mapType;
     private Map<Integer, ItemCost>      itemCosts;
@@ -163,29 +166,35 @@ public class IndustryCalculationServiceImplTests {
         Mockito.when( overheadCalculator.getSalary( Activity.MANUFACTURING, buildCalculationResult.getSeconds() ) )
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
-        Mockito.when( overheadCalculator.getFreightDetails( "Jita", "Atreen", 334469887d ) )
+        Mockito.when(
+                overheadCalculator.getFreightDetails( "Jita", "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
                .thenReturn(
                        jitaFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Jita", 345000000d ) )
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Jita", (double) Math.round( 345000000d ) ) )
                .thenReturn(
                        jitaFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Amarr", "Atreen", 334469887d ) )
+        Mockito.when(
+                overheadCalculator.getFreightDetails( "Amarr", "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
+               .thenReturn( amarrFreightDetails );
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Amarr", (double) Math.round( 355000000d ) ) )
                .thenReturn( amarrFreightDetails );
         //</editor-fold>
-        //<editor-fold desc="Region Repo mocks">
+        //<editor-fold desc="Market Fetcher mocks">
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 22444 ) )
+               .thenReturn( 345000000d );
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2l, 22444 ) )
+               .thenReturn( 355000000d );
+        //</editor-fold>
+        //<editor-fold desc="Crest Endpoint Mocks">
+        Mockito.when( solarSystemRepository.getSolarSystemId( "Jita" ) )
+               .thenReturn( 1l );
+        Mockito.when( solarSystemRepository.getSolarSystemId( "Amarr" ) )
+               .thenReturn( 2l );
         Mockito.when( regionRepository.findRegionId( "The Forge" ) )
                .thenReturn( 20l );
         Mockito.when( regionRepository.findRegionId( "Domain" ) )
                .thenReturn( 21l );
         //</editor-fold>
-        //<editor-fold desc="Market Fetcher mocks">
-        //TODO: Fill this in with a valid location
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 0 , 22444) )
-               .thenReturn( 345000000d );
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 0 , 22444) )
-               .thenReturn( 355000000d );
-        //</editor-fold>
-
 
         BuildCalculationResult result = this.service.calculateBuildCosts( "Atreen", 22444l, industrySkills,
                                                                           inventionSkills, 2, 4, null, false,
@@ -204,6 +213,14 @@ public class IndustryCalculationServiceImplTests {
                                                   .isEmpty() );
         Assert.assertFalse( buildCalculationResult.getFromBuildLocationFreight()
                                                   .isEmpty() );
+        Assert.assertEquals( jitaFreightDetails, buildCalculationResult.getToBuildLocationFreight()
+                                                                       .get( "Jita" ) );
+        Assert.assertEquals( amarrFreightDetails, buildCalculationResult.getToBuildLocationFreight()
+                                                                        .get( "Amarr" ) );
+        Assert.assertEquals( jitaFreightDetails, buildCalculationResult.getFromBuildLocationFreight()
+                                                                       .get( "Jita" ) );
+        Assert.assertEquals( amarrFreightDetails, buildCalculationResult.getFromBuildLocationFreight()
+                                                                        .get( "Amarr" ) );
     }
 
 }
