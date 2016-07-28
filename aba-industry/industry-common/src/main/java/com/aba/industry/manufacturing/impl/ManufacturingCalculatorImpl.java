@@ -1,11 +1,14 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.manufacturing.impl;
@@ -60,21 +63,24 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
             materialReduced.setCost( material.getCost() );
             materialReduced.setAdjustedCost( material.getAdjustedCost() );
             materialReduced.setName( material.getName() );
-            materialReduced.setQuantity( Math.round( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )/* * facility.getFacilityMe()*/ ) );
+            materialReduced.setQuantity( Math.round( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )
+                                                     /* * facility.getFacilityMe()*/ ) );
             materialReduced.setSource( material.getSource() );
             materialReduced.setTypeId( material.getTypeId() );
 
             materialsReduced.add( materialReduced );
 
             materialCost += materialReduced.getCost() * materialReduced.getQuantity();
-            runCost += materialReduced.getAdjustedCost() == null ? 0d : materialReduced.getAdjustedCost() * material.getQuantity();
+            runCost += materialReduced.getAdjustedCost() == null ? 0d : materialReduced.getAdjustedCost() * material
+                    .getQuantity();
         }
         result.setMaterialCost( materialCost );
         result.setMaterialsWithCost( materialsReduced );
         runCost = ( runCost * costIndexes.getCostIndexes()
                                          .get( Activity.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
 
-        //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)/100))*facilityte[facility]*runs*dcmultiplier;
+        //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)
+        // /100))*facilityte[facility]*runs*dcmultiplier;
         Long buildTime = Math.round( bpData.getBlueprintDetails()
                                            .getTimesInSeconds()
                                            .get( Activity.MANUFACTURING.getActivityId() ) *

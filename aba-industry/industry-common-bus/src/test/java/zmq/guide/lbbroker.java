@@ -1,11 +1,14 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package zmq.guide;
@@ -40,11 +43,13 @@ public class lbbroker {
         backend.bind( "ipc://backend.ipc" );
 
         int clientNbr;
-        for ( clientNbr = 0; clientNbr < NBR_CLIENTS; clientNbr++ )
+        for ( clientNbr = 0; clientNbr < NBR_CLIENTS; clientNbr++ ) {
             new ClientTask().start();
+        }
 
-        for ( int workerNbr = 0; workerNbr < NBR_WORKERS; workerNbr++ )
+        for ( int workerNbr = 0; workerNbr < NBR_WORKERS; workerNbr++ ) {
             new WorkerTask().start();
+        }
 
         //  Here is the main loop for the least-recently-used queue. It has two
         //  sockets; a frontend for clients and a backend for workers. It polls
