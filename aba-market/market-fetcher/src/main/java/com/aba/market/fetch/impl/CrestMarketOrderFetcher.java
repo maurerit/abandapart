@@ -20,6 +20,7 @@ import org.devfleet.crest.model.CrestMarketOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 /**
  * Created by mm66053 on 7/26/2016.
@@ -36,11 +37,24 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
 
     @Override
     public Double getLowestSellPrice ( long regionId, long systemId, long itemId ) {
-        Double result = 0d;
+        Double result = null;
+
+        //TODO: For now, I'm concerned with Amarr and Jita, hard coding the hub stations id's
+        Long jitaFourMoonFourId = 60003760l;
+        Long amarrEightId = 60008494l;
+        //Used in the below lambda, needs to be final
+        final Long hubIdToFind = systemId == jitaFourMoonFourId ? jitaFourMoonFourId : amarrEightId;
 
         List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
 
-//        result = sellOrders.stream().filter( order -> order.)
+        OptionalDouble price = sellOrders.stream()
+                                         .filter( order -> order.getLocationId() == hubIdToFind )
+                                         .mapToDouble( order -> order.getPrice() )
+                                         .findFirst();
+
+        if ( price.isPresent() ) {
+            result = price.getAsDouble();
+        }
 
         return result;
     }

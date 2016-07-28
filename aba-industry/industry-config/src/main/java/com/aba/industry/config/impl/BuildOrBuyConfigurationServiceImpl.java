@@ -15,9 +15,11 @@ package com.aba.industry.config.impl;
 
 import com.aba.data.domain.config.BuildOrBuyConfiguration;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BuildOrBuyConfigurationServiceImpl implements BuildOrBuyConfigurationService {
 
     @Override

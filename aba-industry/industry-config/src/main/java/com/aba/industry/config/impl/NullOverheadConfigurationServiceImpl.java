@@ -16,10 +16,12 @@ package com.aba.industry.config.impl;
 import com.aba.data.domain.config.FreightConfiguration;
 import com.aba.data.domain.config.SalaryConfiguration;
 import com.aba.industry.config.OverheadConfigurationService;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by maurerit on 7/26/2016.
  */
+@Service
 public class NullOverheadConfigurationServiceImpl implements OverheadConfigurationService {
     @Override
     public SalaryConfiguration getSalaryConfiguration ( ) {
