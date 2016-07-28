@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * Created by maurerit on 7/25/16.
  */
-public class RegionRepositoryImplUnitTests {
+public class CrestRegionRepositoryUnitTests {
     private CrestRegionRepository repo = new CrestRegionRepository();
 
     @Before
@@ -36,18 +36,20 @@ public class RegionRepositoryImplUnitTests {
 
     @Test
     public void testGetTheForgeId ( ) {
-        long theForgeId = repo.findRegionId( "The Forge" );
-        Assert.assertEquals( theForgeId, 10000002l );
+        Long theForgeId = repo.findRegionId( "The Forge" );
+        Assert.assertEquals( theForgeId.longValue(), 10000002l );
     }
 
     @Test
     public void testGetVenalId ( ) {
-        long venalId = repo.findRegionId( "Venal" );
-        Assert.assertEquals( venalId, 10000015l );
+        Long venalId = repo.findRegionId( "Venal" );
+        Assert.assertEquals( venalId.longValue(), 10000015l );
     }
 
-    @Test( expected = java.util.NoSuchElementException.class )
+    @Test
     public void testGetUnkownRegionId ( ) {
-        long whereAreWeId = repo.findRegionId( "Where are we?" );
+        Long whereAreWeId = repo.findRegionId( "Where are we?" );
+
+        Assert.assertNull( whereAreWeId );
     }
 }

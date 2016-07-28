@@ -22,6 +22,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.OptionalLong;
 
 /**
  * Created by maurerit on 7/25/16.
@@ -40,15 +41,20 @@ public class CrestRegionRepository implements RegionRepository {
 
     @Override
     @Cacheable( "crest-region-id" )
-    public long findRegionId ( String regionName ) {
-        long result = 0;
+    public Long findRegionId ( String regionName )
+    {
+        Long result = null;
 
-        result = getRegions().stream()
-                             .filter( region -> region.getName()
+        //TODO: Look into orElseGet
+        OptionalLong regionId = getRegions().stream()
+                                            .filter( region -> region.getName()
                                                       .equalsIgnoreCase( regionName ) )
-                             .mapToLong( region -> region.getId() )
-                             .findFirst()
-                             .getAsLong();
+                                            .mapToLong( region -> region.getId() )
+                                            .findFirst();
+
+        if ( regionId.isPresent() ) {
+            result = regionId.getAsLong();
+        }
 
         return result;
     }

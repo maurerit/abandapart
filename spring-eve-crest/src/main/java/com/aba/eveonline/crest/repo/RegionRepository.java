@@ -23,5 +23,5 @@ import java.util.List;
 public interface RegionRepository {
     List<CrestItem> getRegions ( );
 
-    long findRegionId ( String regionName );
+    Long findRegionId ( String regionName );
 }
