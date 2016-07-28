@@ -1,11 +1,14 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.service.impl;
@@ -98,7 +101,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     }
 
     @Override
-    //TODO: me and te should be determined by already existing BP's or from the output of invention process with a decryptor
+    //TODO: me and te should be determined by already existing BP's or from the output of invention process with a
+    // decryptor
     //however, version one of this will be for speculation and will assume defaults
     //TODO: Refactor these inputs to be contained inside a BuildCalculationConfiguration or some such
     public BuildCalculationResult calculateBuildCosts (
@@ -150,8 +154,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         InventionCalculationResult inventionCalculationResult = null;
         if ( !blueprintData.getBlueprintDetails()
                            .getTechLevel()
-                           .equals( 1 ) )
-        {
+                           .equals( 1 ) ) {
             inventionCalculationResult = this.inventionCalc.calculateInventionCosts( costIndexes, taxRate,
                                                                                      blueprintData, decryptor,
                                                                                      inventionSkills );
