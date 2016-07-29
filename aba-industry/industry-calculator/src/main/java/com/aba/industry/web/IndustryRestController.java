@@ -14,7 +14,11 @@
 package com.aba.industry.web;
 
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.service.IndustryCalculationService;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,10 +26,18 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by maurerit on 7/23/16.
  */
 @RestController
+@Setter
 public class IndustryRestController {
-    @RequestMapping( path = "/calculateBuild", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType
-            .APPLICATION_JSON_VALUE )
-    public BuildCalculationResult calculateBuild ( ) {
-        return null;
+    @Autowired
+    private IndustryCalculationService industryCalculationService;
+
+    @RequestMapping( path = "/calculateBuild/{systemName}/{typeId}",
+            produces =
+                    MediaType
+                            .APPLICATION_JSON_VALUE )
+    public BuildCalculationResult calculateBuild ( @PathVariable( "systemName" ) String systemName,
+                                                   @PathVariable( "typeId" ) Long typeId )
+    {
+        return industryCalculationService.calculateBuildCosts( systemName, typeId );
     }
 }

@@ -13,7 +13,7 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.client.impl.FuzzySteveClientImpl;
+import com.aba.industry.fetch.client.impl.FuzzySteveService;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 public class FuzzySteveClientTests {
 
-    private FuzzySteveClientImpl client = new FuzzySteveClientImpl();
+    private FuzzySteveService client = new FuzzySteveService();
 
     @Test
     public void testGetSleipnirBlueprintDetails ( ) throws IOException {

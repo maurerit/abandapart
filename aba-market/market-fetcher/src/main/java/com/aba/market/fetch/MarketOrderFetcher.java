@@ -24,4 +24,16 @@ public interface MarketOrderFetcher {
     List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId );
 
     Double getLowestSellPrice ( long regionId, long systemId, long itemId );
+
+    /**
+     * Implementations of this method will inspect the market and report the amount per item that is need to purchase
+     * the number specified by the {@param quantity} parameter.
+     *
+     * @param regionId
+     * @param systemId
+     * @param itemId
+     * @param quantity
+     * @return
+     */
+    Double getPriceForQuantity ( long regionId, long systemId, long itemId, int quantity );
 }

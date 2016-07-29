@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RunWith( MockitoJUnitRunner.class )
-public class IndustryCalculationServiceImplTests {
+public class IndustryCalculationServiceImplUnitTests {
     @Mock
     BuildRequirementsProvider    buildRequirementsProvider;
     @Mock
@@ -82,14 +82,15 @@ public class IndustryCalculationServiceImplTests {
     private IndustryCalculationService service = new IndustryCalculationServiceImpl();
 
     @Before
-    public void dataSetupBeforeTests ( ) throws IOException {
-        InputStream bpDetailsIS = IndustryCalculationServiceImplTests.class.getResourceAsStream(
+    public void dataSetupBeforeTests ( ) throws IOException
+    {
+        InputStream bpDetailsIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-BlueprintDetails.json" );
-        InputStream costIndexesIS = IndustryCalculationServiceImplTests.class.getResourceAsStream(
+        InputStream costIndexesIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-CostIndexes.json" );
-        InputStream itemCostIS = IndustryCalculationServiceImplTests.class.getResourceAsStream(
+        InputStream itemCostIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-ItemCosts.json" );
-        InputStream buildCalculationResultIS = IndustryCalculationServiceImplTests.class.getResourceAsStream(
+        InputStream buildCalculationResultIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-Output.json" );
 
         TypeFactory typeFactory = mapper.getTypeFactory();
@@ -146,7 +147,8 @@ public class IndustryCalculationServiceImplTests {
     }
 
     @Test
-    public void testThatServiceCombinesCalculationResults ( ) throws IOException {
+    public void testThatServiceCombinesCalculationResults ( ) throws IOException
+    {
         Mockito.when( buildRequirementsProvider.getBlueprintData( 22444l ) )
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )

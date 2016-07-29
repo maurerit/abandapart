@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface FuzzySteveClient {
+public interface FuzzySteveRESTClient {
     @GET( "/blueprint/api/blueprint.php" )
     Call<BlueprintData> getBlueprintData ( @Query( "typeid" ) Long typeId );
 

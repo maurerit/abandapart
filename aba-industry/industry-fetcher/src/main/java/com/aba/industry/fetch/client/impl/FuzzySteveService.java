@@ -15,7 +15,7 @@ package com.aba.industry.fetch.client.impl;
 
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
-import com.aba.industry.fetch.service.FuzzySteveClient;
+import com.aba.industry.fetch.service.FuzzySteveRESTClient;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import okhttp3.OkHttpClient;
@@ -24,18 +24,19 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 
-public class FuzzySteveClientImpl implements BuildRequirementsProvider, CostIndexProvider {
+public class FuzzySteveService implements BuildRequirementsProvider, CostIndexProvider {
     private static final String fuzzysDomain = "www.fuzzwork.co.uk";
-    private FuzzySteveClient client;
+    private FuzzySteveRESTClient client;
 
-    public FuzzySteveClientImpl ( ) {
+    public FuzzySteveService ( )
+    {
         OkHttpClient.Builder bob = new OkHttpClient.Builder();
         this.client = new Retrofit.Builder()
                 .baseUrl( "https://" + fuzzysDomain )
                 .addConverterFactory( JacksonConverterFactory.create() )
                 .client( bob.build() )
                 .build()
-                .create( FuzzySteveClient.class );
+                .create( FuzzySteveRESTClient.class );
     }
 
     public BlueprintData getBlueprintData ( Long typeId ) throws IOException {

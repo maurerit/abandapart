@@ -16,7 +16,9 @@ package com.aba.industry.overhead.impl;
 import com.aba.industry.model.Activity;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.overhead.OverheadCalculator;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LHOverheadCalculatorImpl implements OverheadCalculator {
 
     @Override

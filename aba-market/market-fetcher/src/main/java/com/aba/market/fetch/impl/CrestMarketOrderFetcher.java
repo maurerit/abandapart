@@ -13,37 +13,40 @@
 
 package com.aba.market.fetch.impl;
 
+import com.aba.market.comparator.CrestMarketOrderPriceComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 /**
- * Created by mm66053 on 7/26/2016.
+ * Created by maurerit on 7/26/2016.
  */
+@Service
 @Setter
 public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     @Autowired
     private CrestService crestService;
 
     @Override
-    public List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId ) {
+    public List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId )
+    {
         return crestService.getMarketOrders( regionId, "sell", itemId );
     }
 
     @Override
-    public Double getLowestSellPrice ( long regionId, long systemId, long itemId ) {
+    public Double getLowestSellPrice ( long regionId, long systemId, long itemId )
+    {
         Double result = null;
 
-        //TODO: For now, I'm concerned with Amarr and Jita, hard coding the hub stations id's
-        Long jitaFourMoonFourId = 60003760l;
-        Long amarrEightId = 60008494l;
         //Used in the below lambda, needs to be final
-        final Long hubIdToFind = systemId == jitaFourMoonFourId ? jitaFourMoonFourId : amarrEightId;
+        final Long hubIdToFind = getHubStationIdToUse( systemId );
 
         List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
 
@@ -57,5 +60,47 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         }
 
         return result;
+    }
+
+    @Override
+    public Double getPriceForQuantity ( long regionId, long systemId, long itemId, int quantity )
+    {
+        Double result = 0d;
+
+        //TODO: For now I'm concerned with sell orders and from Amarr and Jita.
+        final long hubIdToFind = getHubStationIdToUse( systemId );
+
+        List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
+
+        List<CrestMarketOrder> filteredSellOrders = sellOrders.stream()
+                                                              .filter( order -> order.getLocationId() == hubIdToFind )
+                                                              .sorted( new CrestMarketOrderPriceComparator() )
+                                                              .collect( Collectors.toList() );
+
+        int totalFound = 0;
+        double totalPrice = 0d;
+
+        for ( CrestMarketOrder crestMarketOrder : filteredSellOrders ) {
+            if ( quantity > totalFound ) {
+                totalFound += crestMarketOrder.getVolume();
+                totalPrice += crestMarketOrder.getVolume() * crestMarketOrder.getPrice();
+            }
+            else if ( quantity <= totalFound ) {
+                break;
+            }
+        }
+
+        result = totalPrice / totalFound;
+
+        return result;
+    }
+
+    private Long getHubStationIdToUse ( long systemId )
+    {
+        //TODO: For now, I'm concerned with Amarr and Jita, hard coding the hub stations id's
+        Long jitaFourMoonFourId = 60003760l;
+        Long amarrEightId = 60008494l;
+        return systemId == jitaFourMoonFourId ? jitaFourMoonFourId :
+                amarrEightId;
     }
 }

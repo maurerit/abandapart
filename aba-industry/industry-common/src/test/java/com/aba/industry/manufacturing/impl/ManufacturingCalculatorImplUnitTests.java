@@ -11,14 +11,16 @@
  * the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.invention.impl;
+package com.aba.industry.manufacturing.impl;
 
-import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.data.domain.config.ConfigurationType;
+import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.ItemCost;
+import com.aba.industry.invention.impl.InventionCalculatorImplUnitTests;
+import com.aba.industry.manufacturing.ManufacturingCalculator;
 import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
-import com.aba.industry.model.Decryptor;
-import com.aba.industry.model.InventionCalculationResult;
+import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -34,18 +36,18 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InventionCalculatorImplTests {
+public class ManufacturingCalculatorImplUnitTests {
 
-    private InventionCalculatorImpl calcImpl = new InventionCalculatorImpl();
+    private ManufacturingCalculator calc = new ManufacturingCalculatorImpl();
 
     @Test
-    public void testSleipnirWithNullDecryptor ( ) throws JsonParseException, JsonMappingException, IOException {
+    public void testSleipnirBuildCosts ( ) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        InputStream bpDetailsIS = InventionCalculatorImplTests.class.getResourceAsStream(
+        InputStream bpDetailsIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-BlueprintDetails.json" );
-        InputStream costIndexesIS = InventionCalculatorImplTests.class.getResourceAsStream(
+        InputStream costIndexesIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-CostIndexes.json" );
-        InputStream itemCostIS = InventionCalculatorImplTests.class.getResourceAsStream(
+        InputStream itemCostIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-ItemCosts.json" );
 
         TypeFactory typeFactory = mapper.getTypeFactory();
@@ -55,21 +57,12 @@ public class InventionCalculatorImplTests {
 
         SystemCostIndexes costIndexes = mapper.readValue( costIndexesIS, SystemCostIndexes.class );
         BlueprintData bpData = mapper.readValue( bpDetailsIS, BlueprintData.class );
-        Decryptor decryptor = null;
-        InventionSkillConfiguration skillConfiguration = new InventionSkillConfiguration();
 
-        skillConfiguration.setDatacoreOneSkillLevel( 3 );
-        skillConfiguration.setDatacoreTwoSkillLevel( 3 );
-        skillConfiguration.setEncryptionSkillLevel( 4 );
+        IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
 
-        for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activity.INVENTION.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
-
-            am.setCost( ic.getSell() );
-            am.setAdjustedCost( ic.getAdjusted() );
-        }
+        industrySkills.setAdvancedIndustrySkillLevel( 5 );
+        industrySkills.setIndustrySkillLevel( 5 );
+        industrySkills.setPreference( ConfigurationType.EXCEPTIONAL );
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( Activity.MANUFACTURING.getActivityId() ) ) {
@@ -80,11 +73,11 @@ public class InventionCalculatorImplTests {
             am.setAdjustedCost( ic.getAdjusted() );
         }
 
-        InventionCalculationResult result = calcImpl.calculateInventionCosts( costIndexes, 0.0d, bpData, decryptor,
-                                                                              skillConfiguration );
+        BuildCalculationResult result = calc.calculateBuildCost( costIndexes, 1d, bpData, 2, 4, industrySkills );
 
-        Assert.assertNotNull( "Result should not be null", result );
-        Assert.assertEquals( 6808205.92, result.getCostPerSuccessfulInventionRun(), 0.01 );
+        Assert.assertEquals( 312429715.96, result.getMaterialCost(), 0.01 );
+        Assert.assertEquals( 20036519.59, result.getInstallationFees(), 0.01 );
+        Assert.assertEquals( result.getProductId(), 22444l );
     }
 
 }
