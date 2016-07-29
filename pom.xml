@@ -141,6 +141,8 @@
                     <configuration>
                         <excludes>
                             <exclude>**/domain/**</exclude>
+                            <exclude>**/model/**</exclude>
+                            <exclude>**/*Congiuration.java</exclude>
                         </excludes>
                     </configuration>
                     <executions>
