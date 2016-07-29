@@ -63,7 +63,7 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     }
 
     @Override
-    public Double getPriceForQuantity ( long regionId, long systemId, long itemId, int quantity )
+    public Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity )
     {
         Double result = 0d;
 

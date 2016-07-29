@@ -142,7 +142,7 @@
                         <excludes>
                             <exclude>**/domain/**</exclude>
                             <exclude>**/model/**</exclude>
-                            <exclude>**/*Congiuration.java</exclude>
+                            <exclude>**/*Configuration.java</exclude>
                         </excludes>
                     </configuration>
                     <executions>
