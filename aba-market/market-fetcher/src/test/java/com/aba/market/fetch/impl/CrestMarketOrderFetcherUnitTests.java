@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by mm66053 on 7/27/2016.
+ * Created by maurerit on 7/27/2016.
  */
 @RunWith( MockitoJUnitRunner.class )
 public class CrestMarketOrderFetcherUnitTests {
@@ -61,5 +61,16 @@ public class CrestMarketOrderFetcherUnitTests {
         Double lowestPrice = crestMarketOrderFetcher.getLowestSellPrice( 0l, 10, 12345 );
 
         Assert.assertNull( lowestPrice );
+    }
+
+    @Test
+    public void testPriceForQuantity ( ) throws IOException
+    {
+        Mockito.when( crestService.getMarketOrders( 0l, "sell", 22444 ) )
+               .thenReturn( sleipnirData );
+
+        Double priceForQuantity = crestMarketOrderFetcher.getPriceForQuantity( 0l, 60008494l, 22444, 3 );
+
+        Assert.assertEquals( 347988897.55, priceForQuantity, 0.01 );
     }
 }

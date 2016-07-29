@@ -12,7 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 
 /**
- * Created by mm66053 on 7/27/2016.
+ * Created by maurerit on 7/27/2016.
  */
 @RunWith( MockitoJUnitRunner.class )
 public class CrestSolarSystemRepositoryUnitTests {
