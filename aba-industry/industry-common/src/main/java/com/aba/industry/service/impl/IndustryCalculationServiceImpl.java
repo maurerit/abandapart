@@ -23,10 +23,7 @@ import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
 import com.aba.industry.invention.InventionCalculator;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activity;
-import com.aba.industry.model.BuildCalculationResult;
-import com.aba.industry.model.Decryptor;
-import com.aba.industry.model.InventionCalculationResult;
+import com.aba.industry.model.*;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
@@ -80,7 +77,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     private RegionRepository regionRepository;
 
     @Override
-    public BuildCalculationResult calculateBuildCosts ( String systemName, Long outputTypeId ) {
+    public BuildCalculationResult calculateBuildCosts ( String systemName, Long outputTypeId )
+    {
         IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
         industrySkills.setAdvancedIndustrySkillLevel( 5 );
         industrySkills.setAdvancedIndustrySkillLevelMultiplier( 0.0 );
@@ -131,6 +129,10 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
             throw new ApplicationException( e );
         }
 
+        long jitaId = solarSystemRepository.getSolarSystemId( JITA );
+        long theForgeId = regionRepository.findRegionId( "The Forge" );
+        putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
+
         InventionCalculationResult inventionCalculationResult =
                 getInventionCalculationResult( inventionSkills, decryptor, taxRate, blueprintData, costIndexes );
         result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxRate,
@@ -142,6 +144,25 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         calculateOverheads( systemName, result );
 
         return result;
+    }
+
+    private void putCostsIntoBlueprintData ( long regionId, long systemId, BlueprintData blueprintData )
+    {
+        for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
+                                                         .get( Activity.INVENTION.getActivityId() ) ) {
+            long itemId = am.getTypeId();
+            long quantity = am.getQuantity();
+            am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+            am.setSource( CostSource.LIVE_MARKET_SELL );
+        }
+
+        for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
+                                                         .get( Activity.MANUFACTURING.getActivityId() ) ) {
+            long itemId = am.getTypeId();
+            long quantity = am.getQuantity();
+            am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+            am.setSource( CostSource.LIVE_MARKET_SELL );
+        }
     }
 
     private InventionCalculationResult getInventionCalculationResult (
@@ -164,7 +185,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         return inventionCalculationResult;
     }
 
-    private void calculateOverheads ( String systemName, BuildCalculationResult result ) {
+    private void calculateOverheads ( String systemName, BuildCalculationResult result )
+    {
         SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
         FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
 
@@ -188,6 +210,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                                                                  (double) Math.round(
                                                                          result.getMaterialCost() ) ) );
 
+        //TODO: Situations where there is no item listed make a configurable desirable profit ratio
         if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
             result.getFromBuildLocationFreight()
                   .put( JITA, overheadCalculator.getFreightDetails( systemName, JITA,

@@ -35,5 +35,5 @@ public interface MarketOrderFetcher {
      * @param quantity
      * @return
      */
-    Double getPriceForQuantity ( long regionId, long systemId, long itemId, int quantity );
+    Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity );
 }
