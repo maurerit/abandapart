@@ -13,6 +13,7 @@
 
 package com.aba.industry.overhead.impl;
 
+import com.aba.industry.model.Activity;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.overhead.OverheadCalculator;
 import org.junit.Assert;
@@ -43,5 +44,21 @@ public class LHOverheadCalculatorImplUnitTests {
         Assert.assertEquals( freightDetails.getCharge(), 8500000d, 0.01 );
         Assert.assertEquals( freightDetails.getJumps()
                                            .longValue(), 9l );
+    }
+
+    @Test
+    public void testInventionCalculationResults ( )
+    {
+        Double result = calculator.getSalary( Activity.INVENTION, 2000l );
+
+        Assert.assertEquals( 2777.77, result, 0.01 );
+    }
+
+    @Test
+    public void testManufacturingCalculationResults ( )
+    {
+        Double result = calculator.getSalary( Activity.MANUFACTURING, 20000l );
+
+        Assert.assertEquals( 555555.55, result, 0.01 );
     }
 }
