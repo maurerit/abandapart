@@ -1,23 +1,20 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.manufacturing.impl;
 
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import org.slf4j.Logger;
@@ -56,7 +53,7 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
         Double materialCost = 0d;
         Double runCost = 0d;
         for ( ActivityMaterialWithCost material : bpData.getActivityMaterials()
-                                                        .get( Activity.MANUFACTURING.getActivityId() ) ) {
+                                                        .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
             ActivityMaterialWithCost materialReduced = new ActivityMaterialWithCost();
 
             materialReduced.setBlueprintTypeId( material.getBlueprintTypeId() );
@@ -77,13 +74,13 @@ public class ManufacturingCalculatorImpl implements ManufacturingCalculator {
         result.setMaterialCost( materialCost );
         result.setMaterialsWithCost( materialsReduced );
         runCost = ( runCost * costIndexes.getCostIndexes()
-                                         .get( Activity.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
+                                         .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) * taxMultiplier;
 
         //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)
         // /100))*facilityte[facility]*runs*dcmultiplier;
         Long buildTime = Math.round( bpData.getBlueprintDetails()
                                            .getTimesInSeconds()
-                                           .get( Activity.MANUFACTURING.getActivityId() ) *
+                                           .get( IndustryActivities.MANUFACTURING.getActivityId() ) *
                                              ( 1 - ( teLevel.doubleValue() / 100d ) ) *
                                              ( 1 - ( ( industrySkills.getIndustrySkillLevel()
                                                                      .doubleValue() * 4 ) / 100d ) ) *

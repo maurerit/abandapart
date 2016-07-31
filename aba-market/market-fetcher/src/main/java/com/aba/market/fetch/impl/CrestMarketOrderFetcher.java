@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.market.fetch.impl;
@@ -19,6 +16,7 @@ import lombok.Setter;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +39,7 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     }
 
     @Override
+    @Cacheable( "lowest-sell-price" )
     public Double getLowestSellPrice ( long regionId, long systemId, long itemId )
     {
         Double result = null;
@@ -63,6 +62,7 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     }
 
     @Override
+    @Cacheable( "price-for-quantity" )
     public Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity )
     {
         Double result = 0d;
@@ -97,10 +97,13 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
 
     private Long getHubStationIdToUse ( long systemId )
     {
+        //TODO: For now, use Jita and AMARR hard coded ids
+        Long jitaId = 30000142l;
+        Long amarrId = 30002187l;
         //TODO: For now, I'm concerned with Amarr and Jita, hard coding the hub stations id's
         Long jitaFourMoonFourId = 60003760l;
         Long amarrEightId = 60008494l;
-        return systemId == jitaFourMoonFourId ? jitaFourMoonFourId :
+        return systemId == jitaId ? jitaFourMoonFourId :
                 amarrEightId;
     }
 }

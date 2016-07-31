@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.service.impl;
@@ -29,6 +26,7 @@ import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.IndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketPriceFetcher;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +37,7 @@ import java.io.IOException;
 
 @Service
 @Setter
+//TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
 public class IndustryCalculationServiceImpl implements IndustryCalculationService {
     //TODO: Temporary statics to get rid of Jita and Amarr all over the place
     public static final String JITA  = "Jita";
@@ -69,6 +68,9 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 
     @Autowired
     private MarketOrderFetcher marketOrderFetcher;
+
+    @Autowired
+    private MarketPriceFetcher marketPriceFetcher;
 
     @Autowired
     private SolarSystemRepository solarSystemRepository;
@@ -118,6 +120,9 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         //TODO: Tax Rate should be determined by builders standing with station holder
         Double taxRate = 0.0d;
 
+        Integer meLevelToUse = meLevel;
+        Integer teLevelToUse = teLevel;
+
         BlueprintData blueprintData = null;
         SystemCostIndexes costIndexes;
         try {
@@ -131,14 +136,38 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 
         long jitaId = solarSystemRepository.getSolarSystemId( JITA );
         long theForgeId = regionRepository.findRegionId( "The Forge" );
+
         putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
 
         InventionCalculationResult inventionCalculationResult =
                 getInventionCalculationResult( inventionSkills, decryptor, taxRate, blueprintData, costIndexes );
+
+        if ( inventionCalculationResult != null ) {
+            meLevelToUse = inventionCalculationResult.getResultingME();
+            teLevelToUse = inventionCalculationResult.getResultingTE();
+        }
+
         result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxRate,
                                                             blueprintData,
-                                                            meLevel, teLevel,
+                                                            meLevelToUse, teLevelToUse,
                                                             industrySkills );
+
+        //TODO: Fuzzy Steve's blueprint data 'api' doesn't put in a base invention time... use his multiplier strategy
+        if ( inventionCalculationResult != null ) {
+            double inventionTimeMultiplier = ( 1 - ( inventionSkills.getDatacoreOneSkillLevel()
+                                                                    .doubleValue() / 100 ) ) * ( 1 - (
+                                                                            inventionSkills.getDatacoreTwoSkillLevel()
+                                                                                                                      .doubleValue() / 100 ) );
+            long buildTime = result.getSeconds();
+            long inventionTime = Math.round( ( buildTime * inventionTimeMultiplier ) - buildTime );
+
+            inventionCalculationResult.setSeconds( inventionTime );
+
+            inventionCalculationResult.setSalaryCost(
+                    overheadCalculator.getSalary( IndustryActivities.INVENTION,
+                                                  inventionCalculationResult.getSeconds() ) );
+        }
+
         result.setInventionResult( inventionCalculationResult );
 
         calculateOverheads( systemName, result );
@@ -146,23 +175,31 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         return result;
     }
 
+    //TODO: Refactor this into a cost provider or something?
     private void putCostsIntoBlueprintData ( long regionId, long systemId, BlueprintData blueprintData )
     {
         for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
-                                                         .get( Activity.INVENTION.getActivityId() ) ) {
+                                                         .get( IndustryActivities.INVENTION.getActivityId() ) ) {
             long itemId = am.getTypeId();
             long quantity = am.getQuantity();
             am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+            am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
             am.setSource( CostSource.LIVE_MARKET_SELL );
         }
 
         for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
-                                                         .get( Activity.MANUFACTURING.getActivityId() ) ) {
+                                                         .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
             long itemId = am.getTypeId();
             long quantity = am.getQuantity();
             am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+            am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
             am.setSource( CostSource.LIVE_MARKET_SELL );
         }
+
+        long precursorTypeId = blueprintData.getBlueprintDetails()
+                                            .getPrecursorTypeId();
+        blueprintData.getBlueprintDetails()
+                     .setPrecursorAdjustedPrice( marketPriceFetcher.getAdjustedPrice( precursorTypeId ) );
     }
 
     private InventionCalculationResult getInventionCalculationResult (
@@ -175,12 +212,11 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         InventionCalculationResult inventionCalculationResult = null;
         if ( !blueprintData.getBlueprintDetails()
                            .getTechLevel()
-                           .equals( 1 ) ) {
+                           .equals( 1 ) )
+        {
             inventionCalculationResult = this.inventionCalc.calculateInventionCosts( costIndexes, taxRate,
                                                                                      blueprintData, decryptor,
                                                                                      inventionSkills );
-            inventionCalculationResult.setSalaryCost(
-                    overheadCalculator.getSalary( Activity.INVENTION, inventionCalculationResult.getSeconds() ) );
         }
         return inventionCalculationResult;
     }
@@ -190,8 +226,6 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
         FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
 
-        //TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
-        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
         long jitaId = solarSystemRepository.getSolarSystemId( JITA );
         long amarrId = solarSystemRepository.getSolarSystemId( AMARR );
         Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
@@ -201,6 +235,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
                                                                         amarrId,
                                                                         result.getProductId() );
+        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
         result.getToBuildLocationFreight()
               .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName,
                                                                 (double) Math.round(
@@ -233,13 +268,13 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                   .put( AMARR, overheadCalculator.getFreightDetails( systemName, AMARR, amarrLowestSell ) );
         }
 
-        result.setSalaryCost( overheadCalculator.getSalary( Activity.MANUFACTURING, result.getSeconds() ) );
+        result.setSalaryCost( overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, result.getSeconds() ) );
 
         if ( result.getInventionResult() != null ) {
             result.getInventionResult()
                   .setSalaryCost( overheadCalculator.getSalary(
-                          Activity.INVENTION, result.getInventionResult()
-                                                    .getSeconds() ) );
+                          IndustryActivities.INVENTION, result.getInventionResult()
+                                                              .getSeconds() ) );
         }
     }
 }

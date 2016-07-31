@@ -22,9 +22,15 @@
     <artifactId>market-fetcher</artifactId>
 
     <dependencies>
+        <!--TODO: Add a pom that can be used to import the below 2 dependencies.  They're seperate because of groovy allowing wildcards :(.-->
         <dependency>
             <groupId>org.devfleet.crest</groupId>
             <artifactId>retrofit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-jackson</artifactId>
         </dependency>
 
         <dependency>

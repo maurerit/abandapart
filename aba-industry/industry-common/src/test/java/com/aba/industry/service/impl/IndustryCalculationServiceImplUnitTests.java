@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.service.impl;
@@ -30,6 +27,7 @@ import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.IndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -65,6 +63,8 @@ public class IndustryCalculationServiceImplUnitTests {
     RegionRepository             regionRepository;
     @Mock
     MarketOrderFetcher           marketOrderFetcher;
+    @Mock
+    MarketPriceFetcher           marketPriceFetcher;
     @Mock
     private SolarSystemRepository solarSystemRepository;
     private ObjectMapper mapper = new ObjectMapper();
@@ -115,7 +115,7 @@ public class IndustryCalculationServiceImplUnitTests {
         industrySkills.setPreference( ConfigurationType.EXCEPTIONAL );
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activity.INVENTION.getActivityId() ) ) {
+                                                  .get( IndustryActivities.INVENTION.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 
@@ -124,7 +124,7 @@ public class IndustryCalculationServiceImplUnitTests {
         }
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activity.MANUFACTURING.getActivityId() ) ) {
+                                                  .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 
@@ -134,6 +134,8 @@ public class IndustryCalculationServiceImplUnitTests {
 
         inventionCalculationResult = new InventionCalculationResult();
         inventionCalculationResult.setSeconds( 2000l );
+        inventionCalculationResult.setResultingME( 2 );
+        inventionCalculationResult.setResultingTE( 4 );
 
         jitaFreightDetails = new FreightDetails();
 
@@ -166,9 +168,10 @@ public class IndustryCalculationServiceImplUnitTests {
         Mockito.when( overheadConfigurationService.getFreightConfiguration() )
                .thenReturn( null );
 
-        Mockito.when( overheadCalculator.getSalary( Activity.INVENTION, 2000l ) )
+        Mockito.when( overheadCalculator.getSalary( IndustryActivities.INVENTION, 2000l ) )
                .thenReturn( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000 );
-        Mockito.when( overheadCalculator.getSalary( Activity.MANUFACTURING, buildCalculationResult.getSeconds() ) )
+        Mockito.when(
+                overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, buildCalculationResult.getSeconds() ) )
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
         Mockito.when(
