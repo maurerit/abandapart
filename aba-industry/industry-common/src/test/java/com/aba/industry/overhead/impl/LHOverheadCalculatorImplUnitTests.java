@@ -1,20 +1,17 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.overhead.impl;
 
-import com.aba.industry.model.Activity;
 import com.aba.industry.model.FreightDetails;
+import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.overhead.OverheadCalculator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,7 +46,7 @@ public class LHOverheadCalculatorImplUnitTests {
     @Test
     public void testInventionCalculationResults ( )
     {
-        Double result = calculator.getSalary( Activity.INVENTION, 2000l );
+        Double result = calculator.getSalary( IndustryActivities.INVENTION, 2000l );
 
         Assert.assertEquals( 2777.77, result, 0.01 );
     }
@@ -57,7 +54,7 @@ public class LHOverheadCalculatorImplUnitTests {
     @Test
     public void testManufacturingCalculationResults ( )
     {
-        Double result = calculator.getSalary( Activity.MANUFACTURING, 20000l );
+        Double result = calculator.getSalary( IndustryActivities.MANUFACTURING, 20000l );
 
         Assert.assertEquals( 555555.55, result, 0.01 );
     }

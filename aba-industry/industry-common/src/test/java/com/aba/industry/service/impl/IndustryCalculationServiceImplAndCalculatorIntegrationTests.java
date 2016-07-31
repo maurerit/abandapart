@@ -1,3 +1,13 @@
+/*
+ * Copyright 2016 maurerit
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+
 package com.aba.industry.service.impl;
 
 import com.aba.data.domain.config.ConfigurationType;
@@ -19,10 +29,12 @@ import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.overhead.impl.LHOverheadCalculatorImpl;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -52,6 +64,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     RegionRepository             regionRepository;
     @Mock
     MarketOrderFetcher           marketOrderFetcher;
+    @Mock
+    MarketPriceFetcher           marketPriceFetcher;
     @InjectMocks
     private IndustryCalculationServiceImpl industryCalculationService = new IndustryCalculationServiceImpl();
     private InventionCalculator            inventionCalculator        = new InventionCalculatorImpl();
@@ -115,17 +129,19 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
         industrySkills.setPreference( ConfigurationType.EXCEPTIONAL );
 
         inventionMaterials = bpData.getActivityMaterials()
-                                   .get( Activity.INVENTION.getActivityId() );
+                                   .get( IndustryActivities.INVENTION.getActivityId() );
         manufacturingMaterials = bpData.getActivityMaterials()
-                                       .get( Activity.MANUFACTURING.getActivityId() );
+                                       .get( IndustryActivities.MANUFACTURING.getActivityId() );
 
         bpData.getActivityMaterials()
               .clear();
 
         bpData.getActivityMaterials()
-              .put( Activity.INVENTION.getActivityId(), new ArrayList<>() );
+              .put( IndustryActivities.INVENTION.getActivityId(), new ArrayList<>() );
         bpData.getActivityMaterials()
-              .put( Activity.MANUFACTURING.getActivityId(), new ArrayList<>() );
+              .put( IndustryActivities.MANUFACTURING.getActivityId(), new ArrayList<>() );
+        bpData.getBlueprintDetails()
+              .setPrecursorAdjustedPrice( null );
 
         for ( ActivityMaterialWithCost am : inventionMaterials ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
@@ -184,7 +200,9 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     }
 
     //TODO: NullPointers should be wrapped
+    //TODO: I don't really like this test as it SHOULD never be possible...  Think of something better to do
     @Test( expected = NullPointerException.class )
+    @Ignore
     public void testThatInventionCalcThrowsNullPointer ( ) throws IOException
     {
         BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444l,
@@ -209,6 +227,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
         */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 3812 ) )
                .thenReturn( 141.87 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 3812 ) )
+               .thenReturn( 0d );
         /*
   "3814": {
     "sell": 34.3,
@@ -219,6 +239,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 3814 ) )
                .thenReturn( 34.3 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 3814 ) )
+               .thenReturn( 0d );
         /*
   "3828": {
     "sell": 21568,
@@ -229,6 +251,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 3828 ) )
                .thenReturn( 21568d );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 3828 ) )
+               .thenReturn( 0d );
         /*
   "9836": {
     "sell": 15519.89,
@@ -239,6 +263,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 9836 ) )
                .thenReturn( 15519.89 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 9836 ) )
+               .thenReturn( 4000.75 );
         /*
   "11399": {
     "sell": 12558.04,
@@ -249,6 +275,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11399 ) )
                .thenReturn( 12558.04 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11399 ) )
+               .thenReturn( 4045.75 );
         /*
   "11461": {
     "sell": 389.56,
@@ -259,6 +287,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11461 ) )
                .thenReturn( 389.56 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11461 ) )
+               .thenReturn( 1315.61 );
         /*
   "11478": {
     "sell": 596.8,
@@ -269,6 +299,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11478 ) )
                .thenReturn( 596.8 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11478 ) )
+               .thenReturn( 258.71 );
         /*
   "11530": {
     "sell": 59498,
@@ -279,6 +311,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11530 ) )
                .thenReturn( 59498.00 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11530 ) )
+               .thenReturn( 13173.3 );
         /*
   "11536": {
     "sell": 28796.99,
@@ -289,6 +323,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11536 ) )
                .thenReturn( 28796.99 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11536 ) )
+               .thenReturn( 11086.65 );
         /*
   "11538": {
     "sell": 39490.16,
@@ -299,6 +335,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11538 ) )
                .thenReturn( 39490.16 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11538 ) )
+               .thenReturn( 26546.29 );
         /*
   "11542": {
     "sell": 9004.98,
@@ -309,6 +347,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11542 ) )
                .thenReturn( 9004.98 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11542 ) )
+               .thenReturn( 4022d );
         /*
   "11548": {
     "sell": 117999.52,
@@ -319,6 +359,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11548 ) )
                .thenReturn( 117999.52 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11548 ) )
+               .thenReturn( 19212.66 );
         /*
   "11551": {
     "sell": 37498.86,
@@ -329,6 +371,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11551 ) )
                .thenReturn( 37498.86 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 11551 ) )
+               .thenReturn( 32909d );
         /*
   "11555": {
     "sell": 35300,
@@ -339,6 +383,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 11555 ) )
                .thenReturn( 35300.00 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 35300 ) )
+               .thenReturn( 9706.05 );
         /*
   "20172": {
     "sell": 99998.93,
@@ -349,6 +395,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 20172 ) )
                .thenReturn( 99998.93 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 20172 ) )
+               .thenReturn( 77837.65 );
         /*
   "20424": {
     "sell": 43609.7,
@@ -359,6 +407,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 20424 ) )
                .thenReturn( 43609.7 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 20424 ) )
+               .thenReturn( 61198.27 );
         /*
   "24702": {
     "sell": 51178568.63,
@@ -369,6 +419,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 24702 ) )
                .thenReturn( 51178568.63 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 24702 ) )
+               .thenReturn( 34529995.28 );
         /*
   "34201": {
     "sell": 388669.78,
@@ -379,6 +431,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34201 ) )
                .thenReturn( 388669.78 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34201 ) )
+               .thenReturn( 0d );
         /*
   "34202": {
     "sell": 2789999.98,
@@ -389,6 +443,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34202 ) )
                .thenReturn( 2789999.98 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34202 ) )
+               .thenReturn( 0d );
         /*
   "34203": {
     "sell": 818745.39,
@@ -399,6 +455,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34203 ) )
                .thenReturn( 818745.39 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34203 ) )
+               .thenReturn( 0d );
         /*
   "34204": {
     "sell": 969103,
@@ -409,6 +467,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34204 ) )
                .thenReturn( 969103d );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34204 ) )
+               .thenReturn( 0d );
         /*
   "34205": {
     "sell": 440005,
@@ -419,6 +479,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34205 ) )
                .thenReturn( 440005d );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34205 ) )
+               .thenReturn( 0d );
         /*
   "34206": {
     "sell": 269251.17,
@@ -429,6 +491,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34206 ) )
                .thenReturn( 269251.17 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34206 ) )
+               .thenReturn( 0d );
         /*
   "34207": {
     "sell": 3998918.7,
@@ -439,6 +503,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34207 ) )
                .thenReturn( 3998918.7 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34207 ) )
+               .thenReturn( 0d );
         /*
   "34208": {
     "sell": 4710999.92,
@@ -449,9 +515,13 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
   */
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 34208 ) )
                .thenReturn( 4710999.92 );
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 34208 ) )
+               .thenReturn( 0d );
         /*
 }
          */
+        Mockito.when( marketPriceFetcher.getAdjustedPrice( 24703 ) )
+               .thenReturn( 34958392.2 );
         //</editor-fold>
         BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444l,
                                                                                         industrySkills,

@@ -10,12 +10,60 @@
 
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd" updateCheck="true"
-         monitoring="autodetect" dynamicConfig="true">
+         monitoring="autodetect" dynamicConfig="true" name="market-fetcher">
 
     <diskStore path="java.io.tmpdir"/>
     <!--<diskStore path="~/cache" />-->
 
     <cache name="crest-sell-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localRestartable"/>
+    </cache>
+
+    <cache name="lowest-sell-price"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localRestartable"/>
+    </cache>
+
+    <cache name="price-for-quantity"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localRestartable"/>
+    </cache>
+
+    <cache name="adjusted-price"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localRestartable"/>
+    </cache>
+
+    <cache name="all-market-orders"
            maxEntriesLocalHeap="500"
            maxEntriesLocalDisk="40000"
            eternal="false"

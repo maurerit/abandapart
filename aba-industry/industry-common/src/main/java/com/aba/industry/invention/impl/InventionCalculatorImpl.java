@@ -1,23 +1,20 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.invention.impl;
 
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.invention.InventionCalculator;
-import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
+import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.InventionCalculationResult;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.BlueprintDetails;
@@ -41,9 +38,10 @@ public class InventionCalculatorImpl implements InventionCalculator {
     {
         BlueprintDetails bpDetails = bpData.getBlueprintDetails();
         List<ActivityMaterialWithCost> inventionMaterials = bpData.getActivityMaterials()
-                                                                  .get( Activity.INVENTION.getActivityId() );
+                                                                  .get( IndustryActivities.INVENTION.getActivityId() );
         List<ActivityMaterialWithCost> productionMaterials = bpData.getActivityMaterials()
-                                                                   .get( Activity.MANUFACTURING.getActivityId() );
+                                                                   .get( IndustryActivities.MANUFACTURING
+                                                                                 .getActivityId() );
 
         InventionCalculationResult result = fillInResultDetails( bpData, decryptor, inventionMaterials,
                                                                  skillConfiguration,
@@ -68,12 +66,12 @@ public class InventionCalculatorImpl implements InventionCalculator {
 
         //The run cost for the manufacturing portion of this invention job
         adjustedManufacturingCost *= 0.02 * costIndexes.getCostIndexes()
-                                                       .get( Activity.INVENTION.getActivityId() ) * taxMultiplier;
+                                                       .get( IndustryActivities.INVENTION.getActivityId() ) * taxMultiplier;
 
         Double blueprintCopyCost = bpData.getBlueprintDetails()
                                          .getPrecursorAdjustedPrice() *
                 costIndexes.getCostIndexes()
-                           .get( Activity.INVENTION.getActivityId() ) *
+                           .get( IndustryActivities.INVENTION.getActivityId() ) *
                 .02;
 
         result.setInstallationFees( adjustedManufacturingCost );
@@ -108,11 +106,11 @@ public class InventionCalculatorImpl implements InventionCalculator {
         result.setDecryptor( decryptor );
         result.setMaterialsWithCost( amWithCost );
         result.setRequiredSkills( bpData.getBlueprintSkills()
-                                        .get( Activity.INVENTION.getActivityId() ) );
+                                        .get( IndustryActivities.INVENTION.getActivityId() ) );
         result.setSkillConfiguration( skillConfiguration );
         result.setSeconds( bpData.getBlueprintDetails()
                                  .getTimesInSeconds()
-                                 .get( Activity.INVENTION.getActivityId() ) );
+                                 .get( IndustryActivities.INVENTION.getActivityId() ) );
 
         if ( decryptor == null ) {
             result.setResultingME( 2 );

@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.manufacturing.impl;
@@ -18,9 +15,9 @@ import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.industry.ItemCost;
 import com.aba.industry.invention.impl.InventionCalculatorImplUnitTests;
 import com.aba.industry.manufacturing.ManufacturingCalculator;
-import com.aba.industry.model.Activity;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -65,7 +62,7 @@ public class ManufacturingCalculatorImplUnitTests {
         industrySkills.setPreference( ConfigurationType.EXCEPTIONAL );
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
-                                                  .get( Activity.MANUFACTURING.getActivityId() ) ) {
+                                                  .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
             ItemCost ic = itemCosts.get( am.getTypeId()
                                            .intValue() );
 

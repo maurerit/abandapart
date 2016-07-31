@@ -30,6 +30,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.abandapart</groupId>
             <artifactId>industry-data</artifactId>
             <version>${project.parent.version}</version>
