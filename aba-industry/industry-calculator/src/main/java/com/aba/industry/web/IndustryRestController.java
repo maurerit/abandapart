@@ -36,7 +36,7 @@ public class IndustryRestController {
                     MediaType
                             .APPLICATION_JSON_VALUE )
     public BuildCalculationResult calculateBuild ( @PathVariable( "systemName" ) String systemName,
-                                                   @PathVariable( "typeId" ) Long typeId )
+                                                   @PathVariable( "typeId" ) Integer typeId )
     {
         return industryCalculationService.calculateBuildCosts( systemName, typeId );
     }
