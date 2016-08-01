@@ -158,8 +158,12 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                                                                     .doubleValue() / 100 ) ) * ( 1 - (
                                                                             inventionSkills.getDatacoreTwoSkillLevel()
                                                                                                                       .doubleValue() / 100 ) );
-            long buildTime = result.getSeconds();
-            long inventionTime = Math.round( ( buildTime * inventionTimeMultiplier ) - buildTime );
+            long baseInventionTime = blueprintData.getBlueprintDetails()
+                                                  .getTimesInSeconds()
+                                                  .get( IndustryActivities.INVENTION.getActivityId() );
+            //inventionTime = baseInventionTime ∗ facilityModifier ∗ (1 − 0.03 ∗ AdvancedIndustryLevel)
+            long inventionTime = Math.round(
+                    ( (double) baseInventionTime ) * ( 1 - 0.03 * industrySkills.getAdvancedIndustrySkillLevel() ) );
 
             inventionCalculationResult.setSeconds( inventionTime );
 
