@@ -114,7 +114,7 @@
   },
   "materialCost": 3.124297159600001E8,
   "lowestSellOrders": null,
-  "highestSellOrders": null,
+  "highestBuyOrders": null,
   "toBuildLocationFreight": {},
   "fromBuildLocationFreight": {},
   "inventionResult": null,

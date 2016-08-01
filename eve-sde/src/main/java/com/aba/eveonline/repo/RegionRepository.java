@@ -11,19 +11,17 @@
  * the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.model.fuzzysteve;
+package com.aba.eveonline.repo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import org.devfleet.crest.model.CrestItem;
 
-@Data
-public class ActivityMaterial {
-    @JsonProperty( "typeid" )
-    private Integer typeId;
-    @JsonProperty
-    private String  name;
-    @JsonProperty
-    private Long    quantity;
-    @JsonProperty( "maketype" )
-    private Long    blueprintTypeId;
+import java.util.List;
+
+/**
+ * Created by maurerit on 7/25/16.
+ */
+public interface RegionRepository {
+    List<CrestItem> getRegions ( );
+
+    Long findRegionId ( String regionName );
 }

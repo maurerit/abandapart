@@ -13,8 +13,8 @@ package com.aba.industry.service.impl;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
-import com.aba.eveonline.crest.repo.RegionRepository;
-import com.aba.eveonline.crest.repo.SolarSystemRepository;
+import com.aba.eveonline.repo.RegionRepository;
+import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.ItemCost;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -177,7 +177,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     @Before
     public void mockSetupBeforeTests ( ) throws IOException
     {
-        Mockito.when( buildRequirementsProvider.getBlueprintData( 22444l ) )
+        Mockito.when( buildRequirementsProvider.getBlueprintData( 22444 ) )
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
@@ -205,7 +205,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     @Ignore
     public void testThatInventionCalcThrowsNullPointer ( ) throws IOException
     {
-        BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444l,
+        BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444,
                                                                                         industrySkills,
                                                                                         inventionSkills, 2, 4, null,
                                                                                         false,
@@ -523,7 +523,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 24703 ) )
                .thenReturn( 34958392.2 );
         //</editor-fold>
-        BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444l,
+        BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444,
                                                                                         industrySkills,
                                                                                         inventionSkills, 2, 4, null,
                                                                                         false,

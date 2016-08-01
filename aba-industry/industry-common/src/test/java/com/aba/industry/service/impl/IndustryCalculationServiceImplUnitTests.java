@@ -1,11 +1,14 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.service.impl;
@@ -13,8 +16,9 @@ package com.aba.industry.service.impl;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
-import com.aba.eveonline.crest.repo.RegionRepository;
-import com.aba.eveonline.crest.repo.SolarSystemRepository;
+import com.aba.eveonline.repo.ItemTypeRepository;
+import com.aba.eveonline.repo.RegionRepository;
+import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.ItemCost;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -31,6 +35,7 @@ import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.devfleet.crest.model.CrestType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,6 +72,8 @@ public class IndustryCalculationServiceImplUnitTests {
     MarketPriceFetcher           marketPriceFetcher;
     @Mock
     private SolarSystemRepository solarSystemRepository;
+    @Mock
+    private ItemTypeRepository    itemTypeRepository;
     private ObjectMapper mapper = new ObjectMapper();
     private MapType                     mapType;
     private Map<Integer, ItemCost>      itemCosts;
@@ -151,7 +158,7 @@ public class IndustryCalculationServiceImplUnitTests {
     @Test
     public void testThatServiceCombinesCalculationResults ( ) throws IOException
     {
-        Mockito.when( buildRequirementsProvider.getBlueprintData( 22444l ) )
+        Mockito.when( buildRequirementsProvider.getBlueprintData( 22444 ) )
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
@@ -202,9 +209,171 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( 20l );
         Mockito.when( regionRepository.findRegionId( "Domain" ) )
                .thenReturn( 21l );
+        CrestType materialItem = new CrestType();
+        materialItem.setName( "Material Stuff" );
+        CrestType sleipnir = new CrestType();
+        sleipnir.setName( "Sleipnir" );
+        /*
+        {
+      "name": null,
+      "quantity": 118,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 41497.95,
+      "adjustedCost": 12349.12,
+      "typeid": 11530,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11530 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 294,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 11119.33,
+      "adjustedCost": 4137.41,
+      "typeid": 11399,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11399 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 11025,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 9993.17,
+      "adjustedCost": 3705.93,
+      "typeid": 11542,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11542 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 441,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 28784.83,
+      "adjustedCost": 11225.93,
+      "typeid": 11536,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11536 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 1764,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 39476.44,
+      "adjustedCost": 23860.33,
+      "typeid": 11538,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11538 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 559,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 38099.89,
+      "adjustedCost": 9737.91,
+      "typeid": 11555,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11555 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 294,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 14720.15,
+      "adjustedCost": 4520.0,
+      "typeid": 3828,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 3828 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 23,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 618.71,
+      "adjustedCost": 438.86,
+      "typeid": 11478,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11478 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 59,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 125464.98,
+      "adjustedCost": 18539.86,
+      "typeid": 11548,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11548 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 5.299999899E7,
+      "adjustedCost": 3.192696559E7,
+      "typeid": 24702,
+      "maketype": null
+    },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 24702 ) )
+               .thenReturn( materialItem );
+        /*
+    {
+      "name": null,
+      "quantity": 956,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 40899.99,
+      "adjustedCost": 38666.81,
+      "typeid": 11551,
+      "maketype": null
+    }*/
+        Mockito.when( itemTypeRepository.getItemDetails( 11551 ) )
+               .thenReturn( materialItem );
+        /*
+        {
+        "name": null,
+        "quantity": 16,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 43694.17732484076,
+        "adjustedCost": 39358.3,
+        "typeid": 20424,
+        "maketype": null
+      },*/
+        Mockito.when( itemTypeRepository.getItemDetails( 20424 ) )
+               .thenReturn( materialItem );
+        /*
+      {
+        "name": null,
+        "quantity": 16,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 100896.99,
+        "adjustedCost": 77503.84,
+        "typeid": 20172,
+        "maketype": null
+      }*/
+        Mockito.when( itemTypeRepository.getItemDetails( 20172 ) )
+               .thenReturn( materialItem );
+        Mockito.when( itemTypeRepository.getItemDetails( 22444 ) )
+               .thenReturn( sleipnir );
         //</editor-fold>
 
-        BuildCalculationResult result = this.service.calculateBuildCosts( "Atreen", 22444l, industrySkills,
+        BuildCalculationResult result = this.service.calculateBuildCosts( "Atreen", 22444, industrySkills,
                                                                           inventionSkills, 2, 4, null, false,
                                                                           false );
 
@@ -243,6 +412,7 @@ public class IndustryCalculationServiceImplUnitTests {
                                                           .getCharge(), 0.01 );
         Assert.assertEquals( 136170.0, buildCalculationResult.getInventionResult()
                                                              .getSeconds(), 0.01 );
+        Assert.assertEquals( "Sleipnir", buildCalculationResult.getProductName() );
     }
 
 }

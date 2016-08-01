@@ -13,7 +13,7 @@
 
 package com.aba.eveonline.crest.impl;
 
-import com.aba.eveonline.crest.repo.impl.CrestRegionRepository;
+import com.aba.eveonline.crest.repo.CrestRegionRepository;
 import org.devfleet.crest.retrofit.CrestClient;
 import org.junit.Assert;
 import org.junit.Before;

@@ -10,7 +10,7 @@
 
 package com.aba.eveonline.crest.impl;
 
-import com.aba.eveonline.crest.repo.impl.CrestItemTypeRepository;
+import com.aba.eveonline.crest.repo.CrestItemTypeRepository;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestItem;
 import org.devfleet.crest.retrofit.CrestClient;

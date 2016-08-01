@@ -53,8 +53,10 @@ public abstract class CalculationResult {
         return result;
     }
 
-    protected abstract Double getTotalCostInternal ( );
-
+    //This is only here really to appease jackson.  It see's this property and attempts to set it but doesn't know
+    //that it was a generated property.  Probably bad practice to do this but meh.
     @JsonIgnore
     public void setTotalCost ( ) { }
+
+    protected abstract Double getTotalCostInternal ( );
 }

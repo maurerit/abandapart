@@ -1,4 +1,4 @@
-package com.aba.eveonline.crest.repo;
+package com.aba.eveonline.repo;
 
 /**
  * Created by maurerit on 7/26/2016.

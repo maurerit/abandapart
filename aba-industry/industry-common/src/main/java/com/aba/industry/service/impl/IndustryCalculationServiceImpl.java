@@ -12,8 +12,9 @@ package com.aba.industry.service.impl;
 
 import com.aba.ApplicationException;
 import com.aba.data.domain.config.*;
-import com.aba.eveonline.crest.repo.RegionRepository;
-import com.aba.eveonline.crest.repo.SolarSystemRepository;
+import com.aba.eveonline.repo.ItemTypeRepository;
+import com.aba.eveonline.repo.RegionRepository;
+import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
@@ -78,8 +79,11 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     @Autowired
     private RegionRepository regionRepository;
 
+    @Autowired
+    private ItemTypeRepository itemTypeRepository;
+
     @Override
-    public BuildCalculationResult calculateBuildCosts ( String systemName, Long outputTypeId )
+    public BuildCalculationResult calculateBuildCosts ( String systemName, Integer outputTypeId )
     {
         IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
         industrySkills.setAdvancedIndustrySkillLevel( 5 );
@@ -107,7 +111,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     //TODO: Refactor these inputs to be contained inside a BuildCalculationConfiguration or some such
     public BuildCalculationResult calculateBuildCosts (
             String systemName,
-            Long outputTypeId,
+            Integer outputTypeId,
             IndustrySkillConfiguration industrySkills,
             InventionSkillConfiguration inventionSkills,
             Integer meLevel,
@@ -151,6 +155,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                                                             blueprintData,
                                                             meLevelToUse, teLevelToUse,
                                                             industrySkills );
+        result.setProductName( itemTypeRepository.getItemDetails( outputTypeId )
+                                                 .getName() );
 
         //TODO: Fuzzy Steve's blueprint data 'api' doesn't put in a base invention time... use his multiplier strategy
         if ( inventionCalculationResult != null ) {
@@ -184,26 +190,29 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     {
         for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
                                                          .get( IndustryActivities.INVENTION.getActivityId() ) ) {
-            long itemId = am.getTypeId();
-            long quantity = am.getQuantity();
-            am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
-            am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
-            am.setSource( CostSource.LIVE_MARKET_SELL );
+            putCostsIntoMaterialCost( regionId, systemId, am );
         }
 
         for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
                                                          .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
-            long itemId = am.getTypeId();
-            long quantity = am.getQuantity();
-            am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
-            am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
-            am.setSource( CostSource.LIVE_MARKET_SELL );
+            putCostsIntoMaterialCost( regionId, systemId, am );
         }
 
         long precursorTypeId = blueprintData.getBlueprintDetails()
                                             .getPrecursorTypeId();
         blueprintData.getBlueprintDetails()
                      .setPrecursorAdjustedPrice( marketPriceFetcher.getAdjustedPrice( precursorTypeId ) );
+    }
+
+    private void putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am )
+    {
+        long itemId = am.getTypeId();
+        long quantity = am.getQuantity();
+        am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+        am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
+        am.setSource( CostSource.LIVE_MARKET_SELL );
+        am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
+                                      .getName() );
     }
 
     private InventionCalculationResult getInventionCalculationResult (

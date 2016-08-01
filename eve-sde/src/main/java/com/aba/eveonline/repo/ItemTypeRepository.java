@@ -11,17 +11,13 @@
  * the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.eveonline.crest.repo;
+package com.aba.eveonline.repo;
 
-import org.devfleet.crest.model.CrestItem;
-
-import java.util.List;
+import org.devfleet.crest.model.CrestType;
 
 /**
- * Created by maurerit on 7/25/16.
+ * Created by maurerit on 7/24/16.
  */
-public interface RegionRepository {
-    List<CrestItem> getRegions ( );
-
-    Long findRegionId ( String regionName );
+public interface ItemTypeRepository {
+    CrestType getItemDetails ( int itemId );
 }
