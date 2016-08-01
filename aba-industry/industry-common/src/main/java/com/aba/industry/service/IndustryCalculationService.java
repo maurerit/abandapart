@@ -26,14 +26,14 @@ import com.aba.industry.model.Decryptor;
 public interface IndustryCalculationService {
     /**
      * Convenience overload of
-     * {@link IndustryCalculationService#calculateBuildCosts(String, Long, IndustrySkillConfiguration, InventionSkillConfiguration, Integer, Integer, Decryptor, boolean, boolean)}
+     * {@link IndustryCalculationService#calculateBuildCosts(String, Integer, IndustrySkillConfiguration, InventionSkillConfiguration, Integer, Integer, Decryptor, boolean, boolean)}
      * which assumes all 5's for skills, true for findCurrentPrices and false for useBuildOrBuyConfigurations.
      *
      * @param systemName
      * @param outputTypeId
      * @return
      */
-    BuildCalculationResult calculateBuildCosts ( String systemName, Long outputTypeId );
+    BuildCalculationResult calculateBuildCosts ( String systemName, Integer outputTypeId );
 
     /**
      * Provides a mechanism to easily calculate the output of a full build with configuration options to either use
@@ -56,7 +56,7 @@ public interface IndustryCalculationService {
      */
     BuildCalculationResult calculateBuildCosts (
             String systemName,
-            Long outputTypeId,
+            Integer outputTypeId,
             IndustrySkillConfiguration industrySkills,
             InventionSkillConfiguration inventionSkills,
             Integer meLevel,

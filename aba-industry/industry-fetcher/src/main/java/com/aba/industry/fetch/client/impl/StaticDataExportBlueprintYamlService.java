@@ -46,7 +46,8 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
     }
 
     @Override
-    public BlueprintData getBlueprintData ( final Long typeId ) {
+    public BlueprintData getBlueprintData ( final Integer typeId )
+    {
         BlueprintData result = new BlueprintData();
 
         Blueprint productionBp = null;

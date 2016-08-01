@@ -1,6 +1,6 @@
 package com.aba.eveonline.crest.impl;
 
-import com.aba.eveonline.crest.repo.impl.CrestSolarSystemRepository;
+import com.aba.eveonline.crest.repo.CrestSolarSystemRepository;
 import org.devfleet.crest.retrofit.CrestClient;
 import org.junit.Assert;
 import org.junit.Before;

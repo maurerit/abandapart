@@ -11,12 +11,12 @@
  * the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.eveonline.crest.repo.impl;
+package com.aba.eveonline.crest.repo;
 
-import com.aba.eveonline.crest.repo.RegionRepository;
+import com.aba.eveonline.repo.SolarSystemRepository;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestItem;
+import org.devfleet.crest.model.CrestSolarSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -25,35 +25,32 @@ import java.util.List;
 import java.util.OptionalLong;
 
 /**
- * Created by maurerit on 7/25/16.
+ * Created by maurerit on 7/26/2016.
  */
 @Repository
 @Setter
-public class CrestRegionRepository implements RegionRepository {
+public class CrestSolarSystemRepository implements SolarSystemRepository {
     @Autowired
     private CrestService crestService;
 
-    @Override
-    @Cacheable( "crest-regions" )
-    public List<CrestItem> getRegions ( ) {
-        return crestService.getRegions();
-    }
 
     @Override
-    @Cacheable( "crest-region-id" )
-    public Long findRegionId ( String regionName )
+    @Cacheable( "solar-system-id" )
+    public Long getSolarSystemId ( String systemName )
     {
         Long result = null;
 
+        List<CrestSolarSystem> solarSystems = crestService.getLocations();
+
         //TODO: Look into orElseGet
-        OptionalLong regionId = getRegions().stream()
-                                            .filter( region -> region.getName()
-                                                      .equalsIgnoreCase( regionName ) )
-                                            .mapToLong( region -> region.getId() )
+        OptionalLong systemId = solarSystems.stream()
+                                            .filter( system -> system.getName()
+                                                                     .equalsIgnoreCase( systemName ) )
+                                            .mapToLong( system -> system.getId() )
                                             .findFirst();
 
-        if ( regionId.isPresent() ) {
-            result = regionId.getAsLong();
+        if ( systemId.isPresent() ) {
+            result = systemId.getAsLong();
         }
 
         return result;

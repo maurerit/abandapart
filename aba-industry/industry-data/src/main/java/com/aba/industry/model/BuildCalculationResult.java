@@ -35,13 +35,15 @@ public class BuildCalculationResult extends CalculationResult {
     private IndustrySkillConfiguration skillConfiguration;
 
     @JsonProperty
-    private long productId;
+    private long   productId;
+    @JsonProperty
+    private String productName;
     @JsonProperty
     private Double materialCost = 0d;
     @JsonProperty
     private Map<Integer, CrestMarketOrder> lowestSellOrders;
     @JsonProperty
-    private Map<Integer, CrestMarketOrder> highestSellOrders;
+    private Map<Integer, CrestMarketOrder> highestBuyOrders;
     @JsonProperty
     private Map<String, FreightDetails> toBuildLocationFreight   = new HashMap<>();
     @JsonProperty
@@ -51,7 +53,8 @@ public class BuildCalculationResult extends CalculationResult {
     @JsonProperty
     private List<BuildCalculationResult> childBuilds;
 
-    protected Double getTotalCostInternal ( ) {
+    protected Double getTotalCostInternal ( )
+    {
         Double result = 0d;
 
         result += materialCost;

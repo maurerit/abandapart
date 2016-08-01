@@ -35,7 +35,7 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
 
     @Test
     public void getSleipnirBlueprintData ( ) throws IOException {
-        BlueprintData bpData = staticDataExportBlueprintYamlService.getBlueprintData( 22444l );
+        BlueprintData bpData = staticDataExportBlueprintYamlService.getBlueprintData( 22444 );
 
         Assert.assertNotNull( bpData );
         Assert.assertEquals( bpData.getBlueprintDetails()

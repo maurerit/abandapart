@@ -30,5 +30,5 @@ public interface BuildRequirementsProvider {
      * @throws IOException This method consumes data from the web and could run into issue's
      *                     be prepared.
      */
-    BlueprintData getBlueprintData ( Long typeId ) throws IOException;
+    BlueprintData getBlueprintData ( Integer typeId ) throws IOException;
 }
