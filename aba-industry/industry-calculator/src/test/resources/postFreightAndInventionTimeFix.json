@@ -1,0 +1,208 @@
+{
+  "materialsWithCost": [
+    {
+      "name": null,
+      "quantity": 118,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 41497.95,
+      "adjustedCost": 12349.12,
+      "typeid": 11530,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 294,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 11119.33,
+      "adjustedCost": 4137.41,
+      "typeid": 11399,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 11025,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 9993.17,
+      "adjustedCost": 3705.93,
+      "typeid": 11542,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 441,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 28784.83,
+      "adjustedCost": 11225.93,
+      "typeid": 11536,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 1764,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 39476.44,
+      "adjustedCost": 23860.33,
+      "typeid": 11538,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 559,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 38099.89,
+      "adjustedCost": 9737.91,
+      "typeid": 11555,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 294,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 14720.15,
+      "adjustedCost": 4520.0,
+      "typeid": 3828,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 23,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 618.71,
+      "adjustedCost": 438.86,
+      "typeid": 11478,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 59,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 125464.98,
+      "adjustedCost": 18539.86,
+      "typeid": 11548,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 5.299999899E7,
+      "adjustedCost": 3.192696559E7,
+      "typeid": 24702,
+      "maketype": null
+    },
+    {
+      "name": null,
+      "quantity": 956,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 40899.99,
+      "adjustedCost": 38666.81,
+      "typeid": 11551,
+      "maketype": null
+    }
+  ],
+  "requiredSkills": null,
+  "installationFees": 0.0,
+  "installationTax": 0.0,
+  "seconds": 195840,
+  "salaryCost": 5440000.0,
+  "skillConfiguration": {
+    "preference": "PREFERED",
+    "industrySkillLevel": 5,
+    "advancedIndustrySkillLevel": 5,
+    "industrySkillLevelMultiplier": 0.0,
+    "advancedIndustrySkillLevelMultiplier": 0.0
+  },
+  "productId": 22444,
+  "materialCost": 3.2581370675E8,
+  "lowestSellOrders": null,
+  "highestSellOrders": null,
+  "toBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 5538833.019,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 8471156.382,
+      "freightConfigUsed": null
+    }
+  },
+  "fromBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 5915809.6,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 9853739.999739999,
+      "freightConfigUsed": null
+    }
+  },
+  "inventionResult": {
+    "materialsWithCost": [
+      {
+        "name": null,
+        "quantity": 16,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 43694.17732484076,
+        "adjustedCost": 39358.3,
+        "typeid": 20424,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 16,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 100896.99,
+        "adjustedCost": 77503.84,
+        "typeid": 20172,
+        "maketype": null
+      }
+    ],
+    "requiredSkills": null,
+    "installationFees": 136938.1728189194,
+    "installationTax": 13693.817281891941,
+    "seconds": 136170,
+    "salaryCost": 189125.0,
+    "skillConfiguration": {
+      "preference": "PREFERED",
+      "encryptionSkillLevel": 4,
+      "datacoreOneSkillLevel": 3,
+      "datacoreTwoSkillLevel": 3,
+      "encryptionSkillLevelMultiplier": 0.0,
+      "datacoreOneSkillLevelMultiplier": 0.0,
+      "datacoreTwoSkillLevelMultiplier": 0.0
+    },
+    "inventionRunCost": 2313458.677197452,
+    "costPerSuccessfulInventionRun": 7366265.246683388,
+    "blueprintCopyCost": 25706.98608072179,
+    "probability": 33.800000000000004,
+    "outputTypeId": 22444,
+    "resultingME": 2,
+    "resultingTE": 4,
+    "resultingRuns": 1,
+    "decryptor": null,
+    "totalCost": 7516897.236784199,
+    "costPerBlueprintRun": 7366265.246683388
+  },
+  "childBuilds": null,
+  "totalCost": 3.516555003685242E8
+}

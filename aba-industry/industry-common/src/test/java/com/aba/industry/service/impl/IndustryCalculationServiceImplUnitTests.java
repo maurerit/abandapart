@@ -229,6 +229,20 @@ public class IndustryCalculationServiceImplUnitTests {
                                                                        .get( "Jita" ) );
         Assert.assertEquals( amarrFreightDetails, buildCalculationResult.getFromBuildLocationFreight()
                                                                         .get( "Amarr" ) );
+        Assert.assertEquals( 6000000.0, buildCalculationResult.getToBuildLocationFreight()
+                                                              .get( "Amarr" )
+                                                              .getCharge(), 0.01 );
+        Assert.assertEquals( 1.3E7, buildCalculationResult.getToBuildLocationFreight()
+                                                          .get( "Jita" )
+                                                          .getCharge(), 0.01 );
+        Assert.assertEquals( 6000000.0, buildCalculationResult.getFromBuildLocationFreight()
+                                                              .get( "Amarr" )
+                                                              .getCharge(), 0.01 );
+        Assert.assertEquals( 1.3E7, buildCalculationResult.getFromBuildLocationFreight()
+                                                          .get( "Jita" )
+                                                          .getCharge(), 0.01 );
+        Assert.assertEquals( 136170.0, buildCalculationResult.getInventionResult()
+                                                             .getSeconds(), 0.01 );
     }
 
 }
