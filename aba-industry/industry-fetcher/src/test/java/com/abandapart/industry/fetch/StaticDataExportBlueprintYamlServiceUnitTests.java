@@ -42,5 +42,7 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
                                    .getTimesInSeconds()
                                    .get( IndustryActivities.MANUFACTURING.getActivityId() )
                                    .longValue(), 300000l );
+        Assert.assertNotNull( bpData.getActivityMaterials()
+                                    .get( IndustryActivities.INVENTION.getActivityId() ) );
     }
 }
