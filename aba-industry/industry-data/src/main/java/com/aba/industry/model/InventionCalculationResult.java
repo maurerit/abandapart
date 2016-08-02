@@ -29,11 +29,11 @@ public class InventionCalculationResult extends CalculationResult {
     @JsonProperty
     private Double costPerSuccessfulInventionRun = 0d;
     @JsonProperty
-    private Double blueprintCopyCost;
+    private Double  blueprintCopyCost;
     @JsonProperty
-    private Double probability;
+    private Double  probability;
     @JsonProperty
-    private Long   outputTypeId;
+    private Integer outputTypeId;
 
     @JsonProperty
     private Integer   resultingME;

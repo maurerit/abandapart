@@ -21,7 +21,7 @@ public class BlueprintDetails {
     @JsonProperty
     private Long               maxProductionLimit;
     @JsonProperty( "productTypeID" )
-    private Long               productTypeId;
+    private Integer            productTypeId;
     @JsonProperty( "productTypeName" )
     private String             productName;
     @JsonProperty
@@ -44,7 +44,7 @@ public class BlueprintDetails {
     @JsonProperty
     private Double             precursorAdjustedPrice;
     @JsonProperty
-    private Long               precursorTypeId;
+    private Integer            precursorTypeId;
     @JsonProperty( "probability" )
     private Double             baseProbability;
 }
