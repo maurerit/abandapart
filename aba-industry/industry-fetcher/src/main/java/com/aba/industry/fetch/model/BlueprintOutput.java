@@ -19,5 +19,5 @@ import lombok.Data;
 public class BlueprintOutput {
     private Double  probability;
     private Integer quantity;
-    private Long    typeID;
+    private Integer typeID;
 }
