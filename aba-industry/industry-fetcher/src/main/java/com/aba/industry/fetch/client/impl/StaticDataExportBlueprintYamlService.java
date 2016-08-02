@@ -98,7 +98,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                         .getValue();
         }
 
-        final long manuBpTypeId = productionBp.getBlueprintTypeID();
+        final int manuBpTypeId = productionBp.getBlueprintTypeID();
 
         //<editor-fold desc="Possible base bp lambda">
         possibleMatch = blueprints.getBlueprints()

@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Data
 public class Blueprint {
-    private long                                       blueprintTypeID;
+    private int                                        blueprintTypeID;
     private long                                       maxProductionLimit;
     private Map<BlueprintActivities, BlueprintAcivity> activities;
 }
