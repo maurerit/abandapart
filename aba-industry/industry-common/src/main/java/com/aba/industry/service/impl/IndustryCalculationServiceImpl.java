@@ -122,7 +122,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     {
         BuildCalculationResult result;
         //TODO: Tax Rate should be determined by builders standing with station holder
-        Double taxRate = 0.0d;
+        Double taxMultiplier = 1.0d;
 
         Integer meLevelToUse = meLevel;
         Integer teLevelToUse = teLevel;
@@ -144,14 +144,14 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
 
         InventionCalculationResult inventionCalculationResult =
-                getInventionCalculationResult( inventionSkills, decryptor, taxRate, blueprintData, costIndexes );
+                getInventionCalculationResult( inventionSkills, decryptor, taxMultiplier, blueprintData, costIndexes );
 
         if ( inventionCalculationResult != null ) {
             meLevelToUse = inventionCalculationResult.getResultingME();
             teLevelToUse = inventionCalculationResult.getResultingTE();
         }
 
-        result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxRate,
+        result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxMultiplier,
                                                             blueprintData,
                                                             meLevelToUse, teLevelToUse,
                                                             industrySkills );
@@ -202,17 +202,6 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                                             .getPrecursorTypeId();
         blueprintData.getBlueprintDetails()
                      .setPrecursorAdjustedPrice( marketPriceFetcher.getAdjustedPrice( precursorTypeId ) );
-    }
-
-    private void putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am )
-    {
-        long itemId = am.getTypeId();
-        long quantity = am.getQuantity();
-        am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
-        am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
-        am.setSource( CostSource.LIVE_MARKET_SELL );
-        am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
-                                      .getName() );
     }
 
     private InventionCalculationResult getInventionCalculationResult (
@@ -289,5 +278,16 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                           IndustryActivities.INVENTION, result.getInventionResult()
                                                               .getSeconds() ) );
         }
+    }
+
+    private void putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am )
+    {
+        long itemId = am.getTypeId();
+        long quantity = am.getQuantity();
+        am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
+        am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
+        am.setSource( CostSource.LIVE_MARKET_SELL );
+        am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
+                                      .getName() );
     }
 }
