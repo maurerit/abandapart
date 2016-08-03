@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.service.impl;
@@ -163,10 +160,10 @@ public class IndustryCalculationServiceImplUnitTests {
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
         //<editor-fold desc="Invention and Manufacturing result mocks">
-        Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 0.0d, bpData, null,
+        Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 1.0d, bpData, null,
                                                                    inventionSkills ) )
                .thenReturn( this.inventionCalculationResult );
-        Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 0.0d, bpData, 2, 4, industrySkills ) )
+        Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 1.0d, bpData, 2, 4, industrySkills ) )
                .thenReturn( buildCalculationResult );
         //</editor-fold>
         //<editor-fold desc="Overhead mocks">
@@ -383,6 +380,8 @@ public class IndustryCalculationServiceImplUnitTests {
         Assert.assertEquals( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000,
                              result.getInventionResult()
                                    .getSalaryCost(), 0.01 );
+        Assert.assertEquals( 20036519.59, buildCalculationResult.getInstallationFees(), 0.01 );
+        Assert.assertEquals( 2003651.95, buildCalculationResult.getInstallationTax(), 0.01 );
         Assert.assertNotNull( buildCalculationResult.getFromBuildLocationFreight() );
         Assert.assertNotNull( buildCalculationResult.getToBuildLocationFreight() );
 

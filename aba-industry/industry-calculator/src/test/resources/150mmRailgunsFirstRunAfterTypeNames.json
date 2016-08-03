@@ -1,0 +1,155 @@
+{
+  "materialsWithCost": [
+    {
+      "name": "Superconductor Rails",
+      "quantity": 11,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 22938.0,
+      "adjustedCost": 28521.24,
+      "typeid": 11690,
+      "maketype": null
+    },
+    {
+      "name": "Morphite",
+      "quantity": 8,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 11373.7,
+      "adjustedCost": 4137.41,
+      "typeid": 11399,
+      "maketype": null
+    },
+    {
+      "name": "150mm Railgun I",
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 47499.99,
+      "adjustedCost": 47270.09,
+      "typeid": 565,
+      "maketype": null
+    },
+    {
+      "name": "Robotics",
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 105988.91000000002,
+      "adjustedCost": 27918.87,
+      "typeid": 9848,
+      "maketype": null
+    },
+    {
+      "name": "R.A.M.- Weapon Tech",
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 223.0,
+      "adjustedCost": 216.97,
+      "typeid": 11486,
+      "maketype": null
+    }
+  ],
+  "requiredSkills": null,
+  "installationFees": 0.0,
+  "installationTax": 0.0,
+  "seconds": 1528,
+  "salaryCost": 42444.44444444444,
+  "skillConfiguration": {
+    "preference": "PREFERED",
+    "industrySkillLevel": 5,
+    "advancedIndustrySkillLevel": 5,
+    "industrySkillLevelMultiplier": 0.0,
+    "advancedIndustrySkillLevelMultiplier": 0.0
+  },
+  "productId": 3074,
+  "productName": "150mm Railgun II",
+  "materialCost": 497019.5,
+  "lowestSellOrders": null,
+  "highestBuyOrders": null,
+  "toBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 8449.34,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 12922.52,
+      "freightConfigUsed": null
+    }
+  },
+  "fromBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 14432.982829999999,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 17443.4,
+      "freightConfigUsed": null
+    }
+  },
+  "inventionResult": {
+    "materialsWithCost": [
+      {
+        "name": "Datacore - Plasma Physics",
+        "quantity": 1,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 105709.94,
+        "adjustedCost": 101247.09,
+        "typeid": 20412,
+        "maketype": null
+      },
+      {
+        "name": "Datacore - Quantum Physics",
+        "quantity": 1,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 147500.0,
+        "adjustedCost": 58838.01,
+        "typeid": 20414,
+        "maketype": null
+      }
+    ],
+    "requiredSkills": null,
+    "installationFees": 327.72735480133,
+    "installationTax": 32.772735480133,
+    "seconds": 11730,
+    "salaryCost": 16291.666666666666,
+    "skillConfiguration": {
+      "preference": "PREFERED",
+      "encryptionSkillLevel": 4,
+      "datacoreOneSkillLevel": 3,
+      "datacoreTwoSkillLevel": 3,
+      "encryptionSkillLevelMultiplier": 0.0,
+      "datacoreOneSkillLevelMultiplier": 0.0,
+      "datacoreTwoSkillLevelMultiplier": 0.0
+    },
+    "inventionRunCost": 253209.94,
+    "costPerSuccessfulInventionRun": 573771.7862386932,
+    "blueprintCopyCost": 36.689427220922,
+    "probability": 44.2,
+    "outputTypeId": 3074,
+    "resultingME": 2,
+    "resultingTE": 4,
+    "resultingRuns": 10,
+    "decryptor": null,
+    "totalCost": 574132.2863289746,
+    "costPerBlueprintRun": 57377.17862386932
+  },
+  "childBuilds": null,
+  "totalCost": 1101517.7063289746
+}
