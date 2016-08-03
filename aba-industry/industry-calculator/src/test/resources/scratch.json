@@ -1,0 +1,164 @@
+{
+  "materialsWithCost": [
+    {
+      "name": "Morphite",
+      "quantity": 6,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 11149.0,
+      "adjustedCost": 4137.41,
+      "typeid": 11399,
+      "maketype": null
+    },
+    {
+      "name": "Plasma Thruster",
+      "quantity": 6,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 40189.65,
+      "adjustedCost": 12349.12,
+      "typeid": 11530,
+      "maketype": null
+    },
+    {
+      "name": "Ion Thruster",
+      "quantity": 15,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 42436.96,
+      "adjustedCost": 15168.21,
+      "typeid": 11531,
+      "maketype": null
+    },
+    {
+      "name": "R.A.M.- Armor/Hull Tech",
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 246.99,
+      "adjustedCost": 667.25,
+      "typeid": 11475,
+      "maketype": null
+    },
+    {
+      "name": "10MN Afterburner I",
+      "quantity": 1,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 35999.99,
+      "adjustedCost": 38538.86,
+      "typeid": 12056,
+      "maketype": null
+    },
+    {
+      "name": "Antimatter Reactor Unit",
+      "quantity": 8,
+      "source": "LIVE_MARKET_SELL",
+      "cost": 129966.72070953436,
+      "adjustedCost": 41208.79,
+      "typeid": 11549,
+      "maketype": null
+    }
+  ],
+  "requiredSkills": null,
+  "installationFees": 15997.1152730688,
+  "installationTax": 1599.7115273068803,
+  "seconds": 3055,
+  "salaryCost": 84861.11111111111,
+  "skillConfiguration": {
+    "preference": "PREFERED",
+    "industrySkillLevel": 5,
+    "advancedIndustrySkillLevel": 5,
+    "industrySkillLevelMultiplier": 0.0,
+    "advancedIndustrySkillLevelMultiplier": 0.0
+  },
+  "productId": 12058,
+  "productName": "10MN Afterburner II",
+  "materialCost": 2020567.045676275,
+  "lowestSellOrders": null,
+  "highestBuyOrders": null,
+  "toBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 34349.639,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 52534.742,
+      "freightConfigUsed": null
+    }
+  },
+  "fromBuildLocationFreight": {
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 67946.70653,
+      "freightConfigUsed": null
+    },
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 57200.0,
+      "freightConfigUsed": null
+    }
+  },
+  "inventionResult": {
+    "materialsWithCost": [
+      {
+        "name": "Datacore - Rocket Science",
+        "quantity": 2,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 139999.95,
+        "adjustedCost": 108715.08,
+        "typeid": 20420,
+        "maketype": null
+      },
+      {
+        "name": "Datacore - Molecular Engineering",
+        "quantity": 2,
+        "source": "LIVE_MARKET_SELL",
+        "cost": 88058.0,
+        "adjustedCost": 57473.69,
+        "typeid": 20415,
+        "maketype": null
+      }
+    ],
+    "requiredSkills": null,
+    "installationFees": 539.9585009846129,
+    "installationTax": 53.99585009846129,
+    "seconds": 26265,
+    "salaryCost": 36479.16666666667,
+    "skillConfiguration": {
+      "preference": "PREFERED",
+      "encryptionSkillLevel": 4,
+      "datacoreOneSkillLevel": 3,
+      "datacoreTwoSkillLevel": 3,
+      "encryptionSkillLevelMultiplier": 0.0,
+      "datacoreOneSkillLevelMultiplier": 0.0,
+      "datacoreTwoSkillLevelMultiplier": 0.0
+    },
+    "inventionRunCost": 456115.9,
+    "costPerSuccessfulInventionRun": 1033347.2531014003,
+    "blueprintCopyCost": 29.631519735868,
+    "probability": 44.2,
+    "outputTypeId": 12058,
+    "resultingME": 2,
+    "resultingTE": 4,
+    "resultingRuns": 10,
+    "decryptor": null,
+    "totalCost": 1033941.2074524834,
+    "costPerBlueprintRun": 103334.72531014003
+  },
+  "childBuilds": null,
+  "totalCost": 3181839.821929134
+}
