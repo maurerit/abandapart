@@ -1,0 +1,15 @@
+language: java
+
+before_install:
+  - chmod +x eve-api-java/gradlew
+  - chmod +x eve-crest-java/gradlew
+  - cd eve-api-java && ./gradlew install && cd ..
+  - cd eve-crest-java && ./gradlew install && cd ..
+  - sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml
+jdk:
+  - oraclejdk8
+cache:
+  directories:
+  - aba-web/node_modules
+after_success:
+  - mvn clean test jacoco:report coveralls:report
