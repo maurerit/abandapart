@@ -66,7 +66,8 @@ public class InventionCalculatorImpl implements InventionCalculator {
 
         //The run cost for the manufacturing portion of this invention job
         adjustedManufacturingCost *= 0.02 * costIndexes.getCostIndexes()
-                                                       .get( IndustryActivities.INVENTION.getActivityId() ) * taxMultiplier;
+                                                       .get( IndustryActivities.INVENTION.getActivityId() ) *
+                taxMultiplier;
 
         Double blueprintCopyCost = bpData.getBlueprintDetails()
                                          .getPrecursorAdjustedPrice() *

@@ -21,7 +21,7 @@ public interface OverheadCalculator {
      * {@link IndustryActivities}
      *
      * @param industryActivities The activity being performed which needs salary calculated
-     * @param seconds  The number of seconds it takes to perform the activity
+     * @param seconds            The number of seconds it takes to perform the activity
      * @return A double representing the amount in isk to paid to the individual performing the task
      */
     Double getSalary ( IndustryActivities industryActivities, Long seconds );
