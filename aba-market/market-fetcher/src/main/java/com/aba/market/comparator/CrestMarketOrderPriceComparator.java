@@ -1,11 +1,12 @@
 package com.aba.market.comparator;
 
+import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 
 import java.util.Comparator;
 
 /**
- * Created by maurerit on 7/28/2016.
+ * Created by mm66053 on 8/3/2016.
  */
 public class CrestMarketOrderPriceComparator implements Comparator<CrestMarketOrder> {
     @Override
