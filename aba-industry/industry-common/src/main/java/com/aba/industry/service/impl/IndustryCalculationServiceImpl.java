@@ -158,16 +158,10 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         result.setProductName( itemTypeRepository.getItemDetails( outputTypeId )
                                                  .getName() );
 
-        //TODO: Fuzzy Steve's blueprint data 'api' doesn't put in a base invention time... use his multiplier strategy
         if ( inventionCalculationResult != null ) {
-            double inventionTimeMultiplier = ( 1 - ( inventionSkills.getDatacoreOneSkillLevel()
-                                                                    .doubleValue() / 100 ) ) * ( 1 - (
-                                                                            inventionSkills.getDatacoreTwoSkillLevel()
-                                                                                                                      .doubleValue() / 100 ) );
             long baseInventionTime = blueprintData.getBlueprintDetails()
                                                   .getTimesInSeconds()
                                                   .get( IndustryActivities.INVENTION.getActivityId() );
-            //inventionTime = baseInventionTime ∗ facilityModifier ∗ (1 − 0.03 ∗ AdvancedIndustryLevel)
             long inventionTime = Math.round(
                     ( (double) baseInventionTime ) * ( 1 - 0.03 * industrySkills.getAdvancedIndustrySkillLevel() ) );
 

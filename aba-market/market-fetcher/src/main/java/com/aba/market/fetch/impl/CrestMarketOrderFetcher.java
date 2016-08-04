@@ -10,10 +10,11 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.comparator.CrestMarketOrderPriceComparator;
+import com.aba.market.comparator.CrestMarketBulkOrderPriceComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
+import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -70,11 +71,11 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         //TODO: For now I'm concerned with sell orders and from Amarr and Jita.
         final long hubIdToFind = getHubStationIdToUse( systemId );
 
-        List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
+        List<CrestMarketBulkOrder> sellOrders = getAllMarketOrders( regionId );
 
-        List<CrestMarketOrder> filteredSellOrders = sellOrders.stream()
-                                                              .filter( order -> order.getLocationId() == hubIdToFind )
-                                                              .sorted( new CrestMarketOrderPriceComparator() )
+        List<CrestMarketBulkOrder> filteredSellOrders = sellOrders.stream()
+                                                              .filter( order -> order.getLocationId() == hubIdToFind && order.getTypeId() == itemId )
+                                                              .sorted( new CrestMarketBulkOrderPriceComparator() )
                                                               .collect( Collectors.toList() );
 
         int totalFound = 0;
@@ -93,6 +94,12 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         result = totalPrice / totalFound;
 
         return result;
+    }
+
+    //TODO: Candidate for inclusion into the implemented interface
+    @Cacheable("all-market-orders")
+    public List<CrestMarketBulkOrder> getAllMarketOrders ( long regionId ) {
+        return crestService.getAllMarketOrders( regionId );
     }
 
     private Long getHubStationIdToUse ( long systemId )

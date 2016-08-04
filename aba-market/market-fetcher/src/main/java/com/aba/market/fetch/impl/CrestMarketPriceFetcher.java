@@ -51,7 +51,7 @@ public class CrestMarketPriceFetcher implements MarketPriceFetcher {
     }
 
     @Override
-    @Cacheable( "all-market-orders" )
+    @Cacheable( "all-market-prices" )
     public List<CrestMarketPrice> getAllMarketPrices ( ) {
         return crestService.getAllMarketPrices();
     }

@@ -63,13 +63,25 @@
         <persistence strategy="localRestartable"/>
     </cache>
 
-    <cache name="all-market-orders"
+    <cache name="all-market-prices"
            maxEntriesLocalHeap="500"
            maxEntriesLocalDisk="40000"
            eternal="false"
            diskSpoolBufferSizeMB="0"
            timeToIdleSeconds="250"
            timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localRestartable"/>
+    </cache>
+
+    <cache name="all-market-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="600"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
         <persistence strategy="localRestartable"/>
