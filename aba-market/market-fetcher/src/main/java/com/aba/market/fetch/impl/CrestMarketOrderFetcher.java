@@ -10,11 +10,10 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.comparator.CrestMarketBulkOrderPriceComparator;
+import com.aba.market.comparator.CrestMarketOrderPriceComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -71,11 +70,14 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         //TODO: For now I'm concerned with sell orders and from Amarr and Jita.
         final long hubIdToFind = getHubStationIdToUse( systemId );
 
-        List<CrestMarketBulkOrder> sellOrders = getAllMarketOrders( regionId );
+        List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
 
-        List<CrestMarketBulkOrder> filteredSellOrders = sellOrders.stream()
-                                                              .filter( order -> order.getLocationId() == hubIdToFind && order.getTypeId() == itemId )
-                                                              .sorted( new CrestMarketBulkOrderPriceComparator() )
+        List<CrestMarketOrder> filteredSellOrders = sellOrders.stream()
+                                                              .filter(
+                                                                      order -> order.getLocationId() ==
+                                                                              hubIdToFind && order.getTypeId() ==
+                                                                              itemId )
+                                                              .sorted( new CrestMarketOrderPriceComparator() )
                                                               .collect( Collectors.toList() );
 
         int totalFound = 0;
@@ -96,11 +98,18 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         return result;
     }
 
-    //TODO: Candidate for inclusion into the implemented interface
-    @Cacheable("all-market-orders")
-    public List<CrestMarketBulkOrder> getAllMarketOrders ( long regionId ) {
-        return crestService.getAllMarketOrders( regionId );
-    }
+    //TODO: Figure out how to properly uncomment and utilize the below commented out method.  Initial tests do not
+    // look good.
+    //The below comment is a potential to do as well if some things are figured out. These things are how to get this
+    // method
+    // to cache without putting it into a linked service/component and how to properly cache it.  Maybe this does
+    // belong into
+    //another service/component just because it'll be handy to have for mass build calculation checks on a backend?
+    //Candidate for inclusion into the implemented interface
+//    @Cacheable( "all-market-orders" )
+//    public List<CrestMarketBulkOrder> getAllMarketOrders ( long regionId ) {
+//        return crestService.getAllMarketOrders( regionId );
+//    }
 
     private Long getHubStationIdToUse ( long systemId )
     {
