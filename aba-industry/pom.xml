@@ -31,6 +31,8 @@
         <module>industry-config</module>
         <module>industry-common-bus</module>
         <module>industry-calculator</module>
+        <module>industry-calculator-worker</module>
+        <module>industry-calculator-router</module>
     </modules>
 
     <dependencies>

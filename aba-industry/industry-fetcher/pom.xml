@@ -35,6 +35,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>jcache</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.abandapart</groupId>
             <artifactId>industry-data</artifactId>
             <version>${project.parent.version}</version>

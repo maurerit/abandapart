@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by maurerit on 7/30/16.
@@ -44,5 +45,12 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
                                    .longValue(), 300000l );
         Assert.assertNotNull( bpData.getActivityMaterials()
                                     .get( IndustryActivities.INVENTION.getActivityId() ) );
+    }
+
+    @Test
+    public void testGetAllBlueprints ( ) {
+        List<BlueprintData> result = staticDataExportBlueprintYamlService.getAllBlueprints();
+
+        Assert.assertFalse( result.isEmpty() );
     }
 }

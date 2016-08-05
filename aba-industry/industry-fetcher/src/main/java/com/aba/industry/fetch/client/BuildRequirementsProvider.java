@@ -13,6 +13,7 @@ package com.aba.industry.fetch.client;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author maurerit
@@ -31,4 +32,6 @@ public interface BuildRequirementsProvider {
      *                     be prepared.
      */
     BlueprintData getBlueprintData ( Integer typeId ) throws IOException;
+
+    List<BlueprintData> getAllBlueprints ( );
 }
