@@ -40,23 +40,23 @@ the modules and install their artifacts in your local m2 repository.
 ### Current Priorities ###
 
 Vertical Integration
-1. The ability to specify to the industry-calculator that certain inputs are built in house.
-2. The ability to specify buy or sell costs for inputs that are purchased.
-3. Provide a management interface for managing these configurations.
+  1. The ability to specify to the industry-calculator that certain inputs are built in house.
+  2. The ability to specify buy or sell costs for inputs that are purchased.
+  3. Provide a management interface for managing these configurations.
     - This might be easier to accomplish with a cli client... I don't know, my web skills are garbage :(.
 
 Store Front
-1. Allow certain individuals or groups of individuals to log in and view whats on the market.
-2. Allow for custom orders to be placed by entities that are configured to be allowed in.
-3. Allow only items that are profitable or nearly profitable.
-    - If not profitable, check if overheads are the problem, try to remove overheads as much as possible
+  1. Allow certain individuals or groups of individuals to log in and view whats on the market.
+  2. Allow for custom orders to be placed by entities that are configured to be allowed in.
+  3. Allow only items that are profitable or nearly profitable.
+      - If not profitable, check if overheads are the problem, try to remove overheads as much as possible
 
 Build Queue
-1. Provide for the ability for managers/planners to create a corporate build queue
+  1. Provide for the ability for managers/planners to create a corporate build queue
 
 Queue Items Assignment
-1. Ability for managers/planners to assign items from the queue to qualified members
+  1. Ability for managers/planners to assign items from the queue to qualified members
 
 Industry Job link to Store Front
-1. When a customer puts in a buy order create a queue item
+  1. When a customer puts in a buy order create a queue item
 
