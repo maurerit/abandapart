@@ -30,7 +30,7 @@ describe('Header', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has a navbar', () => {
-      expect(HeaderTemplate).to.match(/div class="navbar/g);
+      expect(HeaderTemplate).to.match(/md-toolbar layout="row"/g);
     });
   });
 
