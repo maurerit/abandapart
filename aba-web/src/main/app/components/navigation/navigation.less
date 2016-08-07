@@ -1,4 +1,3 @@
-@import "~bootstrap-less/bootstrap/bootstrap";
 @import "~font-awesome/less/font-awesome";
 @import "~font-awesome/less/variables";
 @import "~font-awesome/less/mixins";
@@ -8,69 +7,10 @@
 @import "~font-awesome/less/list";
 @import "~font-awesome/less/stacked";
 
-
-
-@background-color: #4d4d4d;
-@text-color: #FFFFFF;
-
-
-
-/* make sidebar nav vertical */ 
-@media (min-width: 768px) {
-  .sidebar-nav .navbar .navbar-collapse {
-        position: fixed;
-        top: 51px;
-        left: 225px;
-        width: 225px;
-        margin-left: -225px;
-        .box-shadow(7px, 7px, 7px, 0.3);
-        overflow-y: auto;
-        background-color: @background-color;
-        bottom: 0;
-        overflow-x: hidden;
-        padding-bottom: 40px;
-        border-right: outset;
-  }
-  .sidebar-nav .navbar ul {
-    float: none;
-  }
-  .sidebar-nav .navbar ul:not {
-
-  }
-  .sidebar-nav .navbar li {
-    float: none;
-    display: block;
-  }
-  .sidebar-nav .navbar li a {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-}
-
-ul
-{
-  background-color: @background-color;
-}
-
-
-.sidebar-nav .navbar .nav > li > a
-{
-    color: #FFFFFF;
-    &:hover
-    {
-      color: #FFCC00;
-    }
-    &:focus
-    {
-      color: #FFCC00;
+.navigation {
+    & .md-button {
+        text-align: left;
+        height: 100%;
+        width: 99%;
     }
 }
-
-
-.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5)
-{
-	-webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
-	-moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
-	box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
-}
-
