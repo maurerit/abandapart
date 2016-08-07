@@ -11,8 +11,8 @@
 package com.aba;
 
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
-import com.aba.industry.fetch.client.impl.FuzzySteveService;
-import com.aba.industry.fetch.client.impl.StaticDataExportBlueprintYamlService;
+import com.aba.industry.fetch.service.impl.FuzzySteveService;
+import com.aba.industry.fetch.service.impl.StaticDataExportBlueprintYamlService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

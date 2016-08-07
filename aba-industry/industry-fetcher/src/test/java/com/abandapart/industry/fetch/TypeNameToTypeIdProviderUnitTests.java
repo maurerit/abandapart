@@ -10,7 +10,7 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.client.impl.FuzzySteveService;
+import com.aba.industry.fetch.service.impl.FuzzySteveService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
