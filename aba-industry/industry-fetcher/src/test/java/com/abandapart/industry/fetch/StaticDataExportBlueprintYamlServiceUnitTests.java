@@ -10,7 +10,7 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.client.impl.StaticDataExportBlueprintYamlService;
+import com.aba.industry.fetch.service.impl.StaticDataExportBlueprintYamlService;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import org.junit.Assert;

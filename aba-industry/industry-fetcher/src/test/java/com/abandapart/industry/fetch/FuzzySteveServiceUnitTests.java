@@ -10,7 +10,7 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.client.impl.FuzzySteveService;
+import com.aba.industry.fetch.service.impl.FuzzySteveService;
 import com.aba.industry.model.fuzzysteve.ActivityMaterial;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
