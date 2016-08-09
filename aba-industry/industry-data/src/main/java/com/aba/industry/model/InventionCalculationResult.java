@@ -11,12 +11,15 @@
 package com.aba.industry.model;
 
 import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode( callSuper = true )
+@JsonIgnoreProperties( allowGetters = true, value = { "costPerBlueprintRun", "totalCost" } )
 public class InventionCalculationResult extends CalculationResult {
     /**
      * The {@link InventionSkillConfiguration} used to calculate this result.
@@ -56,4 +59,7 @@ public class InventionCalculationResult extends CalculationResult {
     public Double getCostPerBlueprintRun ( ) {
         return this.costPerSuccessfulInventionRun / this.resultingRuns;
     }
+
+    @JsonIgnore
+    public void setCostPerBlueprintRun ( Double value ) { }
 }

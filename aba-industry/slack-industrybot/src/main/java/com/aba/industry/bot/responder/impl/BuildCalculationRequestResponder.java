@@ -8,16 +8,27 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.router.client;
+package com.aba.industry.bot.responder.impl;
 
+import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 
-import java.io.IOException;
+import java.util.concurrent.Future;
 
 /**
  * Created by maurerit on 8/7/16.
  */
-public interface IndustryCalculatorRouterClient {
-    BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException;
+public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest,
+        BuildCalculationResult> {
+    @Async
+    @Override
+    public Future<BuildCalculationResult> respond ( BuildCalculationRequest buildCalculationRequest ) {
+        BuildCalculationResult result = null;
+
+
+        return new AsyncResult<>( result );
+    }
 }
