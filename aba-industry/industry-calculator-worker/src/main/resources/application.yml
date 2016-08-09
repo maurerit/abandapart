@@ -1,0 +1,12 @@
+aba:
+  industry:
+    bus:
+      worker:
+        routerLocation: industry-router
+        routerProtocol: tcp
+        routerPort: 42000
+      director:
+        location: industry-director
+        protocol: tcp
+        receivePort: 5558
+        publishPort: 5559

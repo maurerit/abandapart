@@ -19,17 +19,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>industry-calculator-router</artifactId>
+    <artifactId>slack-industrybot</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.zeromq</groupId>
-            <artifactId>jeromq</artifactId>
+            <groupId>com.github.Ullink</groupId>
+            <artifactId>simple-slack-api</artifactId>
+            <version>0.5.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.abandapart</groupId>
-            <artifactId>industry-common-bus</artifactId>
+            <artifactId>industry-calculator-router-client</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
 </project>

@@ -33,6 +33,8 @@
         <module>industry-calculator</module>
         <module>industry-calculator-worker</module>
         <module>industry-calculator-router</module>
+        <module>slack-industrybot</module>
+        <module>industry-calculator-router-client</module>
     </modules>
 
     <dependencies>

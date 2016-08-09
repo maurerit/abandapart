@@ -13,17 +13,21 @@ package com.aba.industry.router.client.impl;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.router.client.IndustryCalculatorRouterClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.zeromq.ZMQ;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
 /**
  * Created by maurerit on 8/8/16.
  */
 @ConfigurationProperties( prefix = "aba.industry.bus.router" )
+@Component
 public class IndustrialCalculatorRouterClientImpl implements IndustryCalculatorRouterClient {
     @Value( "${aba.industry.bus.router.location}" )
     private String  routerLocation;
@@ -34,21 +38,37 @@ public class IndustrialCalculatorRouterClientImpl implements IndustryCalculatorR
 
     private String myName;
 
+    private ObjectMapper mapper = new ObjectMapper();
     private ZMQ.Context context;
     private ZMQ.Socket  socket;
 
     @Override
-    public BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) {
-        return null;
+    public BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException
+    {
+        BuildCalculationResult result = null;
+
+        String requestStr = mapper.writeValueAsString( request );
+
+        socket.send( requestStr );
+        String resultStr = socket.recvStr();
+
+        if ( resultStr != null ) {
+            result = mapper.readValue( resultStr, BuildCalculationResult.class );
+        }
+
+        return result;
     }
 
     @PostConstruct
     public void initialize ( ) {
-        this.context = ZMQ.context( 1 );
-        this.socket = context.socket( ZMQ.REQ );
+        context = ZMQ.context( 1 );
+        socket = context.socket( ZMQ.REQ );
         myName = ManagementFactory.getRuntimeMXBean()
                                   .getName();
 
         socket.setIdentity( myName.getBytes( ZMQ.CHARSET ) );
+
+        socket.connect( routerProtocol + "://" + routerLocation + ":" + routerPort );
+        socket.setReceiveTimeOut( 120000 );
     }
 }
