@@ -10,11 +10,12 @@
 
 package com.aba.industry.bot.responder;
 
+import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
- * Created by maurerit on 8/7/16.
+ * Created by maurerit on 8/9/16.
  */
-public interface RequestResponder<REQUEST, REPLY> {
-    void respond ( SlackMessagePosted slackMessage, REQUEST request );
+public interface ErrorResponder<T, EXTRA_ARGS> {
+    void reportError ( SlackSession session, SlackMessagePosted event, String problem, EXTRA_ARGS args );
 }

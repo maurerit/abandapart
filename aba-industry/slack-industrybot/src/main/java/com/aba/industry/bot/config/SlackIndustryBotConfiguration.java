@@ -10,14 +10,18 @@
 
 package com.aba.industry.bot.config;
 
+import com.aba.industry.bot.async.SlackPostingAsyncUncaughtExceptionHandler;
+import com.aba.industry.fetch.service.impl.FuzzySteveService;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 
 import java.io.IOException;
 
@@ -26,7 +30,7 @@ import java.io.IOException;
  */
 @Configuration
 @ConfigurationProperties( prefix = "aba.industry.bot.authToken" )
-public class SlackIndustryBotConfiguration {
+public class SlackIndustryBotConfiguration extends AsyncConfigurerSupport {
     private static final Logger logger = LoggerFactory.getLogger( SlackIndustryBotConfiguration.class );
 
     @Value( "${aba.industry.bot.authToken}" )
@@ -44,4 +48,24 @@ public class SlackIndustryBotConfiguration {
         }
         return session;
     }
+
+    @Bean
+    public FuzzySteveService fuzzySteveService ( ) {
+        return new FuzzySteveService();
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler ( ) {
+        return new SlackPostingAsyncUncaughtExceptionHandler();
+    }
+
+    //    @Bean
+//    public TypeIdNotFoundResponder typeIdNotFoundResponder ( ) {
+//        return new TypeIdNotFoundResponder();
+//    }
+//
+//    @Bean
+//    public ExceptionErrorResponder exceptionErrorResponder ( ) {
+//        return new ExceptionErrorResponder();
+//    }
 }

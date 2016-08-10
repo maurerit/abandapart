@@ -10,25 +10,48 @@
 
 package com.aba.industry.bot.responder.impl;
 
+import com.aba.industry.bot.async.AsynSlackException;
 import com.aba.industry.bot.responder.RequestResponder;
+import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
+import com.ullink.slack.simpleslackapi.SlackSession;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 
-import java.util.concurrent.Future;
+import java.io.IOException;
 
 /**
  * Created by maurerit on 8/7/16.
  */
 public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest,
         BuildCalculationResult> {
+    @Autowired
+    IndustrialCalculatorRouterClientImpl routerClient;
+
+    @Autowired
+    private SlackSession session;
+
     @Async
     @Override
-    public Future<BuildCalculationResult> respond ( BuildCalculationRequest buildCalculationRequest ) {
+    public void respond ( SlackMessagePosted slackMessage, BuildCalculationRequest buildCalculationRequest ) {
         BuildCalculationResult result = null;
 
+        try {
+            result = routerClient.calculateBuild( buildCalculationRequest );
+        }
+        catch ( IOException e ) {
+            throw new AsynSlackException( slackMessage, e );
+        }
 
-        return new AsyncResult<>( result );
+        StringBuilder message = new StringBuilder();
+        message.append( MessageUtils.formatUserForClicky( slackMessage.getSender() ) )
+               .append( ": I have finished your build calc request for a " )
+               .append( buildCalculationRequest.getRequestedBuildTypeName() )
+               .append( MessageUtils.formatBuildCalculationResult( result ) );
+
+        session.sendMessage( slackMessage.getChannel(), message.toString() );
     }
 }

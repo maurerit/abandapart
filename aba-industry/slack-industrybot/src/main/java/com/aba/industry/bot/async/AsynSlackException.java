@@ -8,13 +8,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.bot.responder;
+package com.aba.industry.bot.async;
 
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
+import lombok.Getter;
 
 /**
- * Created by maurerit on 8/7/16.
+ * Created by maurerit on 8/9/16.
  */
-public interface RequestResponder<REQUEST, REPLY> {
-    void respond ( SlackMessagePosted slackMessage, REQUEST request );
+@Getter
+public class AsynSlackException extends RuntimeException {
+    private SlackMessagePosted slackMessage;
+
+    public AsynSlackException ( SlackMessagePosted slackMessage, Throwable cause ) {
+        super( cause );
+        this.slackMessage = slackMessage;
+    }
 }
