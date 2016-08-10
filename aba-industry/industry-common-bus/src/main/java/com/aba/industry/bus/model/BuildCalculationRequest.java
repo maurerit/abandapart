@@ -30,6 +30,8 @@ public class BuildCalculationRequest {
     @JsonProperty
     private Integer                       requestedBuildTypeId;
     @JsonProperty
+    private String                        requestedBuildTypeName;
+    @JsonProperty
     private IndustrySkillConfiguration    industrySkills;
     @JsonProperty
     private InventionSkillConfiguration   inventionSkills;

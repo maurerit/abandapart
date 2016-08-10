@@ -6,3 +6,7 @@ aba:
         protocol: tcp
         receivePort: 5558
         publishPort: 5559
+      router:
+          location: industry-router
+          protocol: tcp
+          port: 42001
