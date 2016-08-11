@@ -61,8 +61,7 @@ public class InventionCalculatorImplUnitTests {
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( IndustryActivities.INVENTION.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
+            ItemCost ic = itemCosts.get( am.getTypeId() );
 
             am.setCost( ic.getSell() );
             am.setAdjustedCost( ic.getAdjusted() );
@@ -70,8 +69,7 @@ public class InventionCalculatorImplUnitTests {
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
+            ItemCost ic = itemCosts.get( am.getTypeId() );
 
             am.setCost( ic.getSell() );
             am.setAdjustedCost( ic.getAdjusted() );

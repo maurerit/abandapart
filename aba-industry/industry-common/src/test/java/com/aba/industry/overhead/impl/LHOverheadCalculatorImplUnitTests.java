@@ -10,6 +10,7 @@
 
 package com.aba.industry.overhead.impl;
 
+import static com.aba.industry.HubSystemNames.*;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.overhead.OverheadCalculator;
@@ -27,7 +28,7 @@ public class LHOverheadCalculatorImplUnitTests {
 
     @Test
     public void testHalfABillionFreightFromJita ( ) {
-        FreightDetails freightDetails = calculator.getFreightDetails( "Jita", "Atreen", 500000000d );
+        FreightDetails freightDetails = calculator.getFreightDetails( JITA, "Atreen", 500000000d );
 
         Assert.assertEquals( freightDetails.getCharge(), 13000000d, 0.01 );
         Assert.assertEquals( freightDetails.getJumps()
@@ -36,7 +37,7 @@ public class LHOverheadCalculatorImplUnitTests {
 
     @Test
     public void testHalfABillionFreightFromAmarr ( ) {
-        FreightDetails freightDetails = calculator.getFreightDetails( "Amarr", "Atreen", 500000000d );
+        FreightDetails freightDetails = calculator.getFreightDetails( AMARR, "Atreen", 500000000d );
 
         Assert.assertEquals( freightDetails.getCharge(), 8500000d, 0.01 );
         Assert.assertEquals( freightDetails.getJumps()

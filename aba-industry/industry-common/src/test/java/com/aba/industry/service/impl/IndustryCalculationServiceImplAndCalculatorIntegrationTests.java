@@ -10,6 +10,7 @@
 
 package com.aba.industry.service.impl;
 
+import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
@@ -192,9 +193,9 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 355000000d );
         //</editor-fold>
         //<editor-fold desc="Crest Endpoint Mocks">
-        Mockito.when( solarSystemRepository.getSolarSystemId( "Jita" ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( JITA ) )
                .thenReturn( 1l );
-        Mockito.when( solarSystemRepository.getSolarSystemId( "Amarr" ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR ) )
                .thenReturn( 2l );
         Mockito.when( regionRepository.findRegionId( "The Forge" ) )
                .thenReturn( 20l );
