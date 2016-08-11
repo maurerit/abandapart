@@ -10,6 +10,9 @@
 
 package com.aba.industry.model;
 
+
+
+import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -59,10 +62,10 @@ public class BuildCalculationResult extends CalculationResult {
         result += materialCost;
         result += inventionResult != null ? inventionResult.getTotalCost() : 0d;
         result += toBuildLocationFreight != null && toBuildLocationFreight.get(
-                "Jita" ) != null ? toBuildLocationFreight.get( "Jita" )
+                JITA ) != null ? toBuildLocationFreight.get( JITA )
                                                          .getCharge() : 0d;
         result += fromBuildLocationFreight != null && fromBuildLocationFreight.get(
-                "Jita" ) != null ? fromBuildLocationFreight.get( "Jita" )
+                JITA ) != null ? fromBuildLocationFreight.get( JITA )
                                                            .getCharge() : 0d;
 
         return result;

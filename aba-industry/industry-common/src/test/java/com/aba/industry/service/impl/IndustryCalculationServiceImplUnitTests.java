@@ -10,6 +10,7 @@
 
 package com.aba.industry.service.impl;
 
+import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
@@ -120,8 +121,7 @@ public class IndustryCalculationServiceImplUnitTests {
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( IndustryActivities.INVENTION.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
+            ItemCost ic = itemCosts.get( am.getTypeId() );
 
             am.setCost( ic.getSell() );
             am.setAdjustedCost( ic.getAdjusted() );
@@ -129,17 +129,17 @@ public class IndustryCalculationServiceImplUnitTests {
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
+            ItemCost ic = itemCosts.get( am.getTypeId() );
 
             am.setCost( ic.getSell() );
             am.setAdjustedCost( ic.getAdjusted() );
         }
 
         inventionCalculationResult = new InventionCalculationResult();
-        inventionCalculationResult.setSeconds( 2000l );
+        inventionCalculationResult.setSeconds( 2000L );
         inventionCalculationResult.setResultingME( 2 );
         inventionCalculationResult.setResultingTE( 4 );
+        inventionCalculationResult.setResultingRuns( 1L );
 
         jitaFreightDetails = new FreightDetails();
 
@@ -172,40 +172,40 @@ public class IndustryCalculationServiceImplUnitTests {
         Mockito.when( overheadConfigurationService.getFreightConfiguration() )
                .thenReturn( null );
 
-        Mockito.when( overheadCalculator.getSalary( IndustryActivities.INVENTION, 2000l ) )
+        Mockito.when( overheadCalculator.getSalary( IndustryActivities.INVENTION, 2000L ) )
                .thenReturn( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000 );
         Mockito.when(
                 overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, buildCalculationResult.getSeconds() ) )
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
         Mockito.when(
-                overheadCalculator.getFreightDetails( "Jita", "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
+                overheadCalculator.getFreightDetails( JITA, "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
                .thenReturn(
                        jitaFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Jita", (double) Math.round( 345000000d ) ) )
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", JITA, (double) Math.round( 345000000d ) ) )
                .thenReturn(
                        jitaFreightDetails );
         Mockito.when(
-                overheadCalculator.getFreightDetails( "Amarr", "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
+                overheadCalculator.getFreightDetails( AMARR, "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
                .thenReturn( amarrFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", "Amarr", (double) Math.round( 355000000d ) ) )
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", AMARR, (double) Math.round( 355000000d ) ) )
                .thenReturn( amarrFreightDetails );
         //</editor-fold>
         //<editor-fold desc="Market Fetcher mocks">
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1l, 22444 ) )
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2l, 22444 ) )
+        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
         //</editor-fold>
         //<editor-fold desc="Crest Endpoint Mocks">
-        Mockito.when( solarSystemRepository.getSolarSystemId( "Jita" ) )
-               .thenReturn( 1l );
-        Mockito.when( solarSystemRepository.getSolarSystemId( "Amarr" ) )
-               .thenReturn( 2l );
+        Mockito.when( solarSystemRepository.getSolarSystemId( JITA ) )
+               .thenReturn( 1L );
+        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR ) )
+               .thenReturn( 2L );
         Mockito.when( regionRepository.findRegionId( "The Forge" ) )
-               .thenReturn( 20l );
+               .thenReturn( 20L );
         Mockito.when( regionRepository.findRegionId( "Domain" ) )
-               .thenReturn( 21l );
+               .thenReturn( 21L );
         CrestType materialItem = new CrestType();
         materialItem.setName( "Material Stuff" );
         CrestType sleipnir = new CrestType();
@@ -374,44 +374,48 @@ public class IndustryCalculationServiceImplUnitTests {
                                                                           inventionSkills, 2, 4, null, false,
                                                                           false );
 
-        Assert.assertEquals( buildCalculationResult.getSeconds()
+        //<editor-fold desc="Assertions">
+        Assert.assertEquals( result.getSeconds()
                                                    .doubleValue() / 60 / 60 / 2 * 200000, result.getSalaryCost(),
                              0.01 );
+        Assert.assertNotNull( result.getInventionResult() );
         Assert.assertEquals( ( inventionCalculationResult.getSalaryCost() / 60 / 60 / 40 ) * 200000,
                              result.getInventionResult()
                                    .getSalaryCost(), 0.01 );
-        Assert.assertEquals( 20036519.59, buildCalculationResult.getInstallationFees(), 0.01 );
-        Assert.assertEquals( 2003651.95, buildCalculationResult.getInstallationTax(), 0.01 );
-        Assert.assertNotNull( buildCalculationResult.getFromBuildLocationFreight() );
-        Assert.assertNotNull( buildCalculationResult.getToBuildLocationFreight() );
+        Assert.assertEquals( 20036519.59, result.getInstallationFees(), 0.01 );
+        Assert.assertEquals( 2003651.95, result.getInstallationTax(), 0.01 );
+        Assert.assertNotNull( result.getFromBuildLocationFreight() );
+        Assert.assertNotNull( result.getToBuildLocationFreight() );
 
-        Assert.assertFalse( buildCalculationResult.getToBuildLocationFreight()
+        Assert.assertFalse( result.getToBuildLocationFreight()
                                                   .isEmpty() );
-        Assert.assertFalse( buildCalculationResult.getFromBuildLocationFreight()
+        Assert.assertFalse( result.getFromBuildLocationFreight()
                                                   .isEmpty() );
-        Assert.assertEquals( jitaFreightDetails, buildCalculationResult.getToBuildLocationFreight()
-                                                                       .get( "Jita" ) );
-        Assert.assertEquals( amarrFreightDetails, buildCalculationResult.getToBuildLocationFreight()
-                                                                        .get( "Amarr" ) );
-        Assert.assertEquals( jitaFreightDetails, buildCalculationResult.getFromBuildLocationFreight()
-                                                                       .get( "Jita" ) );
-        Assert.assertEquals( amarrFreightDetails, buildCalculationResult.getFromBuildLocationFreight()
-                                                                        .get( "Amarr" ) );
-        Assert.assertEquals( 6000000.0, buildCalculationResult.getToBuildLocationFreight()
-                                                              .get( "Amarr" )
+        Assert.assertEquals( jitaFreightDetails, result.getToBuildLocationFreight()
+                                                                       .get( JITA ) );
+        Assert.assertEquals( amarrFreightDetails, result.getToBuildLocationFreight()
+                                                                        .get( AMARR ) );
+        Assert.assertEquals( jitaFreightDetails, result.getFromBuildLocationFreight()
+                                                                       .get( JITA ) );
+        Assert.assertEquals( amarrFreightDetails, result.getFromBuildLocationFreight()
+                                                                        .get( AMARR ) );
+        Assert.assertEquals( 6000000.0, result.getToBuildLocationFreight()
+                                                              .get( AMARR )
                                                               .getCharge(), 0.01 );
-        Assert.assertEquals( 1.3E7, buildCalculationResult.getToBuildLocationFreight()
-                                                          .get( "Jita" )
+        Assert.assertEquals( 1.3E7, result.getToBuildLocationFreight()
+                                                          .get( JITA )
                                                           .getCharge(), 0.01 );
-        Assert.assertEquals( 6000000.0, buildCalculationResult.getFromBuildLocationFreight()
-                                                              .get( "Amarr" )
+        Assert.assertEquals( 6000000.0, result.getFromBuildLocationFreight()
+                                                              .get( AMARR )
                                                               .getCharge(), 0.01 );
-        Assert.assertEquals( 1.3E7, buildCalculationResult.getFromBuildLocationFreight()
-                                                          .get( "Jita" )
+        Assert.assertEquals( 1.3E7, result.getFromBuildLocationFreight()
+                                                          .get( JITA )
                                                           .getCharge(), 0.01 );
-        Assert.assertEquals( 136170.0, buildCalculationResult.getInventionResult()
+        Assert.assertEquals( 136170.0, result.getInventionResult()
                                                              .getSeconds(), 0.01 );
-        Assert.assertEquals( "Sleipnir", buildCalculationResult.getProductName() );
+        Assert.assertEquals( "Sleipnir", result.getProductName() );
+        Assert.assertEquals( 362770534.17, result.getTotalCost(), .01 );
+        //</editor-fold>
     }
 
 }

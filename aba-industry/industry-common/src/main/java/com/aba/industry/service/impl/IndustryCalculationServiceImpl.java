@@ -10,6 +10,8 @@
 
 package com.aba.industry.service.impl;
 
+import static com.aba.industry.HubSystemNames.*;
+
 import com.aba.ApplicationException;
 import com.aba.data.domain.config.*;
 import com.aba.eveonline.repo.ItemTypeRepository;
@@ -40,10 +42,6 @@ import java.io.IOException;
 @Setter
 //TODO: Find a go way to bring the desired potential shopping/drop off locations into this method.
 public class IndustryCalculationServiceImpl implements IndustryCalculationService {
-    //TODO: Temporary statics to get rid of Jita and Amarr all over the place
-    public static final String JITA  = "Jita";
-    public static final String AMARR = "Amarr";
-
     private static final Logger logger = LoggerFactory.getLogger( IndustryCalculationService.class );
 
     @Autowired

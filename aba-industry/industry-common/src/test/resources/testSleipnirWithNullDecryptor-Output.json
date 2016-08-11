@@ -104,7 +104,7 @@
   "installationFees": 2.003651959474643E7,
   "installationTax": 2003651.959474643,
   "seconds": 195840,
-  "salaryCost": 0.0,
+  "salaryCost": 5440000.0,
   "skillConfiguration": {
     "preference": "EXCEPTIONAL",
     "industrySkillLevel": 5,
@@ -112,13 +112,72 @@
     "industrySkillLevelMultiplier": null,
     "advancedIndustrySkillLevelMultiplier": null
   },
+  "productId": 22444,
+  "productName": "Sleipnir",
+  "buildSystem": "Atreen",
   "materialCost": 3.124297159600001E8,
   "lowestSellOrders": null,
   "highestBuyOrders": null,
-  "toBuildLocationFreight": {},
-  "fromBuildLocationFreight": {},
-  "inventionResult": null,
+  "toBuildLocationFreight": {
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 1.3E7,
+      "freightConfigUsed": null
+    },
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 6000000.0,
+      "freightConfigUsed": null
+    }
+  },
+  "fromBuildLocationFreight": {
+    "Jita": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 15,
+      "charge": 1.3E7,
+      "freightConfigUsed": null
+    },
+    "Amarr": {
+      "startStationId": null,
+      "endStationId": null,
+      "startStationName": null,
+      "endStationName": null,
+      "jumps": 9,
+      "charge": 6000000.0,
+      "freightConfigUsed": null
+    }
+  },
+  "inventionResult": {
+    "materialsWithCost": null,
+    "requiredSkills": null,
+    "installationFees": null,
+    "installationTax": null,
+    "seconds": 136170,
+    "salaryCost": 0.0,
+    "skillConfiguration": null,
+    "inventionRunCost": null,
+    "costPerSuccessfulInventionRun": 0.0,
+    "blueprintCopyCost": null,
+    "probability": null,
+    "outputTypeId": null,
+    "resultingME": 2,
+    "resultingTE": 4,
+    "resultingRuns": 1,
+    "decryptor": null,
+    "totalCost": 0.0,
+    "costPerBlueprintRun": 0.0
+  },
   "childBuilds": null,
-  "totalCost": 3.344698875142212E8,
-  "productId": 22444
+  "totalCost": 3.604698875142212E8
 }
