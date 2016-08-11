@@ -176,6 +176,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
 
         calculateOverheads( systemName, result );
 
+        result.setBuildSystem( systemName );
+
         return result;
     }
 

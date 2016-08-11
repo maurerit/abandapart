@@ -10,6 +10,15 @@
 
 package com.aba.industry.bot;
 
+import com.aba.TypeIdNotFoundException;
+import com.aba.data.domain.config.IndustrySkillConfiguration;
+import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.industry.bot.responder.RequestResponder;
+import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
+import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
+import com.aba.industry.bus.model.BuildCalculationRequest;
+import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
+import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackChannel;
 import com.ullink.slack.simpleslackapi.SlackPersona;
 import com.ullink.slack.simpleslackapi.SlackSession;
@@ -19,6 +28,7 @@ import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -32,6 +42,25 @@ public class SlackIndustryBot implements Runnable {
     public static final Integer SECONDS_BEFORE_SHUTDOWN = 5;
 
     private static final Logger logger = LoggerFactory.getLogger( SlackIndustryBot.class );
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @Autowired
+    private IndustrialCalculatorRouterClientImpl routerClient;
+
+    @Autowired
+    private TypeNameToTypeIdProvider typeIdProvider;
+
+    @Autowired
+    private ExceptionErrorResponder exceptionErrorResponder;
+
+    @Autowired
+    private TypeIdNotFoundResponder typeIdNotFoundResponder;
+
+    //TODO: For some reason, referencing the BuildCalculationRequestResponder by fully qualified name fails :(.
+    @Autowired
+    private RequestResponder<BuildCalculationRequest> buildCalculationRequestResponder;
 
     @Autowired
     private SlackSession session;
@@ -62,10 +91,46 @@ public class SlackIndustryBot implements Runnable {
         try {
             logger.info( "Shutting down" );
             session.disconnect();
+            //TODO: I don't like doing this but I think the spring threadPoolExecutor is keeping the jvm alive.
+            System.exit( 0 );
         }
         catch ( IOException e ) {
             logger.error( "IOException received while closing slack connection", e );
         }
+    }
+
+    private void handleCalculateBuildRequest ( SlackMessagePosted event,
+                                               CalculateCommands command ) throws IOException, TypeIdNotFoundException
+    {
+        String[] segments = command.getInterestingSegments( event.getMessageContent() );
+        String typeName = segments[0];
+        Integer typeId = typeIdProvider.getTypeIdForTypeName( typeName );
+
+        if ( typeId == null ) {
+            throw new TypeIdNotFoundException( typeName, "Not type id found" );
+        }
+
+        BuildCalculationRequest request = new BuildCalculationRequest();
+
+        IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
+        industrySkills.setAdvancedIndustrySkillLevel( 5 );
+        industrySkills.setIndustrySkillLevel( 5 );
+
+        InventionSkillConfiguration inventionSkills = new InventionSkillConfiguration();
+        inventionSkills.setDatacoreOneSkillLevel( 3 );
+        inventionSkills.setDatacoreTwoSkillLevel( 3 );
+        inventionSkills.setEncryptionSkillLevel( 4 );
+
+        request.setIndustrySkills( industrySkills );
+        request.setInventionSkills( inventionSkills );
+        request.setMeLevel( 10 );
+        request.setTeLevel( 20 );
+        request.setRequestedBuildTypeId( typeId );
+        request.setRequestedBuildTypeName( typeName );
+
+        request.setSystemName( "Atreen" );
+
+        buildCalculationRequestResponder.respond( event, request );
     }
 
     public final class MessageListener implements SlackMessagePostedListener {
@@ -118,6 +183,15 @@ public class SlackIndustryBot implements Runnable {
 
                 switch ( command ) {
                     case CALCULATE_BUILD_BASIC:
+                        try {
+                            handleCalculateBuildRequest( event, command );
+                        }
+                        catch ( IOException e ) {
+                            exceptionErrorResponder.reportError( session, event, e.getLocalizedMessage(), e );
+                        }
+                        catch ( TypeIdNotFoundException e ) {
+                            typeIdNotFoundResponder.reportError( session, event, e.getMessage(), e.getTypeName() );
+                        }
                         break;
                     case CALCULATE_BUILD_SPECIFY_PROCURE_TYPE:
                         break;

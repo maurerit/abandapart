@@ -10,11 +10,11 @@
 
 package com.aba.industry.bot.responder;
 
-import java.util.concurrent.Future;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
  * Created by maurerit on 8/7/16.
  */
-public interface RequestResponder<REQUEST, REPLY> {
-    Future<REPLY> respond ( REQUEST request );
+public interface RequestResponder<REQUEST> {
+    void respond ( SlackMessagePosted slackMessage, REQUEST request );
 }
