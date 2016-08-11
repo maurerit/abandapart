@@ -18,38 +18,54 @@ import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 /**
  * Created by maurerit on 8/7/16.
  */
-public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest,
-        BuildCalculationResult> {
+@Component
+public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest> {
+    private static final Logger logger = LoggerFactory.getLogger( BuildCalculationRequestResponder.class );
+
     @Autowired
-    IndustrialCalculatorRouterClientImpl routerClient;
+    private ApplicationContext context;
 
     @Autowired
     private SlackSession session;
 
-    @Async
+    @Async( "threadPoolTaskExecutor" )
     @Override
     public void respond ( SlackMessagePosted slackMessage, BuildCalculationRequest buildCalculationRequest ) {
+        logger.debug( "Received a build calculation request: {}", buildCalculationRequest );
+        IndustrialCalculatorRouterClientImpl routerClient = context.getBean(
+                IndustrialCalculatorRouterClientImpl.class );
         BuildCalculationResult result = null;
 
         try {
             result = routerClient.calculateBuild( buildCalculationRequest );
+            routerClient.disconnect();
         }
         catch ( IOException e ) {
             throw new AsynSlackException( slackMessage, e );
         }
 
+        if ( result == null ) {
+            NullPointerException npe = new NullPointerException();
+            npe.setStackTrace( npe.fillInStackTrace()
+                                  .getStackTrace() );
+            throw new AsynSlackException( slackMessage, npe );
+        }
+
         StringBuilder message = new StringBuilder();
         message.append( MessageUtils.formatUserForClicky( slackMessage.getSender() ) )
-               .append( ": I have finished your build calc request for a " )
-               .append( buildCalculationRequest.getRequestedBuildTypeName() )
+               .append( "\n" )
                .append( MessageUtils.formatBuildCalculationResult( result ) );
 
         session.sendMessage( slackMessage.getChannel(), message.toString() );

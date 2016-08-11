@@ -10,27 +10,30 @@
 
 package com.aba.industry.bot.config;
 
-import com.aba.industry.bot.async.SlackPostingAsyncUncaughtExceptionHandler;
 import com.aba.industry.fetch.service.impl.FuzzySteveService;
+import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 
 /**
  * Created by maurerit on 8/7/16.
  */
 @Configuration
-@ConfigurationProperties( prefix = "aba.industry.bot.authToken" )
-public class SlackIndustryBotConfiguration extends AsyncConfigurerSupport {
+@ConfigurationProperties( prefix = "aba.industry.bot" )
+@EnableAsync
+public class SlackIndustryBotConfiguration {
     private static final Logger logger = LoggerFactory.getLogger( SlackIndustryBotConfiguration.class );
 
     @Value( "${aba.industry.bot.authToken}" )
@@ -54,18 +57,23 @@ public class SlackIndustryBotConfiguration extends AsyncConfigurerSupport {
         return new FuzzySteveService();
     }
 
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler ( ) {
-        return new SlackPostingAsyncUncaughtExceptionHandler();
+    @Bean( name = "threadPoolTaskExecutor" )
+    public Executor threadPoolTaskExecutor ( ) {
+        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+        pool.setCorePoolSize( 2 );
+        pool.setMaxPoolSize( 20 );
+        pool.setQueueCapacity( 2 );
+        return pool;
     }
 
-    //    @Bean
-//    public TypeIdNotFoundResponder typeIdNotFoundResponder ( ) {
-//        return new TypeIdNotFoundResponder();
-//    }
-//
+    @Bean
+    @Scope( scopeName = "prototype" )
+    public IndustrialCalculatorRouterClientImpl routerClient ( ) {
+        return new IndustrialCalculatorRouterClientImpl();
+    }
+
 //    @Bean
-//    public ExceptionErrorResponder exceptionErrorResponder ( ) {
-//        return new ExceptionErrorResponder();
+//    public BuildCalculationRequestResponder buildCalculationRequestResponder ( ) {
+//        return new BuildCalculationRequestResponder();
 //    }
 }

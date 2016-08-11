@@ -50,9 +50,11 @@ public class IndustryCalculationWorker implements Runnable {
     @Value( "${aba.industry.bus.worker.routerPort}" )
     private String routerPort;
 
+    private String myName;
+
     public void run ( ) {
-        String myName = ManagementFactory.getRuntimeMXBean()
-                                         .getName();
+        myName = ManagementFactory.getRuntimeMXBean()
+                                  .getName();
         ZMQ.Context context = ZMQ.context( 1 );
         ZMQ.Socket worker = context.socket( ZMQ.REQ );
         worker.setIdentity( myName.getBytes( ZMQ.CHARSET ) );
@@ -87,6 +89,7 @@ public class IndustryCalculationWorker implements Runnable {
     }
 
     private String calculateBuild ( String requestString ) throws IOException {
+        logger.debug( "{} Received a build calc request {}", myName, requestString );
         String result = null;
         BuildCalculationRequest request = mapper.readValue( requestString, BuildCalculationRequest.class );
 

@@ -12,12 +12,14 @@ package com.aba.industry.bot.util;
 
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.model.FreightDetails;
 import com.ullink.slack.simpleslackapi.SlackPersona;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by maurerit on 8/9/16.
@@ -43,7 +45,10 @@ public class MessageUtils {
 
         message.append( "*" )
                .append( result.getProductName() )
-               .append( " Build Request Details*\n" )
+               .append( "* _(" )
+               .append( result.getProductId() )
+               .append( ")_\n" )
+               .append( "*Build Request Details*\n" )
                .append( "Materials\n    for the build" );
 
         if ( result.getMaterialsWithCost() != null ) {
@@ -59,21 +64,74 @@ public class MessageUtils {
             formatMaterialsWithCost( result.getInventionResult()
                                            .getMaterialsWithCost(), format, message );
 
-            message.append( "\n*Overheads*" );
+            //<editor-fold desc="Invention Overheads">
+            message.append( "\n*_Overheads_*" )
+                   .append( "\n    Installation: " )
+                   .append( format.format( result.getInventionResult()
+                                                 .getInstallationFees() ) )
+                   .append( "\n    Installation Tax: " )
+                   .append( format.format( result.getInventionResult()
+                                                 .getInstallationTax() ) )
+                   .append( "\n    Salary: " )
+                   .append( format.format( result.getInventionResult()
+                                                 .getSalaryCost() ) )
+                   .append( "\n" );
+            //</editor-fold>
         }
 
         //TODO: abandapart-20 Format required skills
 
         if ( !hasInvention ) {
-            message.append( "\nOverheads" );
+            message.append( "\n*_Overheads_*" );
         }
 
-        message.append( "Build Installation: " )
-               .append( result.getInstallationFees() )
-               .append( "\nBuild Installation Tax: " )
-               .append( result.getInstallationTax() )
-               .append( "\nBuild Salary: " )
-               .append( result.getSalaryCost() );
+        //<editor-fold desc="Build Overheads">
+        message.append( "\nBuild\n    Installation: " )
+               .append( format.format( result.getInstallationFees() ) )
+               .append( "\n    Installation Tax: " )
+               .append( format.format( result.getInstallationTax() ) )
+               .append( "\n    Salary: " )
+               .append( format.format( result.getSalaryCost() ) );
+        //</editor-fold>
+
+        //<editor-fold desc="Freight Overheads">
+        boolean hasToFreight = false;
+        if ( result.getToBuildLocationFreight() != null ) {
+            hasToFreight = true;
+
+            message.append( "\n_Freight_" )
+                   .append( "\n  to " )
+                   .append( result.getBuildSystem() );
+            for ( Map.Entry<String, FreightDetails> entry : result.getToBuildLocationFreight()
+                                                                  .entrySet() ) {
+                message.append( "\n    - " )
+                       .append( entry.getKey() )
+                       .append( ": " )
+                       .append( format.format( entry.getValue()
+                                                    .getCharge() ) );
+            }
+        }
+        if ( result.getFromBuildLocationFreight() != null ) {
+            if ( !hasToFreight ) {
+                message.append( "\n_Freight_" );
+            }
+            message.append( "\n  from " )
+                   .append( result.getBuildSystem() );
+            for ( Map.Entry<String, FreightDetails> entry : result.getFromBuildLocationFreight()
+                                                                  .entrySet() ) {
+                message.append( "\n    - " )
+                       .append( entry.getKey() )
+                       .append( ": " )
+                       .append( format.format( entry.getValue()
+                                                    .getCharge() ) );
+            }
+        }
+        //</editor-fold>
+
+        message.append( "\n" )
+               .append( "*Total Cost: " )
+               .append( format.format( result.getTotalCost() ) )
+               .append( "*" );
 
         return message.toString();
     }
@@ -81,9 +139,9 @@ public class MessageUtils {
     private static void formatMaterialsWithCost ( List<ActivityMaterialWithCost> materials, Format format,
                                                   StringBuilder message )
     {
+        message.append( "\n```" );
         for ( ActivityMaterialWithCost amWithCost : materials ) {
-            message.append( "\n``` " )
-                   .append( " x" )
+            message.append( "\nx" )
                    .append( amWithCost.getQuantity() )
                    .append( " " )
                    .append( amWithCost.getName() )
