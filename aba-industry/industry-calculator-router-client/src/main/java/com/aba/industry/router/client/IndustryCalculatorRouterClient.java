@@ -20,4 +20,6 @@ import java.io.IOException;
  */
 public interface IndustryCalculatorRouterClient {
     BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException;
+
+    void disconnect ( );
 }

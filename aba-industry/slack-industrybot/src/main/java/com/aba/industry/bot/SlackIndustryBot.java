@@ -13,12 +13,11 @@ package com.aba.industry.bot;
 import com.aba.TypeIdNotFoundException;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
-import com.aba.industry.bot.responder.impl.BuildCalculationRequestResponder;
+import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
 import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
-import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackChannel;
 import com.ullink.slack.simpleslackapi.SlackPersona;
@@ -59,8 +58,9 @@ public class SlackIndustryBot implements Runnable {
     @Autowired
     private TypeIdNotFoundResponder typeIdNotFoundResponder;
 
+    //TODO: For some reason, referencing the BuildCalculationRequestResponder by fully qualified name fails :(.
     @Autowired
-    private BuildCalculationRequestResponder buildCalculationRequestResponder;
+    private RequestResponder<BuildCalculationRequest> buildCalculationRequestResponder;
 
     @Autowired
     private SlackSession session;
@@ -91,16 +91,18 @@ public class SlackIndustryBot implements Runnable {
         try {
             logger.info( "Shutting down" );
             session.disconnect();
+            //TODO: I don't like doing this but I think the spring threadPoolExecutor is keeping the jvm alive.
+            System.exit( 0 );
         }
         catch ( IOException e ) {
             logger.error( "IOException received while closing slack connection", e );
         }
     }
 
-    private void handleCalculateBuildRequest ( String message,
+    private void handleCalculateBuildRequest ( SlackMessagePosted event,
                                                CalculateCommands command ) throws IOException, TypeIdNotFoundException
     {
-        String[] segments = command.getInterestingSegments( message );
+        String[] segments = command.getInterestingSegments( event.getMessageContent() );
         String typeName = segments[0];
         Integer typeId = typeIdProvider.getTypeIdForTypeName( typeName );
 
@@ -128,9 +130,7 @@ public class SlackIndustryBot implements Runnable {
 
         request.setSystemName( "Atreen" );
 
-        BuildCalculationResult result = routerClient.calculateBuild( request );
-
-
+        buildCalculationRequestResponder.respond( event, request );
     }
 
     public final class MessageListener implements SlackMessagePostedListener {
@@ -184,7 +184,7 @@ public class SlackIndustryBot implements Runnable {
                 switch ( command ) {
                     case CALCULATE_BUILD_BASIC:
                         try {
-                            handleCalculateBuildRequest( message, command );
+                            handleCalculateBuildRequest( event, command );
                         }
                         catch ( IOException e ) {
                             exceptionErrorResponder.reportError( session, event, e.getLocalizedMessage(), e );

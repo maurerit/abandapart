@@ -15,6 +15,6 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 /**
  * Created by maurerit on 8/7/16.
  */
-public interface RequestResponder<REQUEST, REPLY> {
+public interface RequestResponder<REQUEST> {
     void respond ( SlackMessagePosted slackMessage, REQUEST request );
 }

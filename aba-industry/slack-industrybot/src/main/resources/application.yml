@@ -10,3 +10,7 @@ aba:
           location: industry-router
           protocol: tcp
           port: 42001
+
+logging:
+  level:
+    com.aba: DEBUG

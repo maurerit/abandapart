@@ -17,7 +17,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * Created by maurerit on 8/7/16.
@@ -25,7 +24,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 //TODO: For now exclude these.  Build in the functionality to administer things into this bot.
 @EnableAutoConfiguration( exclude = { HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class } )
-@EnableAsync
 public class SlackIndustryBotApp {
     public static void main ( String[] args ) {
         ApplicationContext context = SpringApplication.run( SlackIndustryBotApp.class, args );
