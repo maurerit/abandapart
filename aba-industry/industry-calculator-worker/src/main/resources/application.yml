@@ -10,3 +10,7 @@ aba:
         protocol: tcp
         receivePort: 5558
         publishPort: 5559
+
+logging:
+  level:
+    com.aba: DEBUG

@@ -10,6 +10,8 @@
 
 package com.aba.industry.bot.config;
 
+import com.aba.industry.fetch.service.impl.FuzzySteveService;
+import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import org.slf4j.Logger;
@@ -18,14 +20,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 
 /**
  * Created by maurerit on 8/7/16.
  */
 @Configuration
-@ConfigurationProperties( prefix = "aba.industry.bot.authToken" )
+@ConfigurationProperties( prefix = "aba.industry.bot" )
+@EnableAsync
 public class SlackIndustryBotConfiguration {
     private static final Logger logger = LoggerFactory.getLogger( SlackIndustryBotConfiguration.class );
 
@@ -44,4 +51,29 @@ public class SlackIndustryBotConfiguration {
         }
         return session;
     }
+
+    @Bean
+    public FuzzySteveService fuzzySteveService ( ) {
+        return new FuzzySteveService();
+    }
+
+    @Bean( name = "threadPoolTaskExecutor" )
+    public Executor threadPoolTaskExecutor ( ) {
+        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+        pool.setCorePoolSize( 2 );
+        pool.setMaxPoolSize( 20 );
+        pool.setQueueCapacity( 2 );
+        return pool;
+    }
+
+    @Bean
+    @Scope( scopeName = "prototype" )
+    public IndustrialCalculatorRouterClientImpl routerClient ( ) {
+        return new IndustrialCalculatorRouterClientImpl();
+    }
+
+//    @Bean
+//    public BuildCalculationRequestResponder buildCalculationRequestResponder ( ) {
+//        return new BuildCalculationRequestResponder();
+//    }
 }

@@ -8,18 +8,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.router.client;
+package com.aba.industry.bot.responder;
 
-import com.aba.industry.bus.model.BuildCalculationRequest;
-import com.aba.industry.model.BuildCalculationResult;
-
-import java.io.IOException;
+import com.ullink.slack.simpleslackapi.SlackSession;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
- * Created by maurerit on 8/7/16.
+ * Created by maurerit on 8/9/16.
  */
-public interface IndustryCalculatorRouterClient {
-    BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException;
-
-    void disconnect ( );
+public interface ErrorResponder<T, EXTRA_ARGS> {
+    void reportError ( SlackSession session, SlackMessagePosted event, String problem, EXTRA_ARGS args );
 }

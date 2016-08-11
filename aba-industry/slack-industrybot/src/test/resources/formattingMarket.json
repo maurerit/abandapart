@@ -1,0 +1,40 @@
+{
+  "requiredSkills": null,
+  "seconds": 1528,
+  "skillConfiguration": {
+    "preference": "PREFERED",
+    "industrySkillLevel": 5,
+    "advancedIndustrySkillLevel": 5,
+    "industrySkillLevelMultiplier": 0.0,
+    "advancedIndustrySkillLevelMultiplier": 0.0
+  },
+  "materialCost": 497019.5,
+  "lowestSellOrders": null,
+  "highestBuyOrders": null,
+  "inventionResult": {
+    "requiredSkills": null,
+    "seconds": 11730,
+    "skillConfiguration": {
+      "preference": "PREFERED",
+      "encryptionSkillLevel": 4,
+      "datacoreOneSkillLevel": 3,
+      "datacoreTwoSkillLevel": 3,
+      "encryptionSkillLevelMultiplier": 0.0,
+      "datacoreOneSkillLevelMultiplier": 0.0,
+      "datacoreTwoSkillLevelMultiplier": 0.0
+    },
+    "inventionRunCost": 253209.94,
+    "costPerSuccessfulInventionRun": 573771.7862386932,
+    "blueprintCopyCost": 36.689427220922,
+    "probability": 44.2,
+    "outputTypeId": 3074,
+    "resultingME": 2,
+    "resultingTE": 4,
+    "resultingRuns": 10,
+    "decryptor": null,
+    "totalCost": 574132.2863289746,
+    "costPerBlueprintRun": 57377.17862386932
+  },
+  "childBuilds": null,
+  "totalCost": 1101517.7063289746
+}

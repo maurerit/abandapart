@@ -10,25 +10,64 @@
 
 package com.aba.industry.bot.responder.impl;
 
+import com.aba.industry.bot.async.AsynSlackException;
 import com.aba.industry.bot.responder.RequestResponder;
+import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
+import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
+import com.ullink.slack.simpleslackapi.SlackSession;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Future;
+import java.io.IOException;
 
 /**
  * Created by maurerit on 8/7/16.
  */
-public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest,
-        BuildCalculationResult> {
-    @Async
+@Component
+public class BuildCalculationRequestResponder implements RequestResponder<BuildCalculationRequest> {
+    private static final Logger logger = LoggerFactory.getLogger( BuildCalculationRequestResponder.class );
+
+    @Autowired
+    private ApplicationContext context;
+
+    @Autowired
+    private SlackSession session;
+
+    @Async( "threadPoolTaskExecutor" )
     @Override
-    public Future<BuildCalculationResult> respond ( BuildCalculationRequest buildCalculationRequest ) {
+    public void respond ( SlackMessagePosted slackMessage, BuildCalculationRequest buildCalculationRequest ) {
+        logger.debug( "Received a build calculation request: {}", buildCalculationRequest );
+        IndustrialCalculatorRouterClientImpl routerClient = context.getBean(
+                IndustrialCalculatorRouterClientImpl.class );
         BuildCalculationResult result = null;
 
+        try {
+            result = routerClient.calculateBuild( buildCalculationRequest );
+            routerClient.disconnect();
+        }
+        catch ( IOException e ) {
+            throw new AsynSlackException( slackMessage, e );
+        }
 
-        return new AsyncResult<>( result );
+        if ( result == null ) {
+            NullPointerException npe = new NullPointerException();
+            npe.setStackTrace( npe.fillInStackTrace()
+                                  .getStackTrace() );
+            throw new AsynSlackException( slackMessage, npe );
+        }
+
+        StringBuilder message = new StringBuilder();
+        message.append( MessageUtils.formatUserForClicky( slackMessage.getSender() ) )
+               .append( "\n" )
+               .append( MessageUtils.formatBuildCalculationResult( result ) );
+
+        session.sendMessage( slackMessage.getChannel(), message.toString() );
     }
 }
