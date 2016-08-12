@@ -175,8 +175,7 @@
     "resultingTE": 4,
     "resultingRuns": 1,
     "decryptor": null,
-    "totalCost": 0.0,
-    "costPerBlueprintRun": 0.0
+    "totalCost": 0.0
   },
   "childBuilds": null,
   "totalCost": 3.604698875142212E8
