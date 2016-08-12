@@ -41,7 +41,7 @@ public class InventionCalculatorImplUnitTests {
         InputStream bpDetailsIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-BlueprintDetails.json" );
         InputStream costIndexesIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
-                "/testSleipnirWithNullDecryptor-CostIndexes.json" );
+                "/CostIndexes.json" );
         InputStream itemCostIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-ItemCosts.json" );
 

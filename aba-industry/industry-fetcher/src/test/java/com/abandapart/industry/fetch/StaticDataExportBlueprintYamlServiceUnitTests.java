@@ -10,9 +10,12 @@
 
 package com.abandapart.industry.fetch;
 
+import com.aba.industry.fetch.model.Blueprint;
 import com.aba.industry.fetch.service.impl.StaticDataExportBlueprintYamlService;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,5 +55,32 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
         List<BlueprintData> result = staticDataExportBlueprintYamlService.getAllBlueprints();
 
         Assert.assertFalse( result.isEmpty() );
+    }
+
+    @Test
+    public void testGet150mmRailgunI ( ) throws JsonProcessingException
+    {
+        BlueprintData bpData = staticDataExportBlueprintYamlService.getBlueprintData( 565 );
+
+        ObjectMapper mapper = new ObjectMapper(  );
+
+        String resultStr = mapper.writeValueAsString( bpData );
+        System.out.println(bpData);
+        System.out.println(resultStr);
+
+        Assert.assertNotNull( bpData.getBlueprintDetails() );
+    }
+
+    @Test
+    public void testGetGetProteus ( ) throws JsonProcessingException {
+        BlueprintData bpData = staticDataExportBlueprintYamlService.getBlueprintData( 29988 );
+
+        ObjectMapper mapper = new ObjectMapper(  );
+
+        String resultStr = mapper.writeValueAsString( bpData );
+        System.out.println(bpData);
+        System.out.println(resultStr);
+
+        Assert.assertNotNull( bpData.getBlueprintDetails() );
     }
 }
