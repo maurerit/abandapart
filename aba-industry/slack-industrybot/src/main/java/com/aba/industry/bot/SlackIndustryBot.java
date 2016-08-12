@@ -123,6 +123,7 @@ public class SlackIndustryBot implements Runnable {
 
         request.setIndustrySkills( industrySkills );
         request.setInventionSkills( inventionSkills );
+        //FIXME: #29
         request.setMeLevel( 10 );
         request.setTeLevel( 20 );
         request.setRequestedBuildTypeId( typeId );
