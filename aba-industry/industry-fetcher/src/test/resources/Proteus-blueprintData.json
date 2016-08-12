@@ -1,0 +1,216 @@
+{
+  "blueprintSkills": {},
+  "blueprintDetails": {
+    "maxProductionLimit": 1,
+    "productQuantity": 1,
+    "facilities": null,
+    "techLevel": 2,
+    "adjustedPrice": null,
+    "precursorAdjustedPrice": null,
+    "precursorTypeId": null,
+    "productTypeID": 29988,
+    "productTypeName": null,
+    "times": {
+      "1": 240000,
+      "3": 84000,
+      "4": 84000,
+      "5": 192000,
+      "8": 3600
+    },
+    "probability": 0.34
+  },
+  "activityMaterials": {
+    "1": [
+      {
+        "name": null,
+        "quantity": 15,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 30464,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 1,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 30470,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 2,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 30476,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 20,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 30474,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 2,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 29996,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 7,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 30002,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 15,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 11478,
+        "maketype": null
+      }
+    ],
+    "8": [
+      {
+        "name": null,
+        "quantity": 3,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 20424,
+        "maketype": null
+      },
+      {
+        "name": null,
+        "quantity": 3,
+        "source": null,
+        "cost": null,
+        "adjustedCost": null,
+        "typeid": 20412,
+        "maketype": null
+      }
+    ]
+  },
+  "decryptors": [
+    {
+      "name": "Accelerant Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.2000000476837,
+      "me": 2,
+      "te": 10,
+      "runs": 1,
+      "typeid": 34201,
+      "maketype": null
+    },
+    {
+      "name": "Attainment Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.7999999523163,
+      "me": -1,
+      "te": 4,
+      "runs": 4,
+      "typeid": 34202,
+      "maketype": null
+    },
+    {
+      "name": "Augmentation Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 0.60000002384186,
+      "me": -2,
+      "te": 2,
+      "runs": 9,
+      "typeid": 34203,
+      "maketype": null
+    },
+    {
+      "name": "Parity Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.5,
+      "me": 1,
+      "te": -2,
+      "runs": 3,
+      "typeid": 34204,
+      "maketype": null
+    },
+    {
+      "name": "Process Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.1000000238419,
+      "me": 3,
+      "te": 6,
+      "runs": 0,
+      "typeid": 34205,
+      "maketype": null
+    },
+    {
+      "name": "Symmetry Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.0,
+      "me": 1,
+      "te": 8,
+      "runs": 2,
+      "typeid": 34206,
+      "maketype": null
+    },
+    {
+      "name": "Optimized Attainment Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 1.8999999761581,
+      "me": 1,
+      "te": -2,
+      "runs": 2,
+      "typeid": 34207,
+      "maketype": null
+    },
+    {
+      "name": "Optimized Augmentation Decryptor",
+      "quantity": null,
+      "source": null,
+      "cost": null,
+      "adjustedCost": null,
+      "multiplier": 0.89999997615814,
+      "me": 2,
+      "te": 0,
+      "runs": 7,
+      "typeid": 34208,
+      "maketype": null
+    }
+  ],
+  "requestedid": 29988
+}

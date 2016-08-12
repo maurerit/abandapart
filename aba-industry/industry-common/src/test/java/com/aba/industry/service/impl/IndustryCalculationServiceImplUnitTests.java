@@ -94,7 +94,7 @@ public class IndustryCalculationServiceImplUnitTests {
         InputStream bpDetailsIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-BlueprintDetails.json" );
         InputStream costIndexesIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
-                "/testSleipnirWithNullDecryptor-CostIndexes.json" );
+                "/CostIndexes.json" );
         InputStream itemCostIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-ItemCosts.json" );
         InputStream buildCalculationResultIS = IndustryCalculationServiceImplUnitTests.class.getResourceAsStream(
