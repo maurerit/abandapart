@@ -16,7 +16,6 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Method;
 
@@ -25,13 +24,12 @@ import java.lang.reflect.Method;
  */
 public class SlackPostingAsyncUncaughtExceptionHandler implements AsyncUncaughtExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger( SlackPostingAsyncUncaughtExceptionHandler.class );
-    @Autowired
-    private SlackSession session;
 
     @Override
     public void handleUncaughtException ( Throwable ex, Method method, Object... params ) {
-        if ( ex instanceof AsynSlackException ) {
-            SlackMessagePosted slackMessage = ( (AsynSlackException) ex ).getSlackMessage();
+        if ( ex instanceof AsyncSlackException ) {
+            SlackMessagePosted slackMessage = ( (AsyncSlackException) ex ).getSlackMessage();
+            SlackSession session = ( (AsyncSlackException) ex ).getSession();
 
             StringBuilder message = new StringBuilder();
             message.append( "Hey " )

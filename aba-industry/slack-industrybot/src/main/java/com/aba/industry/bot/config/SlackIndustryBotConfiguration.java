@@ -21,7 +21,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.IOException;
@@ -32,7 +31,6 @@ import java.util.concurrent.Executor;
  */
 @Configuration
 @ConfigurationProperties( prefix = "aba.industry.bot" )
-@EnableAsync
 public class SlackIndustryBotConfiguration {
     private static final Logger logger = LoggerFactory.getLogger( SlackIndustryBotConfiguration.class );
 

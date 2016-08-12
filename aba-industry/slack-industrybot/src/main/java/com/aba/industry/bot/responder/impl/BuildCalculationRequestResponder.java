@@ -10,7 +10,7 @@
 
 package com.aba.industry.bot.responder.impl;
 
-import com.aba.industry.bot.async.AsynSlackException;
+import com.aba.industry.bot.async.AsyncSlackException;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.bus.model.BuildCalculationRequest;
@@ -53,14 +53,14 @@ public class BuildCalculationRequestResponder implements RequestResponder<BuildC
             routerClient.disconnect();
         }
         catch ( IOException e ) {
-            throw new AsynSlackException( slackMessage, e );
+            throw new AsyncSlackException( session, slackMessage, e );
         }
 
         if ( result == null ) {
             NullPointerException npe = new NullPointerException();
             npe.setStackTrace( npe.fillInStackTrace()
                                   .getStackTrace() );
-            throw new AsynSlackException( slackMessage, npe );
+            throw new AsyncSlackException( session, slackMessage, npe );
         }
 
         StringBuilder message = new StringBuilder();

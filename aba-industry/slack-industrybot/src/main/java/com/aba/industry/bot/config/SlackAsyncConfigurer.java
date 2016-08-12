@@ -11,15 +11,36 @@
 package com.aba.industry.bot.config;
 
 import com.aba.industry.bot.async.SlackPostingAsyncUncaughtExceptionHandler;
+import com.aba.industry.bot.responder.impl.BuildCalculationRequestResponder;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
 
 /**
  * Created by maurerit on 8/10/16.
  */
 @Configuration
+@EnableAsync
 public class SlackAsyncConfigurer extends AsyncConfigurerSupport {
+    @Bean
+    public BuildCalculationRequestResponder buildCalculationRequestResponder ( ) {
+        return new BuildCalculationRequestResponder();
+    }
+
+    @Override
+    public Executor getAsyncExecutor ( ) {
+        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+        pool.setCorePoolSize( 2 );
+        pool.setMaxPoolSize( 20 );
+        pool.setQueueCapacity( 2 );
+        return pool;
+    }
+
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler ( ) {
         return new SlackPostingAsyncUncaughtExceptionHandler();
