@@ -79,7 +79,8 @@ public class InventionCalculatorImplUnitTests {
                                                                               skillConfiguration );
 
         Assert.assertNotNull( "Result should not be null", result );
-        Assert.assertEquals( 6808205.92, result.getCostPerSuccessfulInventionRun(), 0.01 );
+        String output = mapper.writeValueAsString( result );
+        Assert.assertEquals( 33.8, result.getProbability(), .001 );
     }
 
 }

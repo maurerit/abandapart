@@ -10,6 +10,7 @@
 
 package com.aba.industry.bot.async;
 
+import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 import lombok.Getter;
 
@@ -17,11 +18,13 @@ import lombok.Getter;
  * Created by maurerit on 8/9/16.
  */
 @Getter
-public class AsynSlackException extends RuntimeException {
+public class AsyncSlackException extends RuntimeException {
     private SlackMessagePosted slackMessage;
+    private SlackSession       session;
 
-    public AsynSlackException ( SlackMessagePosted slackMessage, Throwable cause ) {
+    public AsyncSlackException ( SlackSession session, SlackMessagePosted slackMessage, Throwable cause ) {
         super( cause );
         this.slackMessage = slackMessage;
+        this.session = session;
     }
 }

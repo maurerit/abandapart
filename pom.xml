@@ -147,7 +147,6 @@
                     <configuration>
                         <excludes>
                             <exclude>**/domain/**</exclude>
-                            <exclude>**/model/**</exclude>
                             <exclude>**/*Configuration.java</exclude>
                             <exclude>**/*Constants.java</exclude>
                         </excludes>

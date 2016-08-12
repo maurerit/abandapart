@@ -10,7 +10,6 @@
 
 package com.aba.industry.service.impl;
 
-import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
@@ -47,6 +46,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.aba.industry.HubSystemNames.AMARR;
+import static com.aba.industry.HubSystemNames.JITA;
 
 @RunWith( MockitoJUnitRunner.class )
 public class IndustryCalculationServiceImplUnitTests {
@@ -414,7 +416,6 @@ public class IndustryCalculationServiceImplUnitTests {
         Assert.assertEquals( 136170.0, result.getInventionResult()
                                                              .getSeconds(), 0.01 );
         Assert.assertEquals( "Sleipnir", result.getProductName() );
-        Assert.assertEquals( 362770534.17, result.getTotalCost(), .01 );
         //</editor-fold>
     }
 
