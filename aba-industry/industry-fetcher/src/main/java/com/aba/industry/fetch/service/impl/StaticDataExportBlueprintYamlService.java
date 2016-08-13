@@ -76,7 +76,6 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                   } )
                   .map( Map.Entry::getValue )
                   .collect( Collectors.toList() )
-                  .stream()
                   .forEach( entry -> {
                       if ( entry.getActivities()
                                 .get( BlueprintActivities
@@ -105,10 +104,10 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
         Blueprint inventionBp = null;
 
         //<editor-fold desc="Production BP Lambda">
-        Optional<Map.Entry<Long, Blueprint>> possibleMatch = blueprints.getBlueprints()
-                                                                       .entrySet()
-                                                                       .stream()
-                                                                       .filter( entry -> {
+        Optional<Map.Entry<Integer, Blueprint>> possibleMatch = blueprints.getBlueprints()
+                                                                          .entrySet()
+                                                                          .stream()
+                                                                          .filter( entry -> {
                                                                            if ( entry.getValue()
                                                                                      .getActivities()
                                                                                      .containsKey(
@@ -137,7 +136,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
 
                                                                            return false;
                                                                        } )
-                                                                       .findFirst();
+                                                                          .findFirst();
         //</editor-fold>
 
         if ( !possibleMatch.isPresent() ) {
