@@ -43,7 +43,7 @@ public class ManufacturingCalculatorImplUnitTests {
         InputStream bpDetailsIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-BlueprintDetails.json" );
         InputStream costIndexesIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
-                "/testSleipnirWithNullDecryptor-CostIndexes.json" );
+                "/CostIndexes.json" );
         InputStream itemCostIS = InventionCalculatorImplUnitTests.class.getResourceAsStream(
                 "/testSleipnirWithNullDecryptor-ItemCosts.json" );
 
@@ -63,8 +63,7 @@ public class ManufacturingCalculatorImplUnitTests {
 
         for ( ActivityMaterialWithCost am : bpData.getActivityMaterials()
                                                   .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
-            ItemCost ic = itemCosts.get( am.getTypeId()
-                                           .intValue() );
+            ItemCost ic = itemCosts.get( am.getTypeId() );
 
             am.setCost( ic.getSell() );
             am.setAdjustedCost( ic.getAdjusted() );
