@@ -287,9 +287,32 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
     {
         long itemId = am.getTypeId();
         long quantity = am.getQuantity();
-        am.setCost( marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity ) );
-        am.setAdjustedCost( marketPriceFetcher.getAdjustedPrice( itemId ) );
-        am.setSource( CostSource.LIVE_MARKET_SELL );
+
+        Double cost = marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
+        Double adjustedCost = marketPriceFetcher.getAdjustedPrice( itemId );
+        CostSource source = CostSource.LIVE_MARKET_SELL;
+
+        if ( adjustedCost == null || adjustedCost.equals( Double.NaN ) || adjustedCost.equals(
+                Double.NEGATIVE_INFINITY ) ||
+                adjustedCost.equals( Double.POSITIVE_INFINITY ) )
+        {
+            adjustedCost = 0.0;
+            source = CostSource.NO_PRICE;
+        }
+
+        if ( cost == null || cost.equals( Double.NaN ) || cost.equals( Double.NEGATIVE_INFINITY ) || cost.equals( Double
+                                                                                                                          .POSITIVE_INFINITY ) )
+        {
+            cost = adjustedCost;
+
+            if ( source == CostSource.LIVE_MARKET_SELL ) {
+                source = CostSource.LIVE_MARKET_ADJUSTED;
+            }
+        }
+
+        am.setCost( cost );
+        am.setAdjustedCost( adjustedCost );
+        am.setSource( source );
         am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
                                       .getName() );
     }
