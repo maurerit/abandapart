@@ -261,6 +261,10 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                                          .get( 0 )
                                                          .getTypeID() );
             }
+            else {
+                //TODO: I don't know if this is correct but it will at least give us SOMETHING with a cost later.
+                bpDetails.setPrecursorTypeId( inventionBp.getBlueprintTypeID() );
+            }
             bpDetails.setBaseProbability( inventionBp.getActivities()
                                                      .get( BlueprintActivities.invention )
                                                      .getProducts()
