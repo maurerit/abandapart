@@ -10,7 +10,6 @@
 
 package com.abandapart.industry.fetch;
 
-import com.aba.industry.fetch.model.Blueprint;
 import com.aba.industry.fetch.service.impl.StaticDataExportBlueprintYamlService;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
@@ -69,6 +68,8 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
         System.out.println(resultStr);
 
         Assert.assertNotNull( bpData.getBlueprintDetails() );
+        Assert.assertNull( bpData.getBlueprintDetails()
+                                 .getPrecursorTypeId() );
     }
 
     @Test
@@ -82,5 +83,8 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
         System.out.println(resultStr);
 
         Assert.assertNotNull( bpData.getBlueprintDetails() );
+        Assert.assertNotNull( bpData.getBlueprintDetails() );
+        Assert.assertNotNull( bpData.getBlueprintDetails()
+                                    .getBaseProbability() );
     }
 }
