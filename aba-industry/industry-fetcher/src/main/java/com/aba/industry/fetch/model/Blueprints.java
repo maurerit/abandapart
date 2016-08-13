@@ -19,5 +19,5 @@ import java.util.Map;
  */
 @Data
 public class Blueprints {
-    private Map<Long, Blueprint> blueprints;
+    private Map<Integer, Blueprint> blueprints;
 }
