@@ -159,22 +159,16 @@ public class SlackIndustryBot implements Runnable {
                     else if ( message.contains( "ello" ) ) {
                         StringBuilder sb = new StringBuilder();
                         sb.append( "Hello " )
-                          .append( "<@" )
-                          .append( sender.getId() )
-                          .append( "|" )
-                          .append( sender.getUserName() )
-                          .append( ">!  How are you today?" );
+                          .append( MessageUtils.formatUserForClicky( event.getSender() ) )
+                          .append( "!  How are you today?" );
                         session.sendMessage( channel, sb.toString() );
                     }
                     else if ( message.contains( "help" ) ) {
                         StringBuilder sb = new StringBuilder();
-                        sb.append( "<@" )
-                          .append( sender.getId() )
-                          .append( "|" )
-                          .append( sender.getUserName() )
-                          .append( ">:\n" )
+                        sb.append( MessageUtils.formatUserForClicky( event.getSender() ) )
+                          .append( ":" )
                           .append(
-                                  "I understand the following commands.  Bolded segments are things that can vary " +
+                                  "\nI understand the following commands.  Bolded segments are things that can vary " +
                                           "from request to request.\n" );
                         for ( CalculateCommands currentCommand : CalculateCommands.values() ) {
                             sb.append( currentCommand.getHelpText() );
