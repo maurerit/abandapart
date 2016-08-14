@@ -106,8 +106,8 @@ public class SlackIndustryBot implements Runnable {
         String typeName = segments[0];
         Integer typeId = typeIdProvider.getTypeIdForTypeName( typeName );
 
-        if ( typeId == null ) {
-            throw new TypeIdNotFoundException( typeName, "Not type id found" );
+        if ( typeId.equals( -1 ) ) {
+            throw new TypeIdNotFoundException( typeName, "No type id found" );
         }
 
         BuildCalculationRequest request = new BuildCalculationRequest();

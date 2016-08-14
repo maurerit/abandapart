@@ -11,6 +11,7 @@
 package com.aba.industry.bot.responder.impl;
 
 import com.aba.industry.bot.responder.ErrorResponder;
+import com.aba.industry.bot.util.MessageUtils;
 import com.ullink.slack.simpleslackapi.SlackMessageHandle;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
@@ -27,19 +28,10 @@ public class TypeIdNotFoundResponder implements ErrorResponder<SlackMessageHandl
                               String typeName )
     {
         StringBuilder message = new StringBuilder();
-        message.append( "<@" )
-               .append( event.getSender()
-                             .getId() )
-               .append( "|" )
-               .append( event.getSender()
-                             .getUserName() )
-               .append( "I could not find a typeId for: " )
-               .append( typeName )
-               .append( ".\nThe problem was: " )
-               .append( problem );
+        message.append( MessageUtils.formatUserForClicky( event.getSender() ) )
+               .append( " I could not find a typeId for: " )
+               .append( typeName );
 
         SlackMessageHandle<SlackMessageReply> handle = session.sendMessage( event.getChannel(), message.toString() );
-
-
     }
 }
