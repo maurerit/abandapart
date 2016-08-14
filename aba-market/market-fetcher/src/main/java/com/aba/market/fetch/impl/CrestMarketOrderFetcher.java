@@ -10,7 +10,7 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.comparator.CrestMarketOrderPriceComparator;
+import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
@@ -36,6 +36,11 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     public List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId )
     {
         return crestService.getMarketOrders( regionId, "sell", itemId );
+    }
+
+    @Override
+    public List<CrestMarketOrder> getMarketBuyOrders ( long regionId, long itemId ) {
+        return crestService.getMarketOrders( regionId, "buy", itemId );
     }
 
     @Override
@@ -77,7 +82,7 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
                                                                       order -> order.getLocationId() ==
                                                                               hubIdToFind && order.getTypeId() ==
                                                                               itemId )
-                                                              .sorted( new CrestMarketOrderPriceComparator() )
+                                                              .sorted( new CrestMarketOrderPriceAscendingComparator() )
                                                               .collect( Collectors.toList() );
 
         int totalFound = 0;

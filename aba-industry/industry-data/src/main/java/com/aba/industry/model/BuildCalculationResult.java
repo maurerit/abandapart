@@ -11,8 +11,6 @@
 package com.aba.industry.model;
 
 
-
-import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -23,6 +21,8 @@ import org.devfleet.crest.model.CrestMarketOrder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.aba.industry.TradeHubs.JITA;
 
 @Data
 @EqualsAndHashCode( callSuper = true )
@@ -42,10 +42,16 @@ public class BuildCalculationResult extends CalculationResult {
     private String buildSystem;
     @JsonProperty
     private Double materialCost = 0d;
+    /**
+     * A map of system name to the lowest sell order
+     */
     @JsonProperty
-    private Map<Integer, CrestMarketOrder> lowestSellOrders;
+    private Map<String, CrestMarketOrder> lowestSellOrders;
+    /**
+     * A map of the system name to the highest buy order
+     */
     @JsonProperty
-    private Map<Integer, CrestMarketOrder> highestBuyOrders;
+    private Map<String, CrestMarketOrder> highestBuyOrders;
     @JsonProperty
     private Map<String, FreightDetails> toBuildLocationFreight   = new HashMap<>();
     @JsonProperty

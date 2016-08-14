@@ -15,6 +15,7 @@ import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.model.FreightDetails;
 import com.ullink.slack.simpleslackapi.SlackPersona;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.devfleet.crest.model.CrestMarketOrder;
 
 import java.text.DecimalFormat;
 import java.text.Format;
@@ -133,6 +134,28 @@ public class MessageUtils {
                .append( format.format( result.getTotalCost() ) )
                .append( "*" );
 
+        boolean hasSellPrices = false;
+        if ( result.getLowestSellOrders() != null ) {
+            hasSellPrices = true;
+            message.append( "\n*Hub Prices*\n  _Sell_" );
+            for ( Map.Entry<String, CrestMarketOrder> order : result.getLowestSellOrders()
+                                                                    .entrySet() ) {
+                formatCrestMarketOrder( format, message, order );
+            }
+        }
+
+        if ( result.getHighestBuyOrders() != null ) {
+            if ( !hasSellPrices ) {
+                message.append( "\n*Hub Prices*" );
+            }
+            message.append( "\n  _Buy_" );
+            for ( Map.Entry<String, CrestMarketOrder> order : result.getHighestBuyOrders()
+                                                                    .entrySet() ) {
+                formatCrestMarketOrder( format, message, order );
+            }
+        }
+
+
         return message.toString();
     }
 
@@ -153,6 +176,19 @@ public class MessageUtils {
         }
 
         message.append( "```\n" );
+    }
+
+    private static void formatCrestMarketOrder ( Format format, StringBuilder message,
+                                                 Map.Entry<String, CrestMarketOrder> order )
+    {
+        message.append( "\n    - " )
+               .append( order.getKey() )
+               .append( ": x" )
+               .append( order.getValue()
+                             .getVolume() )
+               .append( " @ " )
+               .append( format.format( order.getValue()
+                                            .getPrice() ) );
     }
 
     public static String formatSecondsToDDHHMMSS ( Long buildSeconds ) {

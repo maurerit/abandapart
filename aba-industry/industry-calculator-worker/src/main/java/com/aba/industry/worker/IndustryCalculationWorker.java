@@ -11,11 +11,17 @@
 package com.aba.industry.worker;
 
 import com.aba.data.domain.config.BuildOrBuyConfiguration;
+import com.aba.eveonline.repo.RegionRepository;
+import com.aba.eveonline.repo.SolarSystemRepository;
+import com.aba.industry.TradeHubs;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.service.IndustryCalculationService;
+import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
+import com.aba.market.fetch.MarketOrderFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.devfleet.crest.model.CrestMarketOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +32,7 @@ import org.zeromq.ZMQ;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.*;
 
 /**
  * Created by maurerit on 8/6/16.
@@ -41,6 +48,15 @@ public class IndustryCalculationWorker implements Runnable {
     @Autowired
     private BuildOrBuyConfigurationService buildOrBuyConfigurationService;
 
+    @Autowired
+    private MarketOrderFetcher crestMarketOrderFetcher;
+
+    @Autowired
+    private SolarSystemRepository crestSolarSystemRepository;
+
+    @Autowired
+    private RegionRepository crestRegionRepository;
+
     private ObjectMapper mapper = new ObjectMapper();
 
     @Value( "${aba.industry.bus.worker.routerLocation}" )
@@ -50,9 +66,25 @@ public class IndustryCalculationWorker implements Runnable {
     @Value( "${aba.industry.bus.worker.routerPort}" )
     private String routerPort;
 
-    private String myName;
+    private String                       myName;
+    private List<SolarSystemInformation> hubs;
 
     public void run ( ) {
+        hubs = new ArrayList<>();
+
+        for ( TradeHubs hub : TradeHubs.values() ) {
+            SolarSystemInformation info = new SolarSystemInformation();
+
+            info.setSystemName( hub.getSystemName() );
+            info.setSystemId( crestSolarSystemRepository.getSolarSystemId( hub.getSystemName() ) );
+            info.setRegionName( hub.getRegionName() );
+            info.setRegionId( crestRegionRepository.findRegionId( hub.getRegionName() ) );
+            info.setStationName( hub.getStationName() );
+            info.setStationId( hub.getStationId() );
+
+            hubs.add( info );
+        }
+
         myName = ManagementFactory.getRuntimeMXBean()
                                   .getName();
         ZMQ.Context context = ZMQ.context( 1 );
@@ -109,6 +141,9 @@ public class IndustryCalculationWorker implements Runnable {
                                                                                    request.isFindPrices(),
                                                                                    request.isUseBuildOrBuyConfigurations() );
 
+        populateHubPrices( resultObj );
+
+
         if ( request.getBuildOrBuyConfigurationList() != null ) {
             for ( BuildOrBuyConfiguration configuration : request.getBuildOrBuyConfigurationList() ) {
                 buildOrBuyConfigurationService.deleteBuildOrByConfiguration( configuration );
@@ -118,5 +153,53 @@ public class IndustryCalculationWorker implements Runnable {
         result = mapper.writeValueAsString( resultObj );
 
         return result;
+    }
+
+    //TODO: Candidate for promotion to something else maybe.  Idea's are to potentially make this another microservice
+    private void populateHubPrices ( BuildCalculationResult resultObj ) {
+        //TODO: #33 check Amarr, Rens, Dodixie and Jita for prices of the product and put it into the result
+        for ( SolarSystemInformation info : hubs ) {
+            //<editor-fold desc="Sell Orders">
+            List<CrestMarketOrder> sellOrders = crestMarketOrderFetcher.getMarketSellOrders( info.getRegionId(),
+                                                                                             resultObj.getProductId() );
+
+            Optional<CrestMarketOrder> orderOptional = sellOrders.stream()
+                                                                 .filter(
+                                                                         order -> order.getLocationId() == info
+                                                                                 .getStationId() )
+                                                                 .sorted(
+                                                                         new CrestMarketOrderPriceAscendingComparator
+                                                                                 () )
+                                                                 .findFirst();
+
+            if ( orderOptional.isPresent() ) {
+                Map<String, CrestMarketOrder> map = resultObj.getLowestSellOrders();
+                if ( map == null ) {
+                    map = new HashMap<>();
+                    resultObj.setLowestSellOrders( map );
+                }
+                map.put( info.getSystemName(), orderOptional.get() );
+            }
+            //</editor-fold>
+
+            //<editor-fold desc="Buy Orders">
+            List<CrestMarketOrder> buyOrders = crestMarketOrderFetcher.getMarketBuyOrders( info.getRegionId(),
+                                                                                           resultObj.getProductId() );
+
+            orderOptional = buyOrders.stream()
+                                     .filter( order -> order.getLocationId() == info.getStationId() )
+                                     .sorted( new CrestMarketOrderPriceAscendingComparator() )
+                                     .findFirst();
+
+            if ( orderOptional.isPresent() ) {
+                Map<String, CrestMarketOrder> map = resultObj.getHighestBuyOrders();
+                if ( map == null ) {
+                    map = new HashMap<>();
+                    resultObj.setHighestBuyOrders( map );
+                }
+                map.put( info.getSystemName(), orderOptional.get() );
+            }
+            //</editor-fold>
+        }
     }
 }

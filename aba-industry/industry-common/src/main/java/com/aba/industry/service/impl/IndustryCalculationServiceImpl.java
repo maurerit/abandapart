@@ -36,8 +36,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-import static com.aba.industry.HubSystemNames.AMARR;
-import static com.aba.industry.HubSystemNames.JITA;
+import static com.aba.industry.TradeHubs.AMARR;
+import static com.aba.industry.TradeHubs.JITA;
 
 @Service
 @Setter
@@ -137,7 +137,7 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
             throw new ApplicationException( e );
         }
 
-        long jitaId = solarSystemRepository.getSolarSystemId( JITA );
+        long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
         long theForgeId = regionRepository.findRegionId( "The Forge" );
 
         putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
@@ -231,8 +231,8 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
         SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
         FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
 
-        long jitaId = solarSystemRepository.getSolarSystemId( JITA );
-        long amarrId = solarSystemRepository.getSolarSystemId( AMARR );
+        long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
+        long amarrId = solarSystemRepository.getSolarSystemId( AMARR.getSystemName() );
         Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
                                                                        jitaId,
                                                                        result.getProductId() );
@@ -242,35 +242,37 @@ public class IndustryCalculationServiceImpl implements IndustryCalculationServic
                                                                         result.getProductId() );
         //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
         result.getToBuildLocationFreight()
-              .put( JITA, overheadCalculator.getFreightDetails( JITA, systemName,
-                                                                (double) Math.round(
+              .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
+                                                                                (double) Math.round(
                                                                         result.getMaterialCost() ) ) );
         result.getToBuildLocationFreight()
-              .put( AMARR, overheadCalculator.getFreightDetails( AMARR, systemName,
-                                                                 (double) Math.round(
+              .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( AMARR.getSystemName(), systemName,
+                                                                                 (double) Math.round(
                                                                          result.getMaterialCost() ) ) );
 
         //TODO: Situations where there is no item listed make a configurable desirable profit ratio
         if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
             result.getFromBuildLocationFreight()
-                  .put( JITA, overheadCalculator.getFreightDetails( systemName, JITA,
-                                                                    (double) Math.round(
+                  .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
+                                                                                    (double) Math.round(
                                                                             result.getMaterialCost() ) ) );
         }
         else {
             result.getFromBuildLocationFreight()
-                  .put( JITA, overheadCalculator.getFreightDetails( systemName, JITA, jitaLowestSell ) );
+                  .put( JITA.getSystemName(),
+                        overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(), jitaLowestSell ) );
         }
 
         if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
             result.getFromBuildLocationFreight()
-                  .put( AMARR, overheadCalculator.getFreightDetails( systemName, AMARR,
-                                                                     (double) Math.round(
+                  .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
+                                                                                     (double) Math.round(
                                                                              result.getMaterialCost() ) ) );
         }
         else {
             result.getFromBuildLocationFreight()
-                  .put( AMARR, overheadCalculator.getFreightDetails( systemName, AMARR, amarrLowestSell ) );
+                  .put( AMARR.getSystemName(),
+                        overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(), amarrLowestSell ) );
         }
 
         result.setSalaryCost( overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, result.getSeconds() ) );

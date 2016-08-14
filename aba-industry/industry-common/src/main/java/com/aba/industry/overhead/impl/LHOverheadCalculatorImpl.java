@@ -10,7 +10,7 @@
 
 package com.aba.industry.overhead.impl;
 
-import com.aba.industry.HubSystemNames;
+import com.aba.industry.TradeHubs;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.overhead.OverheadCalculator;
@@ -25,27 +25,33 @@ public class LHOverheadCalculatorImpl implements OverheadCalculator {
 
         Double reward = 0d;
 
-        switch ( fromSystemName ) {
-            case HubSystemNames.JITA:
-                reward = collateral / 1000000000 * 26000000;
-                freightDetails.setJumps( 15 );
-                break;
-            case HubSystemNames.AMARR:
-                reward = collateral / 1000000000 * 17000000;
-                freightDetails.setJumps( 9 );
-                break;
-            default:
-                switch ( toSystemName ) {
-                    case HubSystemNames.JITA:
-                        reward = collateral / 1000000000 * 26000000;
-                        freightDetails.setJumps( 15 );
-                        break;
-                    case HubSystemNames.AMARR:
-                        reward = collateral / 1000000000 * 17000000;
-                        freightDetails.setJumps( 9 );
-                        break;
-                }
-                break;
+        TradeHubs fromHub = TradeHubs.findBySystemName( fromSystemName );
+        TradeHubs toHub = TradeHubs.findBySystemName( toSystemName );
+
+        if ( fromHub != null ) {
+            switch ( fromHub ) {
+                case JITA:
+                    reward = collateral / 1000000000 * 26000000;
+                    freightDetails.setJumps( 15 );
+                    break;
+                case AMARR:
+                    reward = collateral / 1000000000 * 17000000;
+                    freightDetails.setJumps( 9 );
+                    break;
+            }
+        }
+
+        if ( toHub != null ) {
+            switch ( toHub ) {
+                case JITA:
+                    reward = collateral / 1000000000 * 26000000;
+                    freightDetails.setJumps( 15 );
+                    break;
+                case AMARR:
+                    reward = collateral / 1000000000 * 17000000;
+                    freightDetails.setJumps( 9 );
+                    break;
+            }
         }
 
         freightDetails.setCharge( reward );
