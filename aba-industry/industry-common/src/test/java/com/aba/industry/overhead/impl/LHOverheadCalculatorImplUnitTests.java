@@ -10,7 +10,6 @@
 
 package com.aba.industry.overhead.impl;
 
-import static com.aba.industry.HubSystemNames.*;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.model.IndustryActivities;
 import com.aba.industry.overhead.OverheadCalculator;
@@ -18,6 +17,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static com.aba.industry.TradeHubs.AMARR;
+import static com.aba.industry.TradeHubs.JITA;
 
 /**
  * Created by maurerit on 7/25/2016.
@@ -28,7 +30,7 @@ public class LHOverheadCalculatorImplUnitTests {
 
     @Test
     public void testHalfABillionFreightFromJita ( ) {
-        FreightDetails freightDetails = calculator.getFreightDetails( JITA, "Atreen", 500000000d );
+        FreightDetails freightDetails = calculator.getFreightDetails( JITA.getSystemName(), "Atreen", 500000000d );
 
         Assert.assertEquals( freightDetails.getCharge(), 13000000d, 0.01 );
         Assert.assertEquals( freightDetails.getJumps()
@@ -37,7 +39,7 @@ public class LHOverheadCalculatorImplUnitTests {
 
     @Test
     public void testHalfABillionFreightFromAmarr ( ) {
-        FreightDetails freightDetails = calculator.getFreightDetails( AMARR, "Atreen", 500000000d );
+        FreightDetails freightDetails = calculator.getFreightDetails( AMARR.getSystemName(), "Atreen", 500000000d );
 
         Assert.assertEquals( freightDetails.getCharge(), 8500000d, 0.01 );
         Assert.assertEquals( freightDetails.getJumps()

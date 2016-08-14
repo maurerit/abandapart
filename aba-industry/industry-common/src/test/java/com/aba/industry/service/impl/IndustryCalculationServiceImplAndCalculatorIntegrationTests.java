@@ -10,7 +10,6 @@
 
 package com.aba.industry.service.impl;
 
-import static com.aba.industry.HubSystemNames.*;
 import com.aba.data.domain.config.ConfigurationType;
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
@@ -51,6 +50,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.aba.industry.TradeHubs.AMARR;
+import static com.aba.industry.TradeHubs.JITA;
 
 /**
  * Created by maurerit on 7/28/2016.
@@ -193,9 +195,9 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 355000000d );
         //</editor-fold>
         //<editor-fold desc="Crest Endpoint Mocks">
-        Mockito.when( solarSystemRepository.getSolarSystemId( JITA ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( JITA.getSystemName() ) )
                .thenReturn( 1L );
-        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR.getSystemName() ) )
                .thenReturn( 2L );
         Mockito.when( regionRepository.findRegionId( "The Forge" ) )
                .thenReturn( 20L );

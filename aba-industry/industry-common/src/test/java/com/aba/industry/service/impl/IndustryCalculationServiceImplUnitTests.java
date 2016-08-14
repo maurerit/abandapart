@@ -47,8 +47,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.aba.industry.HubSystemNames.AMARR;
-import static com.aba.industry.HubSystemNames.JITA;
+import static com.aba.industry.TradeHubs.AMARR;
+import static com.aba.industry.TradeHubs.JITA;
 
 @RunWith( MockitoJUnitRunner.class )
 public class IndustryCalculationServiceImplUnitTests {
@@ -181,16 +181,20 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( buildCalculationResult.getSeconds()
                                                   .doubleValue() / 60 / 60 / 2 * 200000 );
         Mockito.when(
-                overheadCalculator.getFreightDetails( JITA, "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
+                overheadCalculator.getFreightDetails( JITA.getSystemName(), "Atreen",
+                                                      (double) Math.round( 3.124297159600001E8 ) ) )
                .thenReturn(
                        jitaFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", JITA, (double) Math.round( 345000000d ) ) )
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", JITA.getSystemName(),
+                                                            (double) Math.round( 345000000d ) ) )
                .thenReturn(
                        jitaFreightDetails );
         Mockito.when(
-                overheadCalculator.getFreightDetails( AMARR, "Atreen", (double) Math.round( 3.124297159600001E8 ) ) )
+                overheadCalculator.getFreightDetails( AMARR.getSystemName(), "Atreen",
+                                                      (double) Math.round( 3.124297159600001E8 ) ) )
                .thenReturn( amarrFreightDetails );
-        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", AMARR, (double) Math.round( 355000000d ) ) )
+        Mockito.when( overheadCalculator.getFreightDetails( "Atreen", AMARR.getSystemName(),
+                                                            (double) Math.round( 355000000d ) ) )
                .thenReturn( amarrFreightDetails );
         //</editor-fold>
         //<editor-fold desc="Market Fetcher mocks">
@@ -200,9 +204,9 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( 355000000d );
         //</editor-fold>
         //<editor-fold desc="Crest Endpoint Mocks">
-        Mockito.when( solarSystemRepository.getSolarSystemId( JITA ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( JITA.getSystemName() ) )
                .thenReturn( 1L );
-        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR ) )
+        Mockito.when( solarSystemRepository.getSolarSystemId( AMARR.getSystemName() ) )
                .thenReturn( 2L );
         Mockito.when( regionRepository.findRegionId( "The Forge" ) )
                .thenReturn( 20L );
