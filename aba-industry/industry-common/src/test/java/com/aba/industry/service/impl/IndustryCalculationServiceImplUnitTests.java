@@ -398,25 +398,25 @@ public class IndustryCalculationServiceImplUnitTests {
         Assert.assertFalse( result.getFromBuildLocationFreight()
                                                   .isEmpty() );
         Assert.assertEquals( jitaFreightDetails, result.getToBuildLocationFreight()
-                                                                       .get( JITA ) );
+                                                       .get( JITA.getSystemName() ) );
         Assert.assertEquals( amarrFreightDetails, result.getToBuildLocationFreight()
-                                                                        .get( AMARR ) );
+                                                        .get( AMARR.getSystemName() ) );
         Assert.assertEquals( jitaFreightDetails, result.getFromBuildLocationFreight()
-                                                                       .get( JITA ) );
+                                                       .get( JITA.getSystemName() ) );
         Assert.assertEquals( amarrFreightDetails, result.getFromBuildLocationFreight()
-                                                                        .get( AMARR ) );
+                                                        .get( AMARR.getSystemName() ) );
         Assert.assertEquals( 6000000.0, result.getToBuildLocationFreight()
-                                                              .get( AMARR )
-                                                              .getCharge(), 0.01 );
+                                              .get( AMARR.getSystemName() )
+                                              .getCharge(), 0.01 );
         Assert.assertEquals( 1.3E7, result.getToBuildLocationFreight()
-                                                          .get( JITA )
-                                                          .getCharge(), 0.01 );
+                                          .get( JITA.getSystemName() )
+                                          .getCharge(), 0.01 );
         Assert.assertEquals( 6000000.0, result.getFromBuildLocationFreight()
-                                                              .get( AMARR )
-                                                              .getCharge(), 0.01 );
+                                              .get( AMARR.getSystemName() )
+                                              .getCharge(), 0.01 );
         Assert.assertEquals( 1.3E7, result.getFromBuildLocationFreight()
-                                                          .get( JITA )
-                                                          .getCharge(), 0.01 );
+                                          .get( JITA.getSystemName() )
+                                          .getCharge(), 0.01 );
         Assert.assertEquals( 136170.0, result.getInventionResult()
                                                              .getSeconds(), 0.01 );
         Assert.assertEquals( "Sleipnir", result.getProductName() );
