@@ -16,6 +16,7 @@ import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
 import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
+import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
 import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
@@ -178,6 +179,12 @@ public class SlackIndustryBot implements Runnable {
                         for ( CalculateCommands currentCommand : CalculateCommands.values() ) {
                             sb.append( currentCommand.getHelpText() );
                         }
+                        session.sendMessage( channel, sb.toString() );
+                    }
+                    else if ( message.contains( ":heart:" ) ) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append( MessageUtils.formatUserForClicky( event.getSender() ) )
+                          .append( " I :heart: you too!" );
                         session.sendMessage( channel, sb.toString() );
                     }
                 }
