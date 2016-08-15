@@ -37,6 +37,7 @@
             <artifactId>industry-common-bus</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
     </dependencies>
 
 
