@@ -33,6 +33,13 @@
         <module>industry-calculator-router-client</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
     <name>ABA Industry Backends</name>
     <description>
         Industry specific libraries.
