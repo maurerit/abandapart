@@ -65,7 +65,7 @@ public class MessageUtils {
             formatMaterialsWithCost( result.getInventionResult()
                                            .getMaterialsWithCost(), format, message );
 
-            //<editor-fold desc="Invention Overheads">
+            //region Invention Overheads
             message.append( "\n*_Overheads_*" )
                    .append( "\n    Installation: " )
                    .append( format.format( result.getInventionResult()
@@ -77,7 +77,7 @@ public class MessageUtils {
                    .append( format.format( result.getInventionResult()
                                                  .getSalaryCost() ) )
                    .append( "\n" );
-            //</editor-fold>
+            //endregion
         }
 
         //TODO: abandapart-20 Format required skills
@@ -86,16 +86,16 @@ public class MessageUtils {
             message.append( "\n*_Overheads_*" );
         }
 
-        //<editor-fold desc="Build Overheads">
+        //region Build Overheads
         message.append( "\nBuild\n    Installation: " )
                .append( format.format( result.getInstallationFees() ) )
                .append( "\n    Installation Tax: " )
                .append( format.format( result.getInstallationTax() ) )
                .append( "\n    Salary: " )
                .append( format.format( result.getSalaryCost() ) );
-        //</editor-fold>
+        //endregion
 
-        //<editor-fold desc="Freight Overheads">
+        //region Freight Overheads
         boolean hasToFreight = false;
         if ( result.getToBuildLocationFreight() != null ) {
             hasToFreight = true;
@@ -127,7 +127,7 @@ public class MessageUtils {
                                                     .getCharge() ) );
             }
         }
-        //</editor-fold>
+        //endregion
 
         message.append( "\n" )
                .append( "*Total Cost: " )
