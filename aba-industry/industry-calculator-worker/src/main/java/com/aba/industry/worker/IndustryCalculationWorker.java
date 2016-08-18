@@ -159,7 +159,7 @@ public class IndustryCalculationWorker implements Runnable {
     private void populateHubPrices ( BuildCalculationResult resultObj ) {
         //TODO: #33 check Amarr, Rens, Dodixie and Jita for prices of the product and put it into the result
         for ( SolarSystemInformation info : hubs ) {
-            //<editor-fold desc="Sell Orders">
+            //region Sell Orders
             List<CrestMarketOrder> sellOrders = crestMarketOrderFetcher.getMarketSellOrders( info.getRegionId(),
                                                                                              resultObj.getProductId() );
 
@@ -180,9 +180,9 @@ public class IndustryCalculationWorker implements Runnable {
                 }
                 map.put( info.getSystemName(), orderOptional.get() );
             }
-            //</editor-fold>
+            //endregion
 
-            //<editor-fold desc="Buy Orders">
+            //region Buy Orders
             List<CrestMarketOrder> buyOrders = crestMarketOrderFetcher.getMarketBuyOrders( info.getRegionId(),
                                                                                            resultObj.getProductId() );
 
@@ -199,7 +199,7 @@ public class IndustryCalculationWorker implements Runnable {
                 }
                 map.put( info.getSystemName(), orderOptional.get() );
             }
-            //</editor-fold>
+            //endregion
         }
     }
 }

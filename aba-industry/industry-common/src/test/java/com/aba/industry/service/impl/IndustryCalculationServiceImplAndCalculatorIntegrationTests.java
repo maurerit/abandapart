@@ -182,19 +182,19 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     @Before
     public void mockSetupBeforeTests ( ) throws IOException
     {
-        //<editor-fold desc="External Services">
+        //region External Services
         Mockito.when( buildRequirementsProvider.getBlueprintData( 22444 ) )
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
-        //</editor-fold>
-        //<editor-fold desc="Market Fetcher mocks">
+        //endregion
+        //region Market Fetcher mocks
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
-        //</editor-fold>
-        //<editor-fold desc="Crest Endpoint Mocks">
+        //endregion
+        //region Crest Endpoint Mocks
         Mockito.when( solarSystemRepository.getSolarSystemId( JITA.getSystemName() ) )
                .thenReturn( 1L );
         Mockito.when( solarSystemRepository.getSolarSystemId( AMARR.getSystemName() ) )
@@ -203,7 +203,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 20L );
         Mockito.when( regionRepository.findRegionId( "Domain" ) )
                .thenReturn( 21L );
-        //</editor-fold>
+        //endregion
     }
 
     //TODO: NullPointers should be wrapped
@@ -222,7 +222,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     @Test
     public void testThatInventionAndManufacturingCalcWork ( )
     {
-        //<editor-fold desc="Market Fetcher Mocks">
+        //region Market Fetcher Mocks
         CrestType materialItem = new CrestType();
         materialItem.setName( "Material Stuff" );
         CrestType sleipnir = new CrestType();
@@ -585,7 +585,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 34958392.2 );
         Mockito.when( itemTypeRepository.getItemDetails( 22444 ) )
                .thenReturn( sleipnir );
-        //</editor-fold>
+        //endregion
         BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444,
                                                                                         industrySkills,
                                                                                         inventionSkills, 2, 4, null,

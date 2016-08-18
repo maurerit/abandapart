@@ -161,14 +161,14 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( this.bpData );
         Mockito.when( costIndexProvider.getSystemCostIndexes( "Atreen" ) )
                .thenReturn( this.costIndexes );
-        //<editor-fold desc="Invention and Manufacturing result mocks">
+        //region Invention and Manufacturing result mocks
         Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 1.0d, bpData, null,
                                                                    inventionSkills ) )
                .thenReturn( this.inventionCalculationResult );
         Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 1.0d, bpData, 2, 4, industrySkills ) )
                .thenReturn( buildCalculationResult );
-        //</editor-fold>
-        //<editor-fold desc="Overhead mocks">
+        //endregion
+        //region Overhead mocks
         Mockito.when( overheadConfigurationService.getSalaryConfiguration() )
                .thenReturn( null );
         Mockito.when( overheadConfigurationService.getFreightConfiguration() )
@@ -196,14 +196,14 @@ public class IndustryCalculationServiceImplUnitTests {
         Mockito.when( overheadCalculator.getFreightDetails( "Atreen", AMARR.getSystemName(),
                                                             (double) Math.round( 355000000d ) ) )
                .thenReturn( amarrFreightDetails );
-        //</editor-fold>
-        //<editor-fold desc="Market Fetcher mocks">
+        //endregion
+        //region Market Fetcher mocks
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
         Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
-        //</editor-fold>
-        //<editor-fold desc="Crest Endpoint Mocks">
+        //endregion
+        //region Crest Endpoint Mocks
         Mockito.when( solarSystemRepository.getSolarSystemId( JITA.getSystemName() ) )
                .thenReturn( 1L );
         Mockito.when( solarSystemRepository.getSolarSystemId( AMARR.getSystemName() ) )
@@ -374,13 +374,13 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( materialItem );
         Mockito.when( itemTypeRepository.getItemDetails( 22444 ) )
                .thenReturn( sleipnir );
-        //</editor-fold>
+        //endregion
 
         BuildCalculationResult result = this.service.calculateBuildCosts( "Atreen", 22444, industrySkills,
                                                                           inventionSkills, 2, 4, null, false,
                                                                           false );
 
-        //<editor-fold desc="Assertions">
+        //region Assertions
         Assert.assertEquals( result.getSeconds()
                                                    .doubleValue() / 60 / 60 / 2 * 200000, result.getSalaryCost(),
                              0.01 );
@@ -420,7 +420,7 @@ public class IndustryCalculationServiceImplUnitTests {
         Assert.assertEquals( 136170.0, result.getInventionResult()
                                                              .getSeconds(), 0.01 );
         Assert.assertEquals( "Sleipnir", result.getProductName() );
-        //</editor-fold>
+        //endregion
     }
 
 }

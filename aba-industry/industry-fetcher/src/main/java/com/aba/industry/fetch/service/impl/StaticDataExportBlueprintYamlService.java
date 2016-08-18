@@ -103,7 +103,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
         Blueprint productionBp;
         Blueprint inventionBp = null;
 
-        //<editor-fold desc="Production BP Lambda">
+        //region Production BP Lambda
         Optional<Map.Entry<Integer, Blueprint>> possibleMatch = blueprints.getBlueprints()
                                                                           .entrySet()
                                                                           .stream()
@@ -137,7 +137,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                                                            return false;
                                                                        } )
                                                                           .findFirst();
-        //</editor-fold>
+        //endregion
 
         if ( !possibleMatch.isPresent() ) {
             throw new NoSuchElementException( "Type with type id: " + typeId + " has no blueprint." );
@@ -149,7 +149,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
 
         final int manuBpTypeId = productionBp.getBlueprintTypeID();
 
-        //<editor-fold desc="Possible base bp lambda">
+        //region Possible base bp lambda
         possibleMatch = blueprints.getBlueprints()
                                   .entrySet()
                                   .stream()
@@ -183,7 +183,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                       return false;
                                   } )
                                   .findFirst();
-        //</editor-fold>
+        //endregion
 
         if ( possibleMatch.isPresent() ) {
             inventionBp = possibleMatch.get()
@@ -193,7 +193,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
         result.setRequestedId( typeId );
         result.setBlueprintSkills( new HashMap<>() );
 
-        //<editor-fold desc="BlueprintDetails buildup">
+        //region BlueprintDetails buildup
         BlueprintDetails bpDetails = new BlueprintDetails();
 
         bpDetails.setMaxProductionLimit( productionBp.getMaxProductionLimit() );
@@ -207,7 +207,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                                   .getProducts()
                                                   .get( 0 )
                                                   .getQuantity() );
-        //<editor-fold desc="Times">
+        //region Times
         bpDetails.setTimesInSeconds( new HashMap<>() );
         if ( productionBp.getActivities()
                          .get( BlueprintActivities.copying ) != null ) {
@@ -244,7 +244,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
 
                                                                                           .getTime() );
         }
-        //</editor-fold>
+        //endregion
 
         if ( inventionBp != null ) {
             bpDetails.getTimesInSeconds()
@@ -275,13 +275,13 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
             bpDetails.setTechLevel( TechLevel.TECH_ONE.getNumerical() );
         }
         result.setBlueprintDetails( bpDetails );
-        //</editor-fold>
+        //endregion
 
-        //<editor-fold desc="Blueprint Skills buildup">
+        //region Blueprint Skills buildup
         //TODO: Build up the skills in a later release
-        //</editor-fold>
+        //endregion
 
-        //<editor-fold desc="ActivityMaterialsWithCost buildup">
+        //region ActivityMaterialsWithCost buildup
         result.setActivityMaterials( new HashMap<>() );
         result.getActivityMaterials()
               .put( BlueprintActivities.manufacturing.getIndustryActivity()
@@ -325,7 +325,7 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                       .add( activityMaterialWithCost );
             }
         }
-        //</editor-fold>
+        //endregion
 
         try {
             result.setDecryptors( this.getDecryptors() );
