@@ -13,37 +13,23 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>aba-industry</artifactId>
+        <artifactId>aba-apps</artifactId>
         <groupId>com.abandapart</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>slack-industrybot</artifactId>
+    <artifactId>industry-calculator-router</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.github.Ullink</groupId>
-            <artifactId>simple-slack-api</artifactId>
-            <version>0.5.1</version>
+            <groupId>org.zeromq</groupId>
+            <artifactId>jeromq</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.abandapart</groupId>
-            <artifactId>industry-calculator-router-client</artifactId>
+            <artifactId>industry-common-bus</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
 </project>
