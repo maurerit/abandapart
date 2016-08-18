@@ -16,7 +16,7 @@
         <artifactId>aba-apps</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>industry-calculator</artifactId>
+    <artifactId>industry-calculator-web</artifactId>
     <name>Industry Calculator</name>
     <description>Various Calculators for industrial purposes</description>
 

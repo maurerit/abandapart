@@ -29,7 +29,6 @@
         <module>industry-common</module>
         <module>industry-config</module>
         <module>industry-common-bus</module>
-        <module>slack-industrybot</module>
         <module>industry-calculator-router-client</module>
     </modules>
 
