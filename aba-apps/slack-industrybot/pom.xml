@@ -13,34 +13,37 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>aba-eve-parent</artifactId>
+        <artifactId>aba-apps</artifactId>
         <groupId>com.abandapart</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
 
-    <artifactId>aba-industry</artifactId>
-
-
-    <modules>
-        <module>industry-data</module>
-        <module>industry-fetcher</module>
-        <module>industry-common</module>
-        <module>industry-config</module>
-        <module>industry-common-bus</module>
-        <module>industry-calculator-router-client</module>
-    </modules>
+    <artifactId>slack-industrybot</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>com.github.Ullink</groupId>
+            <artifactId>simple-slack-api</artifactId>
+            <version>0.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>industry-calculator-router-client</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
-    <name>ABA Industry Backends</name>
-    <description>
-        Industry specific libraries.
-    </description>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
 </project>
