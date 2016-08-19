@@ -13,7 +13,7 @@ package com.aba.industry.bot.responder.impl;
 import com.aba.industry.bot.async.AsyncSlackException;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.util.MessageUtils;
-import com.aba.industry.bus.model.BuildCalculationRequest;
+import com.aba.industry.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackSession;

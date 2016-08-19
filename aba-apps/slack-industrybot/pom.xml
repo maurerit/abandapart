@@ -30,7 +30,7 @@
 
         <dependency>
             <groupId>com.abandapart</groupId>
-            <artifactId>industry-calculator-router-client</artifactId>
+            <artifactId>industry-calculation-bus</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
