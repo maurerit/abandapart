@@ -12,6 +12,7 @@ package com.aba.industry.router.client.impl;
 
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.industry.bus.RemoteIndustryCalculationServiceImpl;
 import com.aba.industry.model.BuildCalculationRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -30,7 +31,7 @@ import java.io.IOException;
 public class LocalRouterCommunicationApp {
     public static void main ( String[] args ) throws IOException {
         ApplicationContext context = SpringApplication.run( LocalRouterCommunicationApp.class, args );
-        IndustrialCalculatorRouterClientImpl client = context.getBean( IndustrialCalculatorRouterClientImpl.class );
+        RemoteIndustryCalculationServiceImpl client = context.getBean( RemoteIndustryCalculationServiceImpl.class );
 
         BuildCalculationRequest request = new BuildCalculationRequest();
 

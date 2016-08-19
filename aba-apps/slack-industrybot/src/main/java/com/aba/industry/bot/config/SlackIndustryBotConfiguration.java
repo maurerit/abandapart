@@ -10,8 +10,8 @@
 
 package com.aba.industry.bot.config;
 
+import com.aba.industry.bus.RemoteIndustryCalculationServiceImpl;
 import com.aba.industry.fetch.service.impl.FuzzySteveService;
-import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
 import org.slf4j.Logger;
@@ -66,8 +66,8 @@ public class SlackIndustryBotConfiguration {
 
     @Bean
     @Scope( scopeName = "prototype" )
-    public IndustrialCalculatorRouterClientImpl routerClient ( ) {
-        return new IndustrialCalculatorRouterClientImpl();
+    public RemoteIndustryCalculationServiceImpl routerClient ( ) {
+        return new RemoteIndustryCalculationServiceImpl();
     }
 
 //    @Bean

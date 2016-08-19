@@ -8,18 +8,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.router.client;
-
-import com.aba.industry.model.BuildCalculationRequest;
-import com.aba.industry.model.BuildCalculationResult;
-
-import java.io.IOException;
+package com.aba.industry.service;
 
 /**
- * Created by maurerit on 8/7/16.
+ * Created by maurerit on 8/19/16.
  */
-public interface IndustryCalculatorRouterClient {
-    BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException;
-
+public interface RemoteIndustryCalculationService extends IndustryCalculationService {
     void disconnect ( );
 }
