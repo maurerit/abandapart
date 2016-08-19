@@ -179,6 +179,12 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         return result;
     }
 
+    @Override
+    public BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException {
+        //TODO: Refactor the above method to call this method, catch the exception and throw a runtime exception.
+        return null;
+    }
+
     //TODO: Refactor this into a cost provider or something?
     private void putCostsIntoBlueprintData ( long regionId, long systemId, BlueprintData blueprintData )
     {

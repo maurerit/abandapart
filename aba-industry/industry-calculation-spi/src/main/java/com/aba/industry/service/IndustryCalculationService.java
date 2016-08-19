@@ -12,8 +12,11 @@ package com.aba.industry.service;
 
 import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.industry.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.model.Decryptor;
+
+import java.io.IOException;
 
 /**
  * Provides methods to calcuate full build calculations including any overheads if there are any to be considered.
@@ -35,7 +38,7 @@ public interface IndustryCalculationService {
     /**
      * Provides a mechanism to easily calculate the output of a full build with configuration options to either use
      * current stock prices or download them from the web.  Can also dive as deep into the supply chain as is specified
-     * by a dependent service provided by a {@link com.aba.industry.config.BuildOrBuyConfigurationService}
+     * by a dependent service provided by a {@link com.aba.data.domain.config.BuildOrBuyConfiguration}
      *
      * @param systemName                  The name of the system to use for the cost indexes
      * @param outputTypeId                The final output type for which this build calculation is being performed
@@ -61,4 +64,14 @@ public interface IndustryCalculationService {
             Decryptor decryptor,
             boolean findCurrentPrices,
             boolean useBuildOrBuyConfigurations );
+
+    /**
+     * The refactored version of {@link IndustryCalculationService#calculateBuildCosts(String, Integer,
+     * IndustrySkillConfiguration, InventionSkillConfiguration, Integer, Integer, Decryptor, boolean, boolean)}
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException;
 }
