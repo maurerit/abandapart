@@ -26,10 +26,11 @@
     <modules>
         <module>industry-data</module>
         <module>industry-fetcher</module>
-        <module>industry-common</module>
+        <module>industry-calculation-spi</module>
         <module>industry-config</module>
         <module>industry-common-bus</module>
-        <module>industry-calculator-router-client</module>
+        <module>industry-calculation-local</module>
+        <module>industry-calculation-bus</module>
     </modules>
 
     <dependencies>

@@ -23,7 +23,7 @@
     <dependencies>
         <dependency>
             <groupId>com.abandapart</groupId>
-            <artifactId>industry-common</artifactId>
+            <artifactId>industry-calculation-local</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
