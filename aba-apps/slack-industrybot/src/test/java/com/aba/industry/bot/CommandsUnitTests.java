@@ -86,4 +86,18 @@ public class CommandsUnitTests {
         Assert.assertEquals( 1, segments.length );
         Assert.assertEquals( "150mm Railgun II", segments[0] );
     }
+
+    @Test
+    public void testBuildLegionDefenseDashAdaptiveAugmenter ( ) {
+        String message = "@1234JKALFJKDSL: calculate Legion Defense - Adaptive Augmenter";
+
+        CalculateCommands command = CalculateCommands.findCommand( message );
+
+        Assert.assertEquals( CalculateCommands.CALCULATE_BUILD_BASIC, command );
+
+        String[] segments = command.getInterestingSegments( message );
+
+        Assert.assertEquals( 1, segments.length );
+        Assert.assertEquals( "Legion Defense - Adaptive Augmenter", segments[0] );
+    }
 }
