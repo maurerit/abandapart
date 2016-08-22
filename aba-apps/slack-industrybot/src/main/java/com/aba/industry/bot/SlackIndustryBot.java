@@ -17,9 +17,9 @@ import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
 import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
 import com.aba.industry.bot.util.MessageUtils;
-import com.aba.industry.bus.model.BuildCalculationRequest;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
-import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
+import com.aba.industry.model.BuildCalculationRequest;
+import com.aba.industry.service.IndustryCalculationService;
 import com.ullink.slack.simpleslackapi.SlackChannel;
 import com.ullink.slack.simpleslackapi.SlackPersona;
 import com.ullink.slack.simpleslackapi.SlackSession;
@@ -48,7 +48,7 @@ public class SlackIndustryBot implements Runnable {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private IndustrialCalculatorRouterClientImpl routerClient;
+    private IndustryCalculationService routerClient;
 
     @Autowired
     private TypeNameToTypeIdProvider typeIdProvider;

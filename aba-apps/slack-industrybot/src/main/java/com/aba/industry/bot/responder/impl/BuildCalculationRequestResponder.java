@@ -13,9 +13,9 @@ package com.aba.industry.bot.responder.impl;
 import com.aba.industry.bot.async.AsyncSlackException;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.util.MessageUtils;
-import com.aba.industry.bus.model.BuildCalculationRequest;
+import com.aba.industry.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
-import com.aba.industry.router.client.impl.IndustrialCalculatorRouterClientImpl;
+import com.aba.industry.service.RemoteIndustryCalculationService;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 import org.slf4j.Logger;
@@ -44,8 +44,8 @@ public class BuildCalculationRequestResponder implements RequestResponder<BuildC
     @Override
     public void respond ( SlackMessagePosted slackMessage, BuildCalculationRequest buildCalculationRequest ) {
         logger.debug( "Received a build calculation request: {}", buildCalculationRequest );
-        IndustrialCalculatorRouterClientImpl routerClient = context.getBean(
-                IndustrialCalculatorRouterClientImpl.class );
+        RemoteIndustryCalculationService routerClient = context.getBean(
+                RemoteIndustryCalculationService.class );
         BuildCalculationResult result = null;
 
         try {
