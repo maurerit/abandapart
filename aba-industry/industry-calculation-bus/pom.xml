@@ -13,21 +13,15 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>aba-apps</artifactId>
+        <artifactId>aba-industry</artifactId>
         <groupId>com.abandapart</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>industry-calculator-worker</artifactId>
+    <artifactId>industry-calculation-bus</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.abandapart</groupId>
-            <artifactId>industry-calculation-local</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.zeromq</groupId>
             <artifactId>jeromq</artifactId>
@@ -35,6 +29,16 @@
         <dependency>
             <groupId>com.abandapart</groupId>
             <artifactId>industry-common-bus</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>industry-fetcher</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>industry-calculation-spi</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
