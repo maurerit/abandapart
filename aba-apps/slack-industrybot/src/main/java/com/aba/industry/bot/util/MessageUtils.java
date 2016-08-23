@@ -67,6 +67,7 @@ public class MessageUtils {
 
             //region Invention Overheads
             message.append( "\n*_Overheads_*" )
+                   .append( "\nInvention" )
                    .append( "\n    Installation: " )
                    .append( format.format( result.getInventionResult()
                                                  .getInstallationFees() ) )
