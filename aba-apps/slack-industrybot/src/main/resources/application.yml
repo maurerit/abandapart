@@ -10,7 +10,8 @@ aba:
           location: industry-router
           protocol: tcp
           port: 42001
-
+    rethink:
+      host: localhost
 logging:
   level:
     com.aba: DEBUG

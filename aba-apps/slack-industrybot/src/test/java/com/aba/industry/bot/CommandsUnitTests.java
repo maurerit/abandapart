@@ -10,6 +10,7 @@
 
 package com.aba.industry.bot;
 
+import com.aba.industry.bot.commands.CalculateCommands;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
