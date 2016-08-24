@@ -20,7 +20,6 @@ import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
 import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
 import com.aba.industry.model.BuildCalculationRequest;
-import com.aba.industry.rethink.RethinkDBConnectionFactory;
 import com.aba.industry.service.IndustryCalculationService;
 import com.ullink.slack.simpleslackapi.SlackChannel;
 import com.ullink.slack.simpleslackapi.SlackPersona;
@@ -64,9 +63,6 @@ public class SlackIndustryBot implements Runnable {
     //TODO: For some reason, referencing the BuildCalculationRequestResponder by fully qualified name fails :(.
     @Autowired
     private RequestResponder<BuildCalculationRequest> buildCalculationRequestResponder;
-
-    @Autowired
-    private RethinkDBConnectionFactory connectionFactory;
 
     @Autowired
     private SlackSession session;
