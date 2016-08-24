@@ -8,18 +8,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.rethink;
+package com.aba.industry.bot.service;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.aba.industry.bot.repo.PreferencesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Created by maurerit on 8/22/16.
+ * Created by maurerit on 8/23/16.
  */
-@Configuration
-public class RethinkDBConfiguration {
-    @Bean
-    public RethinkDBConnectionFactory connectionFactory ( ) {
-        return new RethinkDBConnectionFactory();
-    }
+@Service
+public class PreferencesService {
+    @Autowired
+    private PreferencesRepository preferencesRepository;
+
+//    public void
 }
