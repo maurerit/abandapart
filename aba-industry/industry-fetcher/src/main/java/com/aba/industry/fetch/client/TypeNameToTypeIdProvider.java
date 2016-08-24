@@ -10,11 +10,13 @@
 
 package com.aba.industry.fetch.client;
 
+import com.aba.TypeIdNotFoundException;
+
 import java.io.IOException;
 
 /**
  * Created by maurerit on 8/2/16.
  */
 public interface TypeNameToTypeIdProvider {
-    Integer getTypeIdForTypeName ( String typeName ) throws IOException;
+    Integer getTypeIdForTypeName ( String typeName ) throws IOException, TypeIdNotFoundException;
 }
