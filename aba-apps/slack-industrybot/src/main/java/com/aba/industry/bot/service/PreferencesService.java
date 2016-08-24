@@ -1,26 +1,11 @@
-/*
- * Copyright 2016 maurerit
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- */
-
 package com.aba.industry.bot.service;
 
-import com.aba.industry.bot.repo.PreferencesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.aba.industry.bot.commands.PreferencesCommands;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
- * Created by maurerit on 8/23/16.
+ * Created by mm66053 on 8/24/2016.
  */
-@Service
-public class PreferencesService {
-    @Autowired
-    private PreferencesRepository preferencesRepository;
-
-//    public void
+public interface PreferencesService {
+    void processCommand ( PreferencesCommands command, SlackMessagePosted event );
 }
