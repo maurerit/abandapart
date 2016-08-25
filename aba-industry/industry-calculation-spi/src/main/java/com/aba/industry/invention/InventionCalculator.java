@@ -29,5 +29,6 @@ public interface InventionCalculator {
             Double taxRate,
             BlueprintData bpData,
             Decryptor decryptor,
-            InventionSkillConfiguration skillConfiguration );
+            InventionSkillConfiguration skillConfiguration,
+            Boolean suppressInstallation );
 }

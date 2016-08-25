@@ -15,6 +15,8 @@ import com.aba.data.domain.config.IndustrySkillConfiguration;
 import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
@@ -22,8 +24,10 @@ import java.util.Map;
  * Created by maurerit on 8/23/16.
  */
 @Data
+@Document
 public class Preferences {
     @JsonProperty
+    @Id
     private String                               userId;
     @JsonProperty
     private Map<String, BuildOrBuyConfiguration> buildOrBuyConfigurations;

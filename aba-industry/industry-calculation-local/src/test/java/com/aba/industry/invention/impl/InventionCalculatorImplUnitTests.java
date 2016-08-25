@@ -77,7 +77,7 @@ public class InventionCalculatorImplUnitTests {
         }
 
         InventionCalculationResult result = calcImpl.calculateInventionCosts( costIndexes, 0.0d, bpData, decryptor,
-                                                                              skillConfiguration );
+                                                                              skillConfiguration, false );
 
         Assert.assertNotNull( "Result should not be null", result );
         String output = mapper.writeValueAsString( result );

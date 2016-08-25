@@ -26,6 +26,7 @@ public interface ManufacturingCalculator {
      * @param meLevel
      * @param teLevel
      * @param industrySkills
+     * @param suppressInstallation
      * @return
      */
     BuildCalculationResult calculateBuildCost (
@@ -34,5 +35,6 @@ public interface ManufacturingCalculator {
             BlueprintData bpData,
             Integer meLevel,
             Integer teLevel,
-            IndustrySkillConfiguration industrySkills );
+            IndustrySkillConfiguration industrySkills,
+            Boolean suppressInstallation );
 }

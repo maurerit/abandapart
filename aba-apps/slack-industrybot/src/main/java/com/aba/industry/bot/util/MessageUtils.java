@@ -66,18 +66,33 @@ public class MessageUtils {
                                            .getMaterialsWithCost(), format, message );
 
             //region Invention Overheads
-            message.append( "\n*_Overheads_*" )
-                   .append( "\nInvention" )
-                   .append( "\n    Installation: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getInstallationFees() ) )
-                   .append( "\n    Installation Tax: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getInstallationTax() ) )
-                   .append( "\n    Salary: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getSalaryCost() ) )
-                   .append( "\n" );
+            if ( result.getInventionResult()
+                       .getInstallationFees() != null && result.getInventionResult()
+                                                               .getSalaryCost() != null )
+            {
+                message.append( "\n*_Overheads_*" )
+                       .append( "\nInvention" );
+            }
+            if ( result.getInventionResult()
+                       .getInstallationFees() != null )
+            {
+                message.append( "\n    Installation: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getInstallationFees() ) )
+                       .append( "\n    Installation Tax: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getInstallationTax() ) );
+            }
+
+            if ( result.getInventionResult()
+                       .getSalaryCost() != null )
+            {
+                message.append( "\n    Salary: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getSalaryCost() ) );
+            }
+
+            message.append( "\n" );
             //endregion
         }
 
@@ -88,12 +103,19 @@ public class MessageUtils {
         }
 
         //region Build Overheads
-        message.append( "\nBuild\n    Installation: " )
-               .append( format.format( result.getInstallationFees() ) )
-               .append( "\n    Installation Tax: " )
-               .append( format.format( result.getInstallationTax() ) )
-               .append( "\n    Salary: " )
-               .append( format.format( result.getSalaryCost() ) );
+        if ( result.getInstallationFees() != null && result.getSalaryCost() != null ) {
+            message.append( "\nBuild" );
+        }
+        if ( result.getInstallationFees() != null ) {
+            message.append( "\n    Installation: " )
+                   .append( format.format( result.getInstallationFees() ) )
+                   .append( "\n    Installation Tax: " )
+                   .append( format.format( result.getInstallationTax() ) );
+        }
+        if ( result.getSalaryCost() != null ) {
+            message.append( "\n    Salary: " )
+                   .append( format.format( result.getSalaryCost() ) );
+        }
         //endregion
 
         //region Freight Overheads

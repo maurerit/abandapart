@@ -1,23 +1,19 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.bot;
 
 import com.aba.TypeIdNotFoundException;
-import com.aba.data.domain.config.IndustrySkillConfiguration;
-import com.aba.data.domain.config.InventionSkillConfiguration;
 import com.aba.industry.bot.commands.CalculateCommands;
 import com.aba.industry.bot.commands.PreferencesCommands;
+import com.aba.industry.bot.model.Preferences;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
 import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
@@ -113,23 +109,20 @@ public class SlackIndustryBot implements Runnable {
     private void handleCalculateBuildRequest ( SlackMessagePosted event,
                                                CalculateCommands command ) throws IOException, TypeIdNotFoundException
     {
+        Preferences prefs = preferencesService.getPreferencesForUser( event.getSender()
+                                                                           .getId() );
+
         String[] segments = command.getInterestingSegments( event.getMessageContent() );
         String typeName = segments[0];
         Integer typeId = typeIdProvider.getTypeIdForTypeName( typeName );
 
         BuildCalculationRequest request = new BuildCalculationRequest();
 
-        IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
-        industrySkills.setAdvancedIndustrySkillLevel( 5 );
-        industrySkills.setIndustrySkillLevel( 5 );
-
-        InventionSkillConfiguration inventionSkills = new InventionSkillConfiguration();
-        inventionSkills.setDatacoreOneSkillLevel( 3 );
-        inventionSkills.setDatacoreTwoSkillLevel( 3 );
-        inventionSkills.setEncryptionSkillLevel( 4 );
-
-        request.setIndustrySkills( industrySkills );
-        request.setInventionSkills( inventionSkills );
+        request.setIndustrySkills( prefs.getIndustrySkillConfiguration() );
+        request.setInventionSkills( prefs.getInventionSkillConfiguration() );
+        request.setSuppressSalary( prefs.getSuppressSalary() );
+        request.setSuppressFreight( prefs.getSuppressFreight() );
+        request.setSuppressInstallation( prefs.getSuppressInstallation() );
         //FIXME: #29
         request.setMeLevel( 10 );
         request.setTeLevel( 20 );
