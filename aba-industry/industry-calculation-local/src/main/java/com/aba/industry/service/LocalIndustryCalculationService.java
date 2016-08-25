@@ -118,18 +118,43 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             boolean findCurrentPrices,
             boolean useBuildOrBuyConfigurations )
     {
+        BuildCalculationRequest request = new BuildCalculationRequest();
+        request.setSystemName( systemName );
+        request.setRequestedBuildTypeId( outputTypeId );
+        request.setIndustrySkills( industrySkills );
+        request.setInventionSkills( inventionSkills );
+        request.setMeLevel( meLevel );
+        request.setTeLevel( teLevel );
+        request.setDecryptor( decryptor );
+        request.setFindPrices( findCurrentPrices );
+        request.setUseBuildOrBuyConfigurations( useBuildOrBuyConfigurations );
+
+
+        BuildCalculationResult result = null;
+        try {
+            result = calculateBuild( request );
+        }
+        catch ( IOException e ) {
+            throw new RuntimeException( e );
+        }
+
+        return result;
+    }
+
+    @Override
+    public BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException {
         BuildCalculationResult result;
         //TODO: Tax Rate should be determined by builders standing with station holder
         Double taxMultiplier = 1.0d;
 
-        Integer meLevelToUse = meLevel;
-        Integer teLevelToUse = teLevel;
+        Integer meLevelToUse = request.getMeLevel();
+        Integer teLevelToUse = request.getTeLevel();
 
         BlueprintData blueprintData = null;
         SystemCostIndexes costIndexes;
         try {
-            blueprintData = buildReqProvider.getBlueprintData( outputTypeId );
-            costIndexes = costIndexProvider.getSystemCostIndexes( systemName );
+            blueprintData = buildReqProvider.getBlueprintData( request.getRequestedBuildTypeId() );
+            costIndexes = costIndexProvider.getSystemCostIndexes( request.getSystemName() );
         }
         catch ( IOException e ) {
             logger.error( "Error while retrieving build requirements or cost indexes", e );
@@ -142,7 +167,8 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
 
         InventionCalculationResult inventionCalculationResult =
-                getInventionCalculationResult( inventionSkills, decryptor, taxMultiplier, blueprintData, costIndexes );
+                getInventionCalculationResult( request.getInventionSkills(), request.getDecryptor(), taxMultiplier,
+                                               blueprintData, costIndexes, request.getSuppressInstallation() );
 
         if ( inventionCalculationResult != null ) {
             meLevelToUse = inventionCalculationResult.getResultingME();
@@ -152,8 +178,9 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         result = this.manufacturingCalc.calculateBuildCost( costIndexes, taxMultiplier,
                                                             blueprintData,
                                                             meLevelToUse, teLevelToUse,
-                                                            industrySkills );
-        result.setProductName( itemTypeRepository.getItemDetails( outputTypeId )
+                                                            request.getIndustrySkills(),
+                                                            request.getSuppressInstallation() );
+        result.setProductName( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() )
                                                  .getName() );
 
         if ( inventionCalculationResult != null ) {
@@ -161,28 +188,20 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
                                                   .getTimesInSeconds()
                                                   .get( IndustryActivities.INVENTION.getActivityId() );
             long inventionTime = Math.round(
-                    ( (double) baseInventionTime ) * ( 1 - 0.03 * industrySkills.getAdvancedIndustrySkillLevel() ) );
+                    ( (double) baseInventionTime ) * ( 1 - 0.03 * request.getIndustrySkills()
+                                                                         .getAdvancedIndustrySkillLevel() ) );
 
             inventionCalculationResult.setSeconds( inventionTime );
-
-            inventionCalculationResult.setSalaryCost(
-                    overheadCalculator.getSalary( IndustryActivities.INVENTION,
-                                                  inventionCalculationResult.getSeconds() ) );
         }
 
         result.setInventionResult( inventionCalculationResult );
 
-        calculateOverheads( systemName, result );
+        calculateOverheads( request.getSystemName(), result, request.getSuppressSalary(),
+                            request.getSuppressFreight() );
 
-        result.setBuildSystem( systemName );
+        result.setBuildSystem( request.getSystemName() );
 
         return result;
-    }
-
-    @Override
-    public BuildCalculationResult calculateBuild ( BuildCalculationRequest request ) throws IOException {
-        //TODO: Refactor the above method to call this method, catch the exception and throw a runtime exception.
-        return null;
     }
 
     //TODO: Refactor this into a cost provider or something?
@@ -217,7 +236,8 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             Decryptor decryptor,
             Double taxRate,
             BlueprintData blueprintData,
-            SystemCostIndexes costIndexes )
+            SystemCostIndexes costIndexes,
+            Boolean suppressInstallation )
     {
         InventionCalculationResult inventionCalculationResult = null;
         if ( !blueprintData.getBlueprintDetails()
@@ -226,70 +246,88 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         {
             inventionCalculationResult = this.inventionCalc.calculateInventionCosts( costIndexes, taxRate,
                                                                                      blueprintData, decryptor,
-                                                                                     inventionSkills );
+                                                                                     inventionSkills,
+                                                                                     suppressInstallation );
         }
         return inventionCalculationResult;
     }
 
-    private void calculateOverheads ( String systemName, BuildCalculationResult result )
+    private void calculateOverheads ( String systemName, BuildCalculationResult result, Boolean suppressSalary,
+                                      Boolean suppressFreight )
     {
         SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
         FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
 
-        long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
-        long amarrId = solarSystemRepository.getSolarSystemId( AMARR.getSystemName() );
-        Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
-                                                                       jitaId,
-                                                                       result.getProductId() );
+        //region Freight Calculations
+        if ( !suppressFreight ) {
+            long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
+            long amarrId = solarSystemRepository.getSolarSystemId( AMARR.getSystemName() );
 
-        Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
-                                                                        amarrId,
-                                                                        result.getProductId() );
-        //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
-        result.getToBuildLocationFreight()
-              .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
-                                                                                (double) Math.round(
-                                                                                        result.getMaterialCost() ) ) );
-        result.getToBuildLocationFreight()
-              .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( AMARR.getSystemName(), systemName,
-                                                                                 (double) Math.round(
-                                                                                         result.getMaterialCost() ) ) );
+            Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
+                                                                           jitaId,
+                                                                           result.getProductId() );
 
-        //TODO: Situations where there is no item listed make a configurable desirable profit ratio
-        if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
-            result.getFromBuildLocationFreight()
-                  .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
+            Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
+                                                                            amarrId,
+                                                                            result.getProductId() );
+            //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
+            result.getToBuildLocationFreight()
+                  .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
                                                                                     (double) Math.round(
                                                                                             result.getMaterialCost()
                                                                                     ) ) );
-        }
-        else {
-            result.getFromBuildLocationFreight()
-                  .put( JITA.getSystemName(),
-                        overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(), jitaLowestSell ) );
-        }
-
-        if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
-            result.getFromBuildLocationFreight()
-                  .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
+            result.getToBuildLocationFreight()
+                  .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( AMARR.getSystemName(), systemName,
                                                                                      (double) Math.round(
                                                                                              result.getMaterialCost()
                                                                                      ) ) );
-        }
-        else {
-            result.getFromBuildLocationFreight()
-                  .put( AMARR.getSystemName(),
-                        overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(), amarrLowestSell ) );
-        }
 
-        result.setSalaryCost( overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, result.getSeconds() ) );
 
-        if ( result.getInventionResult() != null ) {
-            result.getInventionResult()
-                  .setSalaryCost( overheadCalculator.getSalary(
-                          IndustryActivities.INVENTION, result.getInventionResult()
-                                                              .getSeconds() ) );
+            //TODO: Situations where there is no item listed make a configurable desirable profit ratio
+            if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
+                result.getFromBuildLocationFreight()
+                      .put( JITA.getSystemName(),
+                            overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
+                                                                  (double) Math.round(
+                                                                          result.getMaterialCost()
+                                                                  ) ) );
+            }
+            else {
+                result.getFromBuildLocationFreight()
+                      .put( JITA.getSystemName(),
+                            overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(), jitaLowestSell ) );
+            }
+
+            if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
+                result.getFromBuildLocationFreight()
+                      .put( AMARR.getSystemName(),
+                            overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
+                                                                  (double) Math.round(
+                                                                          result.getMaterialCost()
+                                                                  ) ) );
+            }
+            else {
+                result.getFromBuildLocationFreight()
+                      .put( AMARR.getSystemName(),
+                            overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
+                                                                  amarrLowestSell ) );
+            }
         }
+        //endregion
+
+        //region Salary Calculations
+        if ( !suppressSalary ) {
+            result.setSalaryCost(
+                    overheadCalculator.getSalary( IndustryActivities.MANUFACTURING, result.getSeconds() ) );
+
+            if ( result.getInventionResult() != null ) {
+                result.getInventionResult()
+                      .setSalaryCost( overheadCalculator.getSalary(
+                              IndustryActivities.INVENTION, result.getInventionResult()
+                                                                  .getSeconds() ) );
+            }
+        }
+        //endregion
     }
 
     private void putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am )

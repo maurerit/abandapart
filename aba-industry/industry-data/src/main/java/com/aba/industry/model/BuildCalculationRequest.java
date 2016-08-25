@@ -46,4 +46,10 @@ public class BuildCalculationRequest {
     private boolean                       useBuildOrBuyConfigurations;
     @JsonProperty
     private List<BuildOrBuyConfiguration> buildOrBuyConfigurationList;
+    @JsonProperty
+    private Boolean suppressSalary       = false;
+    @JsonProperty
+    private Boolean suppressFreight      = false;
+    @JsonProperty
+    private Boolean suppressInstallation = false;
 }

@@ -33,17 +33,21 @@ public enum PreferencesCommands {
                     "if you aren't quite up in all of your training :(.\n" +
                     "To configure the Datacore Skill One skill to five:\n" +
                     "> skill *Datacore Skill One* *5*!\n", 1, 2 ),
-    OVERHEAD( "ov", "ov +([fF]reight|[sS]alary|[iI]nstallation) (show|noshow)",
+    OVERHEAD( "ov", "ov +([fF]reight|[sS]alary|[iI]nstallation) (on|off)",
               "To turn frieght calculations off tell me:\n" +
                       "> ov *Freight* *off*!\n" +
                       "I also accept Salary, and Installation.", 1, 2 );
 
     public static final String DATACORE_SKILL_ONE_NAME = "Datacore Skill One";
     public static final String DATACORE_SKILL_TWO_NAME = "Datacore Skill Two";
-    public static final String ENCRYPTION_SKILL_NAME = "Encyption Skill";
+    public static final String ENCRYPTION_SKILL_NAME   = "Encyption Skill";
 
-    public static final String INDUSTRY_SKILL_NAME = "Industry";
+    public static final String INDUSTRY_SKILL_NAME     = "Industry";
     public static final String ADVANCED_INDUSTRY_SKILL = "Advanced Industry";
+
+    public static final String SALARY_NAME       = "Salary";
+    public static final String FREIGHT_NAME      = "Freight";
+    public static final String INSTALLATION_NAME = "Installation";
 
     private String    triggerWord;
     private String    patternStr;
