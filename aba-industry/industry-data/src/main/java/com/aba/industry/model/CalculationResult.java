@@ -28,9 +28,9 @@ public abstract class CalculationResult {
     @JsonProperty
     private List<Skill>                    requiredSkills;
     @JsonProperty
-    private Double                         installationFees;
+    private Double installationFees = 0d;
     @JsonProperty
-    private Double                         installationTax;
+    private Double installationTax  = 0d;
     @JsonProperty
     private Long                           seconds;
     @JsonProperty
@@ -45,6 +45,7 @@ public abstract class CalculationResult {
         //be guided that their isk is not needed in this process and the corp will indeed cover these costs).
         result += installationFees != null ? installationFees : 0d;
         result += installationTax != null ? installationTax : 0d;
+        result += salaryCost != null ? salaryCost : 0d;
         result += getTotalCostInternal();
 
         return result;
