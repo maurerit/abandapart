@@ -8,7 +8,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.bot;
+package com.aba.industry.bot.commands;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -85,5 +85,19 @@ public class CommandsUnitTests {
 
         Assert.assertEquals( 1, segments.length );
         Assert.assertEquals( "150mm Railgun II", segments[0] );
+    }
+
+    @Test
+    public void testBuildLegionDefenseDashAdaptiveAugmenter ( ) {
+        String message = "@1234JKALFJKDSL: calculate Legion Defense - Adaptive Augmenter";
+
+        CalculateCommands command = CalculateCommands.findCommand( message );
+
+        Assert.assertEquals( CalculateCommands.CALCULATE_BUILD_BASIC, command );
+
+        String[] segments = command.getInterestingSegments( message );
+
+        Assert.assertEquals( 1, segments.length );
+        Assert.assertEquals( "Legion Defense - Adaptive Augmenter", segments[0] );
     }
 }

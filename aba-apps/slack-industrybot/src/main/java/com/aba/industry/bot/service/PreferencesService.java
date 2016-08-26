@@ -8,15 +8,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.fetch.client;
+package com.aba.industry.bot.service;
 
-import com.aba.TypeIdNotFoundException;
-
-import java.io.IOException;
+import com.aba.industry.bot.commands.PreferencesCommands;
+import com.aba.industry.bot.model.Preferences;
+import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
 
 /**
- * Created by maurerit on 8/2/16.
+ * Created by mm66053 on 8/24/2016.
  */
-public interface TypeNameToTypeIdProvider {
-    Integer getTypeIdForTypeName ( String typeName ) throws IOException, TypeIdNotFoundException;
+public interface PreferencesService {
+    void processCommand ( PreferencesCommands command, SlackMessagePosted event );
+
+    Preferences getPreferencesForUser ( String userId );
 }

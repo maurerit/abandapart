@@ -10,6 +10,7 @@
 
 package com.aba.industry.web;
 
+import com.aba.TypeIdNotFoundException;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.service.IndustryCalculationService;
@@ -55,6 +56,9 @@ public class IndustryRestController {
             typeId = typeNameToTypeIdProvider.getTypeIdForTypeName( typeName );
         }
         catch ( IOException e ) {
+            return null;
+        }
+        catch ( TypeIdNotFoundException e ) {
             return null;
         }
 

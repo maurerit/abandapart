@@ -37,7 +37,8 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
             BlueprintData bpData,
             Integer meLevel,
             Integer teLevel,
-            IndustrySkillConfiguration industrySkills )
+            IndustrySkillConfiguration industrySkills,
+            Boolean suppressInstallation )
     {
         BuildCalculationResult result = new BuildCalculationResult();
         result.setSkillConfiguration( industrySkills );
@@ -86,8 +87,10 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
                                              ( 1 - ( ( industrySkills.getAdvancedIndustrySkillLevel()
                                                                      .doubleValue() * 3d ) / 100d ) ) );
 
-        result.setInstallationFees( runCost );
-        result.setInstallationTax( runCost * .1d );
+        if ( !suppressInstallation ) {
+            result.setInstallationFees( runCost );
+            result.setInstallationTax( runCost * .1d );
+        }
         result.setSeconds( buildTime );
         result.setProductId( bpData.getBlueprintDetails()
                                    .getProductTypeId() );

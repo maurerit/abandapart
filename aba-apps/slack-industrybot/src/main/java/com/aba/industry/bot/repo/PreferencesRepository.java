@@ -8,15 +8,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.fetch.client;
+package com.aba.industry.bot.repo;
 
-import com.aba.TypeIdNotFoundException;
-
-import java.io.IOException;
+import com.aba.industry.bot.model.Preferences;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * Created by maurerit on 8/2/16.
+ * Created by maurerit on 8/23/16.
  */
-public interface TypeNameToTypeIdProvider {
-    Integer getTypeIdForTypeName ( String typeName ) throws IOException, TypeIdNotFoundException;
+public interface PreferencesRepository extends MongoRepository<Preferences, String> {
+    Preferences findUniqueByUserId ( String userId );
 }

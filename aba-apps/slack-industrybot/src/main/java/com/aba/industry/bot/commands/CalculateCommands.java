@@ -8,7 +8,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.bot;
+package com.aba.industry.bot.commands;
 
 import lombok.Getter;
 
@@ -40,11 +40,11 @@ public enum CalculateCommands {
      * Will not dive down the build chain and assume everything is bought at sell prices
      * </pre>
      */
-    CALCULATE_BUILD_BASIC( "calculate", ".*calculate +([a-zA-Z0-9]+[a-zA-Z0-9 ]+)",
+    CALCULATE_BUILD_BASIC( "calculate", ".*calculate +([a-zA-Z0-9]+[a-zA-Z0-9 -]+)",
                            "To calculate build costs for a Sleipnir using default settings ask me:\n" +
                                    "> calculate *Sleipnir*!\n", 1 ),
     CALCULATE_BUILD_SPECIFY_PROCURE_TYPE( "calculate",
-                                          ".*calculate ([a-zA-Z0-9]+[a-zA-Z0-9 ]+) (using|with) (buy|sell).*",
+                                          ".*calculate ([a-zA-Z0-9]+[a-zA-Z0-9 -]+) (using|with) (buy|sell).*",
                                           "To calculate build costs of a 150mm Railgun II using buy prices ask me:\n" +
                                                   "> calculate *150mm Railgun II* with *buy* prices :D?\n" +
                                                   "or\n" +
