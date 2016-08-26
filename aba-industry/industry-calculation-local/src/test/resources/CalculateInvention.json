@@ -1,0 +1,62 @@
+{
+  "materialsWithCost": [
+    {
+      "name": "Datacore - Mechanical Engineering",
+      "quantity": 16,
+      "source": null,
+      "cost": 43609.7,
+      "adjustedCost": 61198.27,
+      "typeid": 20424,
+      "maketype": null
+    },
+    {
+      "name": "Datacore - Minmatar Starship Engineering",
+      "quantity": 16,
+      "source": null,
+      "cost": 99998.93,
+      "adjustedCost": 77837.65,
+      "typeid": 20172,
+      "maketype": null
+    }
+  ],
+  "requiredSkills": [
+    {
+      "name": "Minmatar Starship Engineering",
+      "level": "1",
+      "typeid": 11445
+    },
+    {
+      "name": "Mechanical Engineering",
+      "level": "1",
+      "typeid": 11452
+    },
+    {
+      "name": "Minmatar Encryption Methods",
+      "level": "1",
+      "typeid": 21791
+    }
+  ],
+  "installationFees": 2644.1832935636876,
+  "installationTax": 264.41832935636876,
+  "seconds": 160200,
+  "salaryCost": 0.0,
+  "skillConfiguration": {
+    "preference": null,
+    "encryptionSkillLevel": 4,
+    "datacoreOneSkillLevel": 3,
+    "datacoreTwoSkillLevel": 3,
+    "encryptionSkillLevelMultiplier": null,
+    "datacoreOneSkillLevelMultiplier": null,
+    "datacoreTwoSkillLevelMultiplier": null
+  },
+  "inventionRunCost": 2297738.08,
+  "costPerSuccessfulInventionRun": 6808205.924487786,
+  "blueprintCopyCost": 526.9208539521601,
+  "probability": 33.800000000000004,
+  "outputTypeId": 22444,
+  "resultingME": 2,
+  "resultingTE": 4,
+  "resultingRuns": 1,
+  "decryptor": null,
+  "totalCost": 6818370.192170841
+}

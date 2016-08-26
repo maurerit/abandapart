@@ -10,11 +10,13 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.comparator.CrestMarketOrderPriceComparator;
+import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestMarketOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @Setter
 public class CrestMarketOrderFetcher implements MarketOrderFetcher {
+    private static final Logger logger = LoggerFactory.getLogger( CrestMarketOrderFetcher.class );
     @Autowired
     private CrestService crestService;
 
@@ -36,6 +39,11 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     public List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId )
     {
         return crestService.getMarketOrders( regionId, "sell", itemId );
+    }
+
+    @Override
+    public List<CrestMarketOrder> getMarketBuyOrders ( long regionId, long itemId ) {
+        return crestService.getMarketOrders( regionId, "buy", itemId );
     }
 
     @Override
@@ -65,6 +73,8 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     @Cacheable( "price-for-quantity" )
     public Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity )
     {
+        logger.debug( "fetching price for quantity in region: {}, system: {}, for item: {} and quantity: {}", regionId,
+                      systemId, itemId, quantity );
         Double result = 0d;
 
         //TODO: For now I'm concerned with sell orders and from Amarr and Jita.
@@ -77,7 +87,7 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
                                                                       order -> order.getLocationId() ==
                                                                               hubIdToFind && order.getTypeId() ==
                                                                               itemId )
-                                                              .sorted( new CrestMarketOrderPriceComparator() )
+                                                              .sorted( new CrestMarketOrderPriceAscendingComparator() )
                                                               .collect( Collectors.toList() );
 
         int totalFound = 0;

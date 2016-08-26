@@ -10,6 +10,7 @@
 
 package com.abandapart.industry.fetch;
 
+import com.aba.TypeIdNotFoundException;
 import com.aba.industry.fetch.service.impl.FuzzySteveService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,16 +27,14 @@ public class TypeNameToTypeIdProviderUnitTests {
     FuzzySteveService fuzzySteveService = new FuzzySteveService();
 
     @Test
-    public void testGet150mmRailgunIITypeId ( ) throws IOException {
+    public void testGet150mmRailgunIITypeId ( ) throws IOException, TypeIdNotFoundException {
         Integer result = fuzzySteveService.getTypeIdForTypeName( "150mm Railgun II" );
 
         Assert.assertEquals( new Integer( 3074 ), result );
     }
 
-    @Test
-    public void testGetBadName ( ) throws IOException {
+    @Test( expected = TypeIdNotFoundException.class )
+    public void testGetBadName ( ) throws IOException, TypeIdNotFoundException {
         Integer result = fuzzySteveService.getTypeIdForTypeName( "150mm Rail" );
-
-        Assert.assertEquals( new Integer( -1 ), result );
     }
 }

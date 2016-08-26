@@ -23,6 +23,7 @@
         <module>aba-exceptions</module>
         <module>spring-eve-crest</module>
         <module>aba-market</module>
+        <module>aba-apps</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -115,6 +116,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.4</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -141,7 +148,6 @@
                     <configuration>
                         <excludes>
                             <exclude>**/domain/**</exclude>
-                            <exclude>**/model/**</exclude>
                             <exclude>**/*Configuration.java</exclude>
                             <exclude>**/*Constants.java</exclude>
                         </excludes>

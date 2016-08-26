@@ -14,8 +14,9 @@ logging:
 
 aba:
   industry:
-    director:
-      location: localhost
-      protocol: tcp
-      receivePort: 5558
-      publishPort: 5559
+    bus:
+      director:
+        location: localhost
+        protocol: tcp
+        receivePort: 5558
+        publishPort: 5559
