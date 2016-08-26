@@ -131,15 +131,7 @@ public class IndustryCalculationWorker implements Runnable {
             }
         }
 
-        BuildCalculationResult resultObj = calculationService.calculateBuildCosts( request.getSystemName(),
-                                                                                   request.getRequestedBuildTypeId(),
-                                                                                   request.getIndustrySkills(),
-                                                                                   request.getInventionSkills(),
-                                                                                   request.getMeLevel(),
-                                                                                   request.getTeLevel(),
-                                                                                   request.getDecryptor(),
-                                                                                   request.isFindPrices(),
-                                                                                   request.isUseBuildOrBuyConfigurations() );
+        BuildCalculationResult resultObj = calculationService.calculateBuild( request );
 
         populateHubPrices( resultObj );
 

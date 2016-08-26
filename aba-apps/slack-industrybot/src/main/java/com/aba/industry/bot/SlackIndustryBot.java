@@ -11,11 +11,13 @@
 package com.aba.industry.bot;
 
 import com.aba.TypeIdNotFoundException;
-import com.aba.data.domain.config.IndustrySkillConfiguration;
-import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.aba.industry.bot.commands.CalculateCommands;
+import com.aba.industry.bot.commands.PreferencesCommands;
+import com.aba.industry.bot.model.Preferences;
 import com.aba.industry.bot.responder.RequestResponder;
 import com.aba.industry.bot.responder.impl.ExceptionErrorResponder;
 import com.aba.industry.bot.responder.impl.TypeIdNotFoundResponder;
+import com.aba.industry.bot.service.PreferencesService;
 import com.aba.industry.bot.util.MessageUtils;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
 import com.aba.industry.model.BuildCalculationRequest;
@@ -64,11 +66,15 @@ public class SlackIndustryBot implements Runnable {
     private RequestResponder<BuildCalculationRequest> buildCalculationRequestResponder;
 
     @Autowired
+    private PreferencesService preferencesService;
+
+    @Autowired
     private SlackSession session;
     private boolean shuttingDown = false;
     private SlackPersona me;
 
-    public void run ( ) {
+    public void run ( )
+    {
         logger.info( "Starting up and adding message posted listener" );
         session.addMessagePostedListener( new MessageListener() );
         me = session.sessionPersona();
@@ -103,27 +109,20 @@ public class SlackIndustryBot implements Runnable {
     private void handleCalculateBuildRequest ( SlackMessagePosted event,
                                                CalculateCommands command ) throws IOException, TypeIdNotFoundException
     {
+        Preferences prefs = preferencesService.getPreferencesForUser( event.getSender()
+                                                                           .getId() );
+
         String[] segments = command.getInterestingSegments( event.getMessageContent() );
         String typeName = segments[0];
         Integer typeId = typeIdProvider.getTypeIdForTypeName( typeName );
 
-        if ( typeId.equals( -1 ) ) {
-            throw new TypeIdNotFoundException( typeName, "No type id found" );
-        }
-
         BuildCalculationRequest request = new BuildCalculationRequest();
 
-        IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
-        industrySkills.setAdvancedIndustrySkillLevel( 5 );
-        industrySkills.setIndustrySkillLevel( 5 );
-
-        InventionSkillConfiguration inventionSkills = new InventionSkillConfiguration();
-        inventionSkills.setDatacoreOneSkillLevel( 3 );
-        inventionSkills.setDatacoreTwoSkillLevel( 3 );
-        inventionSkills.setEncryptionSkillLevel( 4 );
-
-        request.setIndustrySkills( industrySkills );
-        request.setInventionSkills( inventionSkills );
+        request.setIndustrySkills( prefs.getIndustrySkillConfiguration() );
+        request.setInventionSkills( prefs.getInventionSkillConfiguration() );
+        request.setSuppressSalary( prefs.getSuppressSalary() );
+        request.setSuppressFreight( prefs.getSuppressFreight() );
+        request.setSuppressInstallation( prefs.getSuppressInstallation() );
         //FIXME: #29
         request.setMeLevel( 10 );
         request.setTeLevel( 20 );
@@ -139,7 +138,8 @@ public class SlackIndustryBot implements Runnable {
         public static final String SHUTDOWN_CMD = "shutdown";
 
         @Override
-        public void onEvent ( SlackMessagePosted event, SlackSession session ) {
+        public void onEvent ( SlackMessagePosted event, SlackSession session )
+        {
             String message = event.getMessageContent();
             SlackUser sender = event.getSender();
             SlackChannel channel = event.getChannel();
@@ -149,8 +149,10 @@ public class SlackIndustryBot implements Runnable {
             logger.debug( "{} said {}", sender.getRealName(), message );
             if ( message.contains( me.getId() ) ) {
                 //Try to find a more advanced command first
-                CalculateCommands command = CalculateCommands.findCommand( message );
-                if ( command == null ) {
+                CalculateCommands calculateCommand = CalculateCommands.findCommand( message );
+                PreferencesCommands preferencesCommand = PreferencesCommands.findCommand( message );
+                //region Simple Commands
+                if ( calculateCommand == null && preferencesCommand == null ) {
                     //Extremely basic commands
                     if ( message.contains( SHUTDOWN_CMD ) ) {
                         session.sendMessage( channel, "Shutting down in " + SECONDS_BEFORE_SHUTDOWN + " seconds." );
@@ -170,7 +172,12 @@ public class SlackIndustryBot implements Runnable {
                           .append(
                                   "\nI understand the following commands.  Bolded segments are things that can vary " +
                                           "from request to request.\n" );
+                        sb.append("Calculation:\n");
                         for ( CalculateCommands currentCommand : CalculateCommands.values() ) {
+                            sb.append( currentCommand.getHelpText() );
+                        }
+                        sb.append("\nPreferences:\n");
+                        for ( PreferencesCommands currentCommand : PreferencesCommands.values() ) {
                             sb.append( currentCommand.getHelpText() );
                         }
                         session.sendMessage( channel, sb.toString() );
@@ -182,22 +189,28 @@ public class SlackIndustryBot implements Runnable {
                         session.sendMessage( channel, sb.toString() );
                     }
                 }
+                //endregion
 
-                switch ( command ) {
-                    case CALCULATE_BUILD_BASIC:
-                        try {
-                            handleCalculateBuildRequest( event, command );
-                        }
-                        catch ( IOException e ) {
-                            exceptionErrorResponder.reportError( session, event, e.getLocalizedMessage(), e );
-                        }
-                        catch ( TypeIdNotFoundException e ) {
-                            typeIdNotFoundResponder.reportError( session, event, e.getMessage(), e.getTypeName() );
-                        }
-                        break;
-                    case CALCULATE_BUILD_SPECIFY_PROCURE_TYPE:
-                        break;
+                if ( calculateCommand != null ) {
+                    switch ( calculateCommand ) {
+                        case CALCULATE_BUILD_BASIC:
+                            try {
+                                handleCalculateBuildRequest( event, calculateCommand );
+                            }
+                            catch ( IOException e ) {
+                                exceptionErrorResponder.reportError( session, event, e.getLocalizedMessage(), e );
+                            }
+                            catch ( TypeIdNotFoundException e ) {
+                                typeIdNotFoundResponder.reportError( session, event, e.getMessage(), e.getTypeName() );
+                            }
+                            break;
+                        case CALCULATE_BUILD_SPECIFY_PROCURE_TYPE:
+                            break;
 
+                    }
+                }
+                else if ( preferencesCommand != null ) {
+                    preferencesService.processCommand( preferencesCommand, event );
                 }
             }
         }

@@ -164,9 +164,10 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( this.costIndexes );
         //region Invention and Manufacturing result mocks
         Mockito.when( inventionCalculator.calculateInventionCosts( costIndexes, 1.0d, bpData, null,
-                                                                   inventionSkills ) )
+                                                                   inventionSkills, false ) )
                .thenReturn( this.inventionCalculationResult );
-        Mockito.when( manufacturingCalculator.calculateBuildCost( costIndexes, 1.0d, bpData, 2, 4, industrySkills ) )
+        Mockito.when(
+                manufacturingCalculator.calculateBuildCost( costIndexes, 1.0d, bpData, 2, 4, industrySkills, false ) )
                .thenReturn( buildCalculationResult );
         //endregion
         //region Overhead mocks

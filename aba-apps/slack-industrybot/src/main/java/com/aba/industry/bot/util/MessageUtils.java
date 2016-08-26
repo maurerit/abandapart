@@ -66,38 +66,63 @@ public class MessageUtils {
                                            .getMaterialsWithCost(), format, message );
 
             //region Invention Overheads
-            message.append( "\n*_Overheads_*" )
-                   .append( "\n    Installation: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getInstallationFees() ) )
-                   .append( "\n    Installation Tax: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getInstallationTax() ) )
-                   .append( "\n    Salary: " )
-                   .append( format.format( result.getInventionResult()
-                                                 .getSalaryCost() ) )
-                   .append( "\n" );
+            if ( result
+                    .getInstallationFees() > 0 || result.getSalaryCost() > 0 )
+            {
+                message.append( "\n*_Overheads_*" )
+                       .append( "\nInvention" );
+            }
+            if ( result
+                    .getInventionResult()
+                    .getInstallationFees() > 0 )
+            {
+                message.append( "\n    Installation: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getInstallationFees() ) )
+                       .append( "\n    Installation Tax: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getInstallationTax() ) );
+            }
+
+            if ( result.getInventionResult()
+                       .getSalaryCost() > 0 )
+            {
+                message.append( "\n    Salary: " )
+                       .append( format.format( result.getInventionResult()
+                                                     .getSalaryCost() ) );
+            }
+
+            message.append( "\n" );
             //endregion
         }
 
         //TODO: abandapart-20 Format required skills
 
-        if ( !hasInvention ) {
+        if ( !hasInvention && ( result.getInstallationFees() > 0 || result.getSalaryCost() > 0 ) ) {
             message.append( "\n*_Overheads_*" );
         }
 
         //region Build Overheads
-        message.append( "\nBuild\n    Installation: " )
-               .append( format.format( result.getInstallationFees() ) )
-               .append( "\n    Installation Tax: " )
-               .append( format.format( result.getInstallationTax() ) )
-               .append( "\n    Salary: " )
-               .append( format.format( result.getSalaryCost() ) );
+        if ( result.getInstallationFees() > 0 || result.getSalaryCost() > 0 ) {
+            message.append( "\nBuild" );
+        }
+        if ( result.getInstallationFees() > 0 ) {
+            message.append( "\n    Installation: " )
+                   .append( format.format( result.getInstallationFees() ) )
+                   .append( "\n    Installation Tax: " )
+                   .append( format.format( result.getInstallationTax() ) );
+        }
+        if ( result.getSalaryCost() > 0 ) {
+            message.append( "\n    Salary: " )
+                   .append( format.format( result.getSalaryCost() ) );
+        }
         //endregion
 
         //region Freight Overheads
         boolean hasToFreight = false;
-        if ( result.getToBuildLocationFreight() != null ) {
+        if ( result.getToBuildLocationFreight() != null && result.getToBuildLocationFreight()
+                                                                 .size() > 0 )
+        {
             hasToFreight = true;
 
             message.append( "\n_Freight_" )
@@ -112,7 +137,9 @@ public class MessageUtils {
                                                     .getCharge() ) );
             }
         }
-        if ( result.getFromBuildLocationFreight() != null ) {
+        if ( result.getFromBuildLocationFreight() != null && result.getFromBuildLocationFreight()
+                                                                   .size() > 0 )
+        {
             if ( !hasToFreight ) {
                 message.append( "\n_Freight_" );
             }

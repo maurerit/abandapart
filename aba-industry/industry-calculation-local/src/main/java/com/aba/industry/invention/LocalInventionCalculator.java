@@ -33,7 +33,8 @@ public class LocalInventionCalculator implements InventionCalculator {
             Double taxRate,
             BlueprintData bpData,
             Decryptor decryptor,
-            InventionSkillConfiguration skillConfiguration )
+            InventionSkillConfiguration skillConfiguration,
+            Boolean suppressInstallation )
     {
         BlueprintDetails bpDetails = bpData.getBlueprintDetails();
         List<ActivityMaterialWithCost> inventionMaterials = bpData.getActivityMaterials()
@@ -74,8 +75,10 @@ public class LocalInventionCalculator implements InventionCalculator {
                            .get( IndustryActivities.INVENTION.getActivityId() ) *
                 .02;
 
-        result.setInstallationFees( adjustedManufacturingCost );
-        result.setInstallationTax( adjustedManufacturingCost * .1 );
+        if ( !suppressInstallation ) {
+            result.setInstallationFees( adjustedManufacturingCost );
+            result.setInstallationTax( adjustedManufacturingCost * .1 );
+        }
         result.setInventionRunCost( inventionRunCost );
         result.setBlueprintCopyCost( blueprintCopyCost );
 
