@@ -1,0 +1,7 @@
+aba:
+  industry:
+    bus:
+      router:
+        location: industry-router
+        protocol: tcp
+        port: 42001

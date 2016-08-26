@@ -1,14 +1,11 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.industry.bus;
@@ -36,7 +33,7 @@ import javax.annotation.PreDestroy;
  * @author Marq Aideron <marq.aideron@gmail.com>
  */
 @Component
-@ConfigurationProperties( "aba.industry.director" )
+@ConfigurationProperties( "aba.industry.bus.director" )
 public class IndustryDirectorConnectionImpl implements IndustryDirectorConnection {
     private static final Logger       logger       = LoggerFactory.getLogger( IndustryDirectorConnection.class );
     private              ObjectMapper objectMapper = new ObjectMapper();
@@ -44,25 +41,25 @@ public class IndustryDirectorConnectionImpl implements IndustryDirectorConnectio
     /**
      * The dns location of the industry director
      */
-    @Value( "${aba.industry.director.location}" )
+    @Value( "${aba.industry.bus.director.location}" )
     private String location;
 
     /**
      * The protocol on which the director speaks
      */
-    @Value( "${aba.industry.director.protocol}" )
+    @Value( "${aba.industry.bus.director.protocol}" )
     private String protocol;
 
     /**
      * The port on which the director listens
      */
-    @Value( "${aba.industry.director.receivePort}" )
+    @Value( "${aba.industry.bus.director.receivePort}" )
     private String directorreceiverPort;
 
     /**
      * The port on which the director will publish things
      */
-    @Value( "${aba.industry.director.publishPort}" )
+    @Value( "${aba.industry.bus.director.publishPort}" )
     private String directorPublishPort;
 
     private ZContext context = new ZContext();

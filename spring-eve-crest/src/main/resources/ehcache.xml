@@ -24,7 +24,6 @@
            timeToLiveSeconds="86400"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-        <persistence strategy="localRestartable"/>
     </cache>
 
     <cache name="crest-region-id"
@@ -36,7 +35,6 @@
            timeToLiveSeconds="86400"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-        <persistence strategy="localRestartable"/>
     </cache>
 
     <cache name="crest-regions"
@@ -48,7 +46,6 @@
            timeToLiveSeconds="86400"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-        <persistence strategy="localRestartable"/>
     </cache>
 
     <cache name="solar-system-id"
@@ -60,6 +57,5 @@
            timeToLiveSeconds="86400"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
-        <persistence strategy="localRestartable"/>
     </cache>
 </ehcache>

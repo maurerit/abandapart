@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.abandapart</groupId>
             <artifactId>aba-data</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

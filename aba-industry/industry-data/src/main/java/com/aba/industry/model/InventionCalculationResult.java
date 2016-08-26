@@ -11,12 +11,15 @@
 package com.aba.industry.model;
 
 import com.aba.data.domain.config.InventionSkillConfiguration;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode( callSuper = true )
+@JsonIgnoreProperties( allowGetters = true, value = "totalCost" )
 public class InventionCalculationResult extends CalculationResult {
     /**
      * The {@link InventionSkillConfiguration} used to calculate this result.
@@ -44,16 +47,24 @@ public class InventionCalculationResult extends CalculationResult {
     @JsonProperty
     private Decryptor decryptor;
 
+    @Override
+    public Double getTotalCost ( ) {
+        return getTotalCostInternal();
+    }
+
     protected Double getTotalCostInternal ( ) {
         Double result = 0d;
 
-        result += costPerSuccessfulInventionRun;
+        result += super.getInstallationFees() / ( probability / 100 );
+        result += super.getInstallationTax() / ( probability / 100 );
+        result += blueprintCopyCost / ( probability / 100 );
+        result += this.costPerSuccessfulInventionRun / this.resultingRuns;
 
         return result;
     }
 
-    @JsonProperty( "costPerBlueprintRun" )
-    public Double getCostPerBlueprintRun ( ) {
-        return this.costPerSuccessfulInventionRun / this.resultingRuns;
-    }
+    //This is only here really to appease jackson.  It see's this property and attempts to set it but doesn't know
+    //that it was a generated property.  Probably bad practice to do this but meh.
+    @JsonIgnore
+    public void setTotalCost ( ) { }
 }

@@ -26,13 +26,11 @@
     <modules>
         <module>industry-data</module>
         <module>industry-fetcher</module>
-        <module>industry-common</module>
-        <module>industry-director</module>
+        <module>industry-calculation-spi</module>
         <module>industry-config</module>
         <module>industry-common-bus</module>
-        <module>industry-calculator</module>
-        <module>industry-calculator-worker</module>
-        <module>industry-calculator-router</module>
+        <module>industry-calculation-local</module>
+        <module>industry-calculation-bus</module>
     </modules>
 
     <dependencies>
@@ -41,13 +39,9 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
-    <name>ABA Industry Backends</name>
-    <description>Backend applications that may not tie directly to running web applications but provide support in one
-        way or another. Examples include:
 
-        Listeners for Market data
-        API Pollers
-        Decision makers
-        etc.
+    <name>ABA Industry Backends</name>
+    <description>
+        Industry specific libraries.
     </description>
 </project>

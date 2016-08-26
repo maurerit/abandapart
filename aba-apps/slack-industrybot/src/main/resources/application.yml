@@ -1,0 +1,20 @@
+#spring:
+#  data:
+#    mongodb:
+#      uri: mongodb://localhost:32776/industrybot
+aba:
+  industry:
+    bus:
+      director:
+        location: industry-director
+        protocol: tcp
+        receivePort: 5558
+        publishPort: 5559
+      router:
+          location: industry-router
+          protocol: tcp
+          port: 42001
+logging:
+  level:
+    com.aba: DEBUG
+    org.springframework.boot.autoconfigure.mongo: DEBUG
