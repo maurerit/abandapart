@@ -10,6 +10,7 @@
 
 package com.aba.industry.fetch.service.impl;
 
+import com.aba.TypeIdNotFoundException;
 import com.aba.industry.fetch.client.CostIndexProvider;
 import com.aba.industry.fetch.client.FuzzySteveRESTClient;
 import com.aba.industry.fetch.client.TypeNameToTypeIdProvider;
@@ -54,7 +55,8 @@ public class FuzzySteveService implements /*BuildRequirementsProvider,*/ CostInd
 
     @Override
     @Cacheable( "typename-to-typeid" )
-    public Integer getTypeIdForTypeName ( String typeName ) throws IOException {
+    public Integer getTypeIdForTypeName ( String typeName ) throws IOException, TypeIdNotFoundException
+    {
         Integer result = -1;
         FuzzySteveTypeResponse response = this.client.getTypeIdForTypeName( typeName )
                                                      .execute()
@@ -62,6 +64,9 @@ public class FuzzySteveService implements /*BuildRequirementsProvider,*/ CostInd
 
         if ( !"bad item".equals( response.getTypeName() ) ) {
             result = response.getTypeID();
+        }
+        else {
+            throw new TypeIdNotFoundException(typeName, "Type ID Not found");
         }
 
         return result;

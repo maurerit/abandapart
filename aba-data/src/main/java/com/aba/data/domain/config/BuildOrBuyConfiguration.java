@@ -10,19 +10,36 @@
 
 package com.aba.data.domain.config;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table( name = "build_or_buy_config" )
-@Data
+@Getter
+@ToString
+@EqualsAndHashCode
 public class BuildOrBuyConfiguration {
-    private Long       typeId;
+    @JsonProperty
+    private Integer    typeId;
+    @JsonProperty
     private BuildOrBuy buildOrBuy;
 
-    public static enum BuildOrBuy {
+    public BuildOrBuyConfiguration ( ) {
+    }
+
+    public BuildOrBuyConfiguration ( Integer typeId,
+                                     BuildOrBuy buildOrBuy )
+    {
+        this.typeId = typeId;
+        this.buildOrBuy = buildOrBuy;
+    }
+
+    public enum BuildOrBuy {
         BUILD,
         BUY
     }
