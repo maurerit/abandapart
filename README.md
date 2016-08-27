@@ -2,6 +2,11 @@ ABA Industry bits and bobs
 ==========================
 
 #### Branch Status' ####
+## Code Health ##
+`Develop`
+[![codebeat badge](https://codebeat.co/badges/bcebeddc-8710-44c8-b44a-8a602f4095a9)](https://codebeat.co/projects/github-com-maurerit-abandapart)
+
+## Build Information ##
 `Develop`
 
 [![Build Status](https://travis-ci.org/maurerit/abandapart.svg?branch=develop)](https://travis-ci.org/maurerit/abandapart) [![Coverage Status](https://coveralls.io/repos/github/maurerit/abandapart/badge.svg?branch=develop)](https://coveralls.io/github/maurerit/abandapart?branch=develop)
