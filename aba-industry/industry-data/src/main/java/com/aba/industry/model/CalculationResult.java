@@ -32,9 +32,11 @@ public abstract class CalculationResult {
     @JsonProperty
     private Double installationTax  = 0d;
     @JsonProperty
-    private Long                           seconds;
+    private Long seconds;
     @JsonProperty
     private Double salaryCost = 0d;
+    @JsonProperty
+    private Integer batchSize = 1;
 
     @JsonProperty
     public Double getTotalCost ( ) {
@@ -43,9 +45,9 @@ public abstract class CalculationResult {
         //Installation fees and tax have the potential to be null as not all producers listen to the fact that
         //all costs will be handled by the corp (so they're working at a reduced rate due to this and should
         //be guided that their isk is not needed in this process and the corp will indeed cover these costs).
-        result += installationFees != null ? installationFees : 0d;
-        result += installationTax != null ? installationTax : 0d;
-        result += salaryCost != null ? salaryCost : 0d;
+        result += installationFees != null ? installationFees / batchSize : 0d;
+        result += installationTax != null ? installationTax / batchSize : 0d;
+        result += salaryCost != null ? salaryCost / batchSize : 0d;
         result += getTotalCostInternal();
 
         return result;

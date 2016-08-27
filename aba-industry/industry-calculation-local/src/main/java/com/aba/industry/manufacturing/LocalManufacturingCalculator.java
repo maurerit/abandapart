@@ -42,6 +42,8 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
     {
         BuildCalculationResult result = new BuildCalculationResult();
         result.setSkillConfiguration( industrySkills );
+        result.setBatchSize( bpData.getBlueprintDetails()
+                                   .getProductQuantity() );
 
     	/*
          * for (materialid in blueprintData['activityMaterials'][1]) {
