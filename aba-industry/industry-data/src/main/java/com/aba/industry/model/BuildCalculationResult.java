@@ -65,14 +65,14 @@ public class BuildCalculationResult extends CalculationResult {
     {
         Double result = 0d;
 
-        result += materialCost;
+        result += materialCost / getBatchSize();
         result += inventionResult != null ? inventionResult.getTotalCost() : 0d;
         result += toBuildLocationFreight != null && toBuildLocationFreight.get(
                 JITA.getSystemName() ) != null ? toBuildLocationFreight.get( JITA.getSystemName() )
-                                                                       .getCharge() : 0d;
+                                                                       .getCharge() / getBatchSize() : 0d;
         result += fromBuildLocationFreight != null && fromBuildLocationFreight.get(
                 JITA.getSystemName() ) != null ? fromBuildLocationFreight.get( JITA.getSystemName() )
-                                                                         .getCharge() : 0d;
+                                                                         .getCharge() / getBatchSize() : 0d;
 
         return result;
     }
