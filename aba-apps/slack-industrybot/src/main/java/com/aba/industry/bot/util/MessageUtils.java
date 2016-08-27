@@ -78,10 +78,10 @@ public class MessageUtils {
             {
                 message.append( "\n    Installation: " )
                        .append( format.format( result.getInventionResult()
-                                                     .getInstallationFees() ) )
+                                                     .getInstallationFees() / result.getBatchSize() ) )
                        .append( "\n    Installation Tax: " )
                        .append( format.format( result.getInventionResult()
-                                                     .getInstallationTax() ) );
+                                                     .getInstallationTax() / result.getBatchSize() ) );
             }
 
             if ( result.getInventionResult()
@@ -89,7 +89,7 @@ public class MessageUtils {
             {
                 message.append( "\n    Salary: " )
                        .append( format.format( result.getInventionResult()
-                                                     .getSalaryCost() ) );
+                                                     .getSalaryCost() / result.getBatchSize() ) );
             }
 
             message.append( "\n" );
@@ -108,13 +108,13 @@ public class MessageUtils {
         }
         if ( result.getInstallationFees() > 0 ) {
             message.append( "\n    Installation: " )
-                   .append( format.format( result.getInstallationFees() ) )
+                   .append( format.format( result.getInstallationFees() / result.getBatchSize() ) )
                    .append( "\n    Installation Tax: " )
-                   .append( format.format( result.getInstallationTax() ) );
+                   .append( format.format( result.getInstallationTax() / result.getBatchSize() ) );
         }
         if ( result.getSalaryCost() > 0 ) {
             message.append( "\n    Salary: " )
-                   .append( format.format( result.getSalaryCost() ) );
+                   .append( format.format( result.getSalaryCost() / result.getBatchSize() ) );
         }
         //endregion
 
@@ -134,7 +134,7 @@ public class MessageUtils {
                        .append( entry.getKey() )
                        .append( ": " )
                        .append( format.format( entry.getValue()
-                                                    .getCharge() ) );
+                                                    .getCharge() / result.getBatchSize() ) );
             }
         }
         if ( result.getFromBuildLocationFreight() != null && result.getFromBuildLocationFreight()
@@ -151,7 +151,7 @@ public class MessageUtils {
                        .append( entry.getKey() )
                        .append( ": " )
                        .append( format.format( entry.getValue()
-                                                    .getCharge() ) );
+                                                    .getCharge() / result.getBatchSize() ) );
             }
         }
         //endregion

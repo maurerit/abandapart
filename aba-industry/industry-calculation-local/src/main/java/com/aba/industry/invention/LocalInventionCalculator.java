@@ -46,6 +46,8 @@ public class LocalInventionCalculator implements InventionCalculator {
         InventionCalculationResult result = fillInResultDetails( bpData, decryptor, inventionMaterials,
                                                                  skillConfiguration,
                                                                  bpDetails );
+        result.setBatchSize( bpData.getBlueprintDetails()
+                                   .getProductQuantity() );
 
         Double decryptorMultiplier = decryptor != null ? decryptor.getMultiplier() : 1;
         Double taxMultiplier = ( taxRate / 100 ) + 1;
