@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +38,6 @@ public class CrestMarketOrderFetcherUnitTests {
     @Mock
     private CrestService               crestService;
     private List<CrestMarketOrder>     sleipnirData;
-    private List<CrestMarketBulkOrder> allOrders;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
@@ -47,15 +45,10 @@ public class CrestMarketOrderFetcherUnitTests {
     {
         InputStream sleipnirDataIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
                 "/CrestMarketWithDataForSleipnirs.json" );
-        InputStream allMarketData = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
-                "/CrestMarketAlotOfOrders.json" );
 
         TypeFactory typeFactory = mapper.getTypeFactory();
         CollectionType marketOrderType = typeFactory.constructCollectionType( List.class, CrestMarketOrder.class );
-        CollectionType marketBulkOrderType = typeFactory.constructCollectionType( List.class,
-                                                                                  CrestMarketBulkOrder.class );
         sleipnirData = mapper.readValue( sleipnirDataIS, marketOrderType );
-        allOrders = mapper.readValue( allMarketData, marketBulkOrderType );
     }
 
     @Test
