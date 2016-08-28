@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.devfleet.crest.model.CrestMarketPrice;
 import org.junit.Assert;
@@ -37,7 +36,6 @@ import java.util.List;
 @RunWith( MockitoJUnitRunner.class )
 public class CrestMarketPriceFetcherUnitTests {
     private List<CrestMarketOrder>     sleipnirData;
-    private List<CrestMarketBulkOrder> allOrders;
     private List<CrestMarketPrice>     prices;
     @InjectMocks
     private CrestMarketPriceFetcher    marketPriceFetcher;
@@ -51,18 +49,13 @@ public class CrestMarketPriceFetcherUnitTests {
     public void setup ( ) throws IOException {
         InputStream sleipnirDataIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
                 "/CrestMarketWithDataForSleipnirs.json" );
-        InputStream allMarketDataIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
-                "/CrestMarketAlotOfOrders.json" );
         InputStream marketPricesIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
                 "/MarketPricesWithSleipnirInIt.json" );
 
         TypeFactory typeFactory = mapper.getTypeFactory();
         CollectionType marketOrderType = typeFactory.constructCollectionType( List.class, CrestMarketOrder.class );
-        CollectionType marketBulkOrderType = typeFactory.constructCollectionType( List.class,
-                                                                                  CrestMarketBulkOrder.class );
         CollectionType marketPricesType = typeFactory.constructCollectionType( List.class, CrestMarketPrice.class );
         sleipnirData = mapper.readValue( sleipnirDataIS, marketOrderType );
-        allOrders = mapper.readValue( allMarketDataIS, marketBulkOrderType );
 
         prices = mapper.readValue( marketPricesIS, marketPricesType );
     }
