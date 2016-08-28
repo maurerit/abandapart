@@ -13,11 +13,11 @@ package com.aba.industry.worker;
 import com.aba.data.domain.config.BuildOrBuyConfiguration;
 import com.aba.eveonline.repo.RegionRepository;
 import com.aba.eveonline.repo.SolarSystemRepository;
-import com.aba.industry.TradeHubs;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.model.BuildCalculationRequest;
 import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.service.IndustryCalculationService;
+import com.aba.market.TradeHubs;
 import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,6 +73,9 @@ public class IndustryCalculationWorker implements Runnable {
         hubs = new ArrayList<>();
 
         for ( TradeHubs hub : TradeHubs.values() ) {
+            if ( hub == TradeHubs.NULL ) {
+                continue;
+            }
             SolarSystemInformation info = new SolarSystemInformation();
 
             info.setSystemName( hub.getSystemName() );
