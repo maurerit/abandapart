@@ -29,6 +29,7 @@
         <module>industry-calculator-router</module>
         <module>historical-accumulator</module>
         <module>slack-industrybot</module>
+        <module>auto-build-checker</module>
     </modules>
 
     <dependencies>
