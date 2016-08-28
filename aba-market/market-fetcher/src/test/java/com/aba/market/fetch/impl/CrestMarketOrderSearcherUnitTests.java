@@ -35,12 +35,12 @@ import java.util.List;
 @RunWith( MockitoJUnitRunner.class )
 public class CrestMarketOrderSearcherUnitTests {
     @InjectMocks
-    CrestMarketOrderSearcher crestuMarketOrderSearcher;
+    private CrestMarketOrderSearcher crestuMarketOrderSearcher;
     @Mock
-    MarketOrderFetcher       marketOrderFetcher;
+    private MarketOrderFetcher       marketOrderFetcher;
 
-    List<CrestMarketOrder>     sleipnirData;
-    List<CrestMarketBulkOrder> allOrders;
+    private List<CrestMarketOrder>     sleipnirData;
+    private List<CrestMarketBulkOrder> allOrders;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
