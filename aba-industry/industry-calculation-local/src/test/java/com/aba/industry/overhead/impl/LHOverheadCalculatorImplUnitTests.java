@@ -19,8 +19,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.aba.industry.TradeHubs.AMARR;
-import static com.aba.industry.TradeHubs.JITA;
+import static com.aba.market.TradeHubs.AMARR;
+import static com.aba.market.TradeHubs.JITA;
 
 /**
  * Created by maurerit on 7/25/2016.

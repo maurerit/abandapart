@@ -10,7 +10,6 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
@@ -22,8 +21,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.OptionalDouble;
-import java.util.stream.Collectors;
 
 /**
  * Created by maurerit on 7/26/2016.
@@ -36,76 +33,18 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     private CrestService crestService;
 
     @Override
+    @Cacheable( "crest-sell-orders" )
     public List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId )
     {
+        logger.debug( "fetching sell prices in region: {}, for item: {}", regionId, itemId );
         return crestService.getMarketOrders( regionId, "sell", itemId );
     }
 
     @Override
+    @Cacheable( "crest-buy-orders" )
     public List<CrestMarketOrder> getMarketBuyOrders ( long regionId, long itemId ) {
+        logger.debug( "fetching buy prices in region: {}, for item: {}", regionId, itemId );
         return crestService.getMarketOrders( regionId, "buy", itemId );
-    }
-
-    @Override
-    @Cacheable( "lowest-sell-price" )
-    public Double getLowestSellPrice ( long regionId, long systemId, long itemId )
-    {
-        Double result = null;
-
-        //Used in the below lambda, needs to be final
-        final Long hubIdToFind = getHubStationIdToUse( systemId );
-
-        List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
-
-        OptionalDouble price = sellOrders.stream()
-                                         .filter( order -> order.getLocationId() == hubIdToFind )
-                                         .mapToDouble( order -> order.getPrice() )
-                                         .findFirst();
-
-        if ( price.isPresent() ) {
-            result = price.getAsDouble();
-        }
-
-        return result;
-    }
-
-    @Override
-    @Cacheable( "price-for-quantity" )
-    public Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity )
-    {
-        logger.debug( "fetching price for quantity in region: {}, system: {}, for item: {} and quantity: {}", regionId,
-                      systemId, itemId, quantity );
-        Double result = 0d;
-
-        //TODO: For now I'm concerned with sell orders and from Amarr and Jita.
-        final long hubIdToFind = getHubStationIdToUse( systemId );
-
-        List<CrestMarketOrder> sellOrders = getMarketSellOrders( regionId, itemId );
-
-        List<CrestMarketOrder> filteredSellOrders = sellOrders.stream()
-                                                              .filter(
-                                                                      order -> order.getLocationId() ==
-                                                                              hubIdToFind && order.getTypeId() ==
-                                                                              itemId )
-                                                              .sorted( new CrestMarketOrderPriceAscendingComparator() )
-                                                              .collect( Collectors.toList() );
-
-        int totalFound = 0;
-        double totalPrice = 0d;
-
-        for ( CrestMarketOrder crestMarketOrder : filteredSellOrders ) {
-            if ( quantity > totalFound ) {
-                totalFound += crestMarketOrder.getVolume();
-                totalPrice += crestMarketOrder.getVolume() * crestMarketOrder.getPrice();
-            }
-            else if ( quantity <= totalFound ) {
-                break;
-            }
-        }
-
-        result = totalPrice / totalFound;
-
-        return result;
     }
 
     //TODO: Figure out how to properly uncomment and utilize the below commented out method.  Initial tests do not
@@ -120,16 +59,4 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
 //    public List<CrestMarketBulkOrder> getAllMarketOrders ( long regionId ) {
 //        return crestService.getAllMarketOrders( regionId );
 //    }
-
-    private Long getHubStationIdToUse ( long systemId )
-    {
-        //TODO: For now, use Jita and AMARR hard coded ids
-        Long jitaId = 30000142l;
-        Long amarrId = 30002187l;
-        //TODO: For now, I'm concerned with Amarr and Jita, hard coding the hub stations id's
-        Long jitaFourMoonFourId = 60003760l;
-        Long amarrEightId = 60008494l;
-        return systemId == jitaId ? jitaFourMoonFourId :
-                amarrEightId;
-    }
 }

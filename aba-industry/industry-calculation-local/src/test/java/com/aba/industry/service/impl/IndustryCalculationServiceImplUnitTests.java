@@ -29,6 +29,7 @@ import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.IndustryCalculationService;
 import com.aba.industry.service.LocalIndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketOrderSearcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
@@ -48,8 +49,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.aba.industry.TradeHubs.AMARR;
-import static com.aba.industry.TradeHubs.JITA;
+import static com.aba.market.TradeHubs.AMARR;
+import static com.aba.market.TradeHubs.JITA;
 
 @RunWith( MockitoJUnitRunner.class )
 public class IndustryCalculationServiceImplUnitTests {
@@ -69,6 +70,8 @@ public class IndustryCalculationServiceImplUnitTests {
     RegionRepository             regionRepository;
     @Mock
     MarketOrderFetcher           marketOrderFetcher;
+    @Mock
+    MarketOrderSearcher          marketOrderSearcher;
     @Mock
     MarketPriceFetcher           marketPriceFetcher;
     @Mock
@@ -200,9 +203,9 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( amarrFreightDetails );
         //endregion
         //region Market Fetcher mocks
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
         //endregion
         //region Crest Endpoint Mocks

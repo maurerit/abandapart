@@ -10,10 +10,10 @@
 
 package com.aba.market.fetch.impl;
 
+import com.aba.market.fetch.MarketOrderFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.junit.Assert;
@@ -30,14 +30,15 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by maurerit on 7/27/2016.
+ * Created by maurerit on 8/27/16.
  */
 @RunWith( MockitoJUnitRunner.class )
-public class CrestMarketOrderFetcherUnitTests {
+public class CrestMarketOrderSearcherUnitTests {
     @InjectMocks
-    CrestMarketOrderFetcher crestMarketOrderFetcher;
+    CrestMarketOrderSearcher crestuMarketOrderSearcher;
     @Mock
-    CrestService            crestService;
+    MarketOrderFetcher       marketOrderFetcher;
+
     List<CrestMarketOrder>     sleipnirData;
     List<CrestMarketBulkOrder> allOrders;
     private ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +47,7 @@ public class CrestMarketOrderFetcherUnitTests {
     public void setupData ( ) throws IOException
     {
         InputStream sleipnirDataIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
-                "/CrestMarketWithDataForSleipnirs.json" );
+                "/CrestMarketForTestPriceForQuantity.json" );
         InputStream allMarketData = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
                 "/CrestMarketAlotOfOrders.json" );
 
@@ -58,34 +59,15 @@ public class CrestMarketOrderFetcherUnitTests {
         allOrders = mapper.readValue( allMarketData, marketBulkOrderType );
     }
 
-    @Test
-    public void testGetMarketSellOrdersReturnsSleipnirData ( ) {
-        Mockito.when( crestService.getMarketOrders( 0l, "sell", 0l ) )
-               .thenReturn( sleipnirData );
-
-        List<CrestMarketOrder> orders = crestMarketOrderFetcher.getMarketSellOrders( 0l, 0l );
-
-        Assert.assertEquals( sleipnirData, orders );
-    }
 
     @Test
-    public void testGetMarketBuyOrdersReturnsSleipnirData ( ) {
-        Mockito.when( crestService.getMarketOrders( 0l, "buy", 0l ) )
+    public void testPriceForQuantity ( ) throws IOException
+    {
+        Mockito.when( marketOrderFetcher.getMarketSellOrders( 0L, 22444 ) )
                .thenReturn( sleipnirData );
 
-        List<CrestMarketOrder> orders = crestMarketOrderFetcher.getMarketBuyOrders( 0l, 0l );
+        Double priceForQuantity = crestuMarketOrderSearcher.getPriceForQuantity( 0L, 0L, 22444, 3 );
 
-        Assert.assertEquals( sleipnirData, orders );
+        Assert.assertEquals( 347988897.55, priceForQuantity, 0.01 );
     }
-
-//    @Test
-//    public void testLotsOfOrders ( ) throws IOException
-//    {
-//        Mockito.when( crestService.getAllMarketOrders( 0l ) )
-//               .thenReturn( allOrders );
-//
-//        List<CrestMarketBulkOrder> retrievedOrders = crestService.getAllMarketOrders( 0l );
-//
-//        Assert.assertFalse( retrievedOrders.isEmpty() );
-//    }
 }

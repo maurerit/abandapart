@@ -67,6 +67,34 @@
            timeToLiveSeconds="250"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <!-- market-fetcher -->
+    <cache name="crest-buy-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
     </cache>
 
     <cache name="lowest-sell-price"
@@ -135,4 +163,21 @@
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
     </cache>
+
+    <!--
+    This configuration works from mac to pi but not pi to mac... must be something in the mac that isn't REALLY
+    listening to multicast... not sure
+    -->
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+                        multicastGroupPort=4446, timeToLive=32"/>
+    <!-- Tested and working KNOWN PEER replication -->
+    <!--<cacheManagerPeerProviderFactory-->
+    <!--class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"-->
+    <!--properties="peerDiscovery=manual, rmiUrls=//192.168.1.102:4000/crest-buy-orders|//192.168.1.102:4000/crest-sell-orders" />-->
+
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="port=4000, socketTimeoutMillis=2000"/>
 </ehcache>

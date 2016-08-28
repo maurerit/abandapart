@@ -106,11 +106,7 @@ public class IndustryRouter implements Runnable {
                 backend.sendMore( "" );
                 backend.send( request );
                 messageCount++;
-
-                if ( messageCount % 1000 == 1 ) {
-                    logger.info( "Broker passed: {} messages.", messageCount );
-                }
-
+                logger.info( "Broker passed: {} messages.", messageCount );
             }
         }
 
