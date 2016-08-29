@@ -62,7 +62,7 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
             materialReduced.setCost( material.getCost() );
             materialReduced.setAdjustedCost( material.getAdjustedCost() );
             materialReduced.setName( material.getName() );
-            materialReduced.setQuantity( Math.round( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )
+            materialReduced.setQuantity( (long)Math.ceil( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )
                                                      /* * facility.getFacilityMe()*/ ) );
             materialReduced.setSource( material.getSource() );
             materialReduced.setTypeId( material.getTypeId() );
