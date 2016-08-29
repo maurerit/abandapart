@@ -1,0 +1,32 @@
+[
+  {
+    "adjustedPrice": 178289309.01,
+    "averagePrice": 338838315.79,
+    "type": {
+      "id_str": "22444",
+      "href": "https://crest-tq.eveonline.com/inventory/types/22444/",
+      "id": 22444,
+      "name": "Sleipnir"
+    }
+  },
+  {
+    "adjustedPrice": 198468538.03,
+    "averagePrice": 344237452.63,
+    "type": {
+      "id_str": "22446",
+      "href": "https://crest-tq.eveonline.com/inventory/types/22446/",
+      "id": 22446,
+      "name": "Vulture"
+    }
+  },
+  {
+    "adjustedPrice": 119677579.51,
+    "averagePrice": 337219677.92,
+    "type": {
+      "id_str": "22448",
+      "href": "https://crest-tq.eveonline.com/inventory/types/22448/",
+      "id": 22448,
+      "name": "Absolution"
+    }
+  }
+]

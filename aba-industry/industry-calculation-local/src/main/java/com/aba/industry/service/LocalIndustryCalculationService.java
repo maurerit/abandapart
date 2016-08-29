@@ -26,6 +26,7 @@ import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketOrderSearcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -35,8 +36,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-import static com.aba.industry.TradeHubs.AMARR;
-import static com.aba.industry.TradeHubs.JITA;
+import static com.aba.market.TradeHubs.AMARR;
+import static com.aba.market.TradeHubs.JITA;
 
 @Service
 @Setter
@@ -67,6 +68,9 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
 
     @Autowired
     private MarketOrderFetcher marketOrderFetcher;
+
+    @Autowired
+    private MarketOrderSearcher marketOrderSearcher;
 
     @Autowired
     private MarketPriceFetcher marketPriceFetcher;
@@ -263,11 +267,11 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
             long amarrId = solarSystemRepository.getSolarSystemId( AMARR.getSystemName() );
 
-            Double jitaLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
+            Double jitaLowestSell = marketPriceFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
                                                                            jitaId,
                                                                            result.getProductId() );
 
-            Double amarrLowestSell = marketOrderFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
+            Double amarrLowestSell = marketPriceFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
                                                                             amarrId,
                                                                             result.getProductId() );
             //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
@@ -335,7 +339,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         long itemId = am.getTypeId();
         long quantity = am.getQuantity();
 
-        Double cost = marketOrderFetcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
+        Double cost = marketOrderSearcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
         Double adjustedCost = marketPriceFetcher.getAdjustedPrice( itemId );
         CostSource source = CostSource.LIVE_MARKET_SELL;
 

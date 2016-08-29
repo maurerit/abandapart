@@ -10,15 +10,20 @@
 
 package com.aba.market.fetch;
 
-import org.devfleet.crest.model.CrestMarketOrder;
-
-import java.util.List;
-
 /**
- * Created by maurerit on 7/25/16.
+ * Created by maurerit on 8/27/16.
  */
-public interface MarketOrderFetcher {
-    List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId );
-
-    List<CrestMarketOrder> getMarketBuyOrders ( long regionId, long itemId );
+//TODO: Find a better name for this.  Its a fetcher but it does something above and beyond JUST fetching
+public interface MarketOrderSearcher {
+    /**
+     * Implementations of this method will inspect the market and report the amount per item that is need to purchase
+     * the number specified by the {@param quantity} parameter.
+     *
+     * @param regionId
+     * @param systemId
+     * @param itemId
+     * @param quantity
+     * @return
+     */
+    Double getPriceForQuantity ( long regionId, long systemId, long itemId, long quantity );
 }
