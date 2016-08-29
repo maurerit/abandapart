@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.aba.industry.TradeHubs.JITA;
+import static com.aba.market.TradeHubs.JITA;
 
 @Data
 @EqualsAndHashCode( callSuper = true )

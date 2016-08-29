@@ -10,9 +10,12 @@
 
 package com.aba.market.fetch.impl;
 
+import com.aba.market.TradeHubs;
+import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
+import org.devfleet.crest.model.CrestMarketOrder;
 import org.devfleet.crest.model.CrestMarketPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,6 +32,33 @@ import java.util.OptionalDouble;
 public class CrestMarketPriceFetcher implements MarketPriceFetcher {
     @Autowired
     private CrestService crestService;
+
+    @Autowired
+    private MarketOrderFetcher marketOrderFetcher;
+
+    @Override
+    @Cacheable( "lowest-sell-price" )
+    public Double getLowestSellPrice ( long regionId, long systemId, long itemId )
+    {
+        Double result = null;
+
+        //Used in the below lambda, needs to be final
+        final Long hubIdToFind = TradeHubs.findBySystemId( systemId )
+                                          .getStationId();
+
+        List<CrestMarketOrder> sellOrders = marketOrderFetcher.getMarketSellOrders( regionId, itemId );
+
+        OptionalDouble price = sellOrders.stream()
+                                         .filter( order -> order.getLocationId() == hubIdToFind )
+                                         .mapToDouble( order -> order.getPrice() )
+                                         .findFirst();
+
+        if ( price.isPresent() ) {
+            result = price.getAsDouble();
+        }
+
+        return result;
+    }
 
     @Override
     @Cacheable( "adjusted-price" )

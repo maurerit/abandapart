@@ -33,14 +33,20 @@
             <artifactId>converter-jackson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-context-support</artifactId>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>org.ehcache</groupId>-->
+        <!--<artifactId>jcache</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>jcache</artifactId>
+            <groupId>com.abandapart</groupId>
+            <artifactId>market-common</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>
