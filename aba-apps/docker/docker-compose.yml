@@ -1,0 +1,7 @@
+industry-router:
+  container_name: industry-router
+  image: industry-calculator-router
+industry-worker:
+  image: industry-calculator-worker
+  links:
+    - industry-router
