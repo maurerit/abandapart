@@ -80,7 +80,7 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
 
         //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)
         // /100))*facilityte[facility]*runs*dcmultiplier;
-        Long buildTime = Math.round( bpData.getBlueprintDetails()
+        Long buildTime = (long)Math.ceil( bpData.getBlueprintDetails()
                                            .getTimesInSeconds()
                                            .get( IndustryActivities.MANUFACTURING.getActivityId() ) *
                                              ( 1 - ( teLevel.doubleValue() / 100d ) ) *
