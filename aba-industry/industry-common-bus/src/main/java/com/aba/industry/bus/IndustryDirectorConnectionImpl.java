@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Socket;
@@ -32,7 +31,7 @@ import javax.annotation.PreDestroy;
  *
  * @author Marq Aideron <marq.aideron@gmail.com>
  */
-@Component
+//@Component
 @ConfigurationProperties( "aba.industry.bus.director" )
 public class IndustryDirectorConnectionImpl implements IndustryDirectorConnection {
     private static final Logger       logger       = LoggerFactory.getLogger( IndustryDirectorConnection.class );

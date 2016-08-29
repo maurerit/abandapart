@@ -65,7 +65,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <imageName>${project.artifactId}</imageName>
-                    <dockerDirectory>docker</dockerDirectory>
+                    <baseImage>marqaideron/aba-apps-base</baseImage>
                     <entryPoint>["java", "-Xms256m", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
