@@ -18,6 +18,8 @@ import java.util.List;
  * Created by maurerit on 7/29/16.
  */
 public interface MarketPriceFetcher {
+    Double getLowestSellPrice ( long regionId, long systemId, long itemId );
+
     Double getAdjustedPrice ( long typeId );
 
     List<CrestMarketPrice> getAllMarketPrices ( );

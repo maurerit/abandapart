@@ -31,6 +31,7 @@ import com.aba.industry.overhead.LHLocalOverheadCalculator;
 import com.aba.industry.overhead.OverheadCalculator;
 import com.aba.industry.service.LocalIndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketOrderSearcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
@@ -52,8 +53,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.aba.industry.TradeHubs.AMARR;
-import static com.aba.industry.TradeHubs.JITA;
+import static com.aba.market.TradeHubs.AMARR;
+import static com.aba.market.TradeHubs.JITA;
 
 /**
  * Created by maurerit on 7/28/2016.
@@ -70,6 +71,8 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     RegionRepository             regionRepository;
     @Mock
     MarketOrderFetcher           marketOrderFetcher;
+    @Mock
+    MarketOrderSearcher          marketOrderSearcher;
     @Mock
     MarketPriceFetcher           marketPriceFetcher;
     @Mock
@@ -190,9 +193,9 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( this.costIndexes );
         //endregion
         //region Market Fetcher mocks
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
         //endregion
         //region Crest Endpoint Mocks
@@ -237,7 +240,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 309.19
   },
         */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 3812 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 3812 ) )
                .thenReturn( 141.87 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 3812 ) )
                .thenReturn( 0d );
@@ -251,7 +254,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 32.94
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 3814 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 3814 ) )
                .thenReturn( 34.3 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 3814 ) )
                .thenReturn( 0d );
@@ -265,7 +268,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 11600.52
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 3828 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 3828 ) )
                .thenReturn( 21568d );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 3828 ) )
                .thenReturn( 0d );
@@ -279,7 +282,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 12734.16
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 9836 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 9836 ) )
                .thenReturn( 15519.89 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 9836 ) )
                .thenReturn( 4000.75 );
@@ -293,7 +296,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 10160.97
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11399 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11399 ) )
                .thenReturn( 12558.04 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11399 ) )
                .thenReturn( 4045.75 );
@@ -307,7 +310,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 516.32
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11461 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11461 ) )
                .thenReturn( 389.56 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11461 ) )
                .thenReturn( 1315.61 );
@@ -321,7 +324,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 257.17
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11478 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11478 ) )
                .thenReturn( 596.8 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11478 ) )
                .thenReturn( 258.71 );
@@ -335,7 +338,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 39040.3
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11530 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11530 ) )
                .thenReturn( 59498.00 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11530 ) )
                .thenReturn( 13173.3 );
@@ -349,7 +352,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 26292.95
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11536 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11536 ) )
                .thenReturn( 28796.99 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11536 ) )
                .thenReturn( 11086.65 );
@@ -363,7 +366,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 38102.26
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11538 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11538 ) )
                .thenReturn( 39490.16 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11538 ) )
                .thenReturn( 26546.29 );
@@ -377,7 +380,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 10334.39
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11542 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11542 ) )
                .thenReturn( 9004.98 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11542 ) )
                .thenReturn( 4022d );
@@ -391,7 +394,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 124219.57
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11548 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11548 ) )
                .thenReturn( 117999.52 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11548 ) )
                .thenReturn( 19212.66 );
@@ -405,7 +408,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 37349.96
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11551 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11551 ) )
                .thenReturn( 37498.86 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 11551 ) )
                .thenReturn( 32909d );
@@ -419,7 +422,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 38550.94
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 11555 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 11555 ) )
                .thenReturn( 35300.00 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 35300 ) )
                .thenReturn( 9706.05 );
@@ -433,7 +436,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 108443.91
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 20172 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 20172 ) )
                .thenReturn( 99998.93 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 20172 ) )
                .thenReturn( 77837.65 );
@@ -447,7 +450,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 55965.93
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 20424 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 20424 ) )
                .thenReturn( 43609.7 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 20424 ) )
                .thenReturn( 61198.27 );
@@ -461,7 +464,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 56564037.86
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 24702 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 24702 ) )
                .thenReturn( 51178568.63 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 24702 ) )
                .thenReturn( 34529995.28 );
@@ -475,7 +478,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 323614.58
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34201 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34201 ) )
                .thenReturn( 388669.78 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34201 ) )
                .thenReturn( 0d );
@@ -489,7 +492,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 2020783.76
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34202 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34202 ) )
                .thenReturn( 2789999.98 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34202 ) )
                .thenReturn( 0d );
@@ -503,7 +506,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 870524.16
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34203 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34203 ) )
                .thenReturn( 818745.39 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34203 ) )
                .thenReturn( 0d );
@@ -517,7 +520,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 910288.93
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34204 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34204 ) )
                .thenReturn( 969103d );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34204 ) )
                .thenReturn( 0d );
@@ -531,7 +534,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 225192.06
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34205 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34205 ) )
                .thenReturn( 440005d );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34205 ) )
                .thenReturn( 0d );
@@ -545,7 +548,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 302613.4
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34206 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34206 ) )
                .thenReturn( 269251.17 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34206 ) )
                .thenReturn( 0d );
@@ -559,7 +562,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 3249111.93
   },
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34207 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34207 ) )
                .thenReturn( 3998918.7 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34207 ) )
                .thenReturn( 0d );
@@ -573,7 +576,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
     "average": 4436939.26
   }
   */
-        Mockito.when( marketOrderFetcher.getLowestSellPrice( 20, 1L, 34208 ) )
+        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 34208 ) )
                .thenReturn( 4710999.92 );
         Mockito.when( marketPriceFetcher.getAdjustedPrice( 34208 ) )
                .thenReturn( 0d );
