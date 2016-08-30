@@ -22,7 +22,6 @@ import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -36,7 +35,7 @@ import java.util.Set;
 /**
  * Created by maurerit on 8/23/16.
  */
-@Configuration
+//@Configuration
 @EnableConfigurationProperties( { MongoProperties.class, EmbeddedMongoProperties.class } )
 public class EmbeddedMongoConfiguration {
     private static final byte[] IP4_LOOPBACK_ADDRESS = { 127, 0, 0, 1 };
