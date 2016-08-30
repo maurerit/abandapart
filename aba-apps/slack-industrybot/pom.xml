@@ -43,10 +43,10 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>de.flapdoodle.embed</groupId>-->
+        <!--<artifactId>de.flapdoodle.embed.mongo</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <repositories>
@@ -65,9 +65,6 @@
                     <imageName>${project.artifactId}</imageName>
                     <baseImage>marqaideron/aba-apps-base</baseImage>
                     <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    <volumes>
-                        <volume>/key</volume>
-                    </volumes>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

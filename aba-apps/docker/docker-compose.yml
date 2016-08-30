@@ -1,7 +1,22 @@
+mongodb:
+  container_name: mongodb
+  image: mongo
+  ports:
+    - "27017:27017"
 industry-router:
   container_name: industry-router
   image: industry-calculator-router
+  ports:
+    - "42001:42001"
 industry-worker:
   image: industry-calculator-worker
   links:
     - industry-router
+slackbot:
+  container_name: slackbot
+  image: slack-industrybot
+  links:
+    - industry-router
+    - mongodb
+  env_file:
+    - .env

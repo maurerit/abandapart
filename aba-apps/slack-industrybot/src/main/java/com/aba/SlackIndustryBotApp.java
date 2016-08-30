@@ -18,6 +18,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Arrays;
+
 /**
  * Created by maurerit on 8/7/16.
  */
@@ -26,7 +28,17 @@ import org.springframework.context.ApplicationContext;
 @EnableAutoConfiguration( exclude = { HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class } )
 public class SlackIndustryBotApp {
     public static void main ( String[] args ) {
-        ApplicationContext context = SpringApplication.run( SlackIndustryBotApp.class, args );
+
+        String authToken = System.getenv( "AUTH_TOKEN" );
+
+        if ( authToken == null || "".equalsIgnoreCase( authToken ) ) {
+            throw new RuntimeException( "AUTH_TOKEN environment variable can not be null" );
+        }
+
+        String[] newArgs = Arrays.copyOf( args, args.length + 1 );
+        newArgs[newArgs.length - 1] = "--aba.industry.bot.authToken=" + authToken;
+
+        ApplicationContext context = SpringApplication.run( SlackIndustryBotApp.class, newArgs );
         SlackIndustryBot bot = context.getBean( SlackIndustryBot.class );
 
         bot.run();

@@ -106,6 +106,14 @@
            timeToLiveSeconds="250"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
     </cache>
 
     <cache name="price-for-quantity"
@@ -117,6 +125,14 @@
            timeToLiveSeconds="250"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
     </cache>
 
     <cache name="adjusted-price"
@@ -128,6 +144,14 @@
            timeToLiveSeconds="250"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
     </cache>
 
     <cache name="all-market-prices"
