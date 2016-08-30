@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zeromq.ZMQ;
@@ -56,6 +57,11 @@ public class IndustryDirectorConnectionTests {
     private String receivePort;
     @Value( "${aba.industry.bus.director.publishPort}" )
     private String publishPort;
+
+    @Bean
+    public IndustryDirectorConnection industryDirectorConnection ( ) {
+        return new IndustryDirectorConnectionImpl();
+    }
 
     @Test
     public void testSendMessage ( ) throws IOException {
