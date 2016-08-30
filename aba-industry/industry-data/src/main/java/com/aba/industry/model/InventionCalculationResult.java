@@ -55,10 +55,10 @@ public class InventionCalculationResult extends CalculationResult {
     protected Double getTotalCostInternal ( ) {
         Double result = 0d;
 
-        result += ( super.getInstallationFees() / ( probability / 100 ) ) / getBatchSize();
-        result += ( super.getInstallationTax() / ( probability / 100 ) ) / getBatchSize();
-        result += ( blueprintCopyCost / ( probability / 100 ) ) / getBatchSize();
-        result += ( this.costPerSuccessfulInventionRun / this.resultingRuns ) / getBatchSize();
+        result += ( super.getInstallationFees() / ( probability / 100 ) ) / (getResultingRuns()*getBatchSize());
+        result += ( super.getInstallationTax() / ( probability / 100 ) ) / (getResultingRuns()*getBatchSize());
+        result += ( blueprintCopyCost / ( probability / 100 ) ) / (getResultingRuns()*getBatchSize());
+        result += ( this.costPerSuccessfulInventionRun / this.resultingRuns ) / (getResultingRuns()*getBatchSize());
 
         return result;
     }
