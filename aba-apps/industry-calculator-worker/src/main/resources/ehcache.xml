@@ -135,6 +135,25 @@
                 properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
     </cache>
 
+    <cache name="cost-indexes"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
     <cache name="adjusted-price"
            maxEntriesLocalHeap="500"
            maxEntriesLocalDisk="40000"
