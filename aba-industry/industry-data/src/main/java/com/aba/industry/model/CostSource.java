@@ -31,6 +31,10 @@ public enum CostSource {
      */
     NO_PRICE,
     /**
+     * The thingy was built
+     */
+    BUILT,
+    /**
      * Adjusted price from crest
      */
     LIVE_MARKET_ADJUSTED
