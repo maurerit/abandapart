@@ -3,6 +3,8 @@ mongodb:
   image: mongo
   ports:
     - "27017:27017"
+  volumes:
+    - ../../mongodb:/data/db
 industry-router:
   container_name: industry-router
   image: industry-calculator-router

@@ -47,6 +47,7 @@ public class FuzzySteveService implements /*BuildRequirementsProvider,*/ CostInd
     }
 
     @Override
+    @Cacheable( "cost-indexes" )
     public SystemCostIndexes getSystemCostIndexes ( String systemName ) throws IOException {
         return this.client.getSystemCostIndexes( systemName )
                           .execute()
