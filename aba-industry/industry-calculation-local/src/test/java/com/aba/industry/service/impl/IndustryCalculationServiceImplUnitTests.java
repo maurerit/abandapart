@@ -17,6 +17,7 @@ import com.aba.eveonline.repo.ItemTypeRepository;
 import com.aba.eveonline.repo.RegionRepository;
 import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.ItemCost;
+import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.config.OverheadConfigurationService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
@@ -55,29 +56,31 @@ import static com.aba.market.TradeHubs.JITA;
 @RunWith( MockitoJUnitRunner.class )
 public class IndustryCalculationServiceImplUnitTests {
     @Mock
-    BuildRequirementsProvider    buildRequirementsProvider;
+    private BuildOrBuyConfigurationService buildOrBuyConfigurationService;
     @Mock
-    CostIndexProvider            costIndexProvider;
+    private BuildRequirementsProvider      buildRequirementsProvider;
     @Mock
-    OverheadConfigurationService overheadConfigurationService;
+    private CostIndexProvider              costIndexProvider;
     @Mock
-    OverheadCalculator           overheadCalculator;
+    private OverheadConfigurationService   overheadConfigurationService;
     @Mock
-    InventionCalculator          inventionCalculator;
+    private OverheadCalculator             overheadCalculator;
     @Mock
-    ManufacturingCalculator      manufacturingCalculator;
+    private InventionCalculator            inventionCalculator;
     @Mock
-    RegionRepository             regionRepository;
+    private ManufacturingCalculator        manufacturingCalculator;
     @Mock
-    MarketOrderFetcher           marketOrderFetcher;
+    private RegionRepository               regionRepository;
     @Mock
-    MarketOrderSearcher          marketOrderSearcher;
+    private MarketOrderFetcher             marketOrderFetcher;
     @Mock
-    MarketPriceFetcher           marketPriceFetcher;
+    private MarketOrderSearcher            marketOrderSearcher;
     @Mock
-    private SolarSystemRepository solarSystemRepository;
+    private MarketPriceFetcher             marketPriceFetcher;
     @Mock
-    private ItemTypeRepository    itemTypeRepository;
+    private SolarSystemRepository          solarSystemRepository;
+    @Mock
+    private ItemTypeRepository             itemTypeRepository;
     private ObjectMapper mapper = new ObjectMapper();
     private MapType                     mapType;
     private Map<Integer, ItemCost>      itemCosts;
