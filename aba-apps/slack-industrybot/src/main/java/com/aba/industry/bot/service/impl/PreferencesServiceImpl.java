@@ -215,22 +215,29 @@ public class PreferencesServiceImpl implements PreferencesService {
 
         String[] segments = command.getInterestingSegments( event.getMessageContent() );
 
+        if ( segments[0].equalsIgnoreCase( "all" ) ) {
+            prefs.getBuildOrBuyConfigurations()
+                 .put( segments[0], new BuildOrBuyConfiguration( -1,
+                                                                 BuildOrBuyConfiguration.BuildOrBuy.valueOf(
+                                                                         segments[1].toUpperCase() ) ) );
+        }
+        else {
+            Integer typeId = null;
+            try {
+                typeId = typeIdProvider.getTypeIdForTypeName( segments[0] );
+            }
+            catch ( TypeIdNotFoundException e ) {
+                typeIdNotFoundResponder.reportError( session, event, e.getMessage(), e.getTypeName() );
+            }
+            catch ( IOException e ) {
+                throw new RuntimeException( e );
+            }
 
-        Integer typeId = null;
-        try {
-            typeId = typeIdProvider.getTypeIdForTypeName( segments[0] );
+            prefs.getBuildOrBuyConfigurations()
+                 .put( segments[0], new BuildOrBuyConfiguration( typeId,
+                                                                 BuildOrBuyConfiguration.BuildOrBuy.valueOf(
+                                                                         segments[1].toUpperCase() ) ) );
         }
-        catch ( TypeIdNotFoundException e ) {
-            typeIdNotFoundResponder.reportError( session, event, e.getMessage(), e.getTypeName() );
-        }
-        catch ( IOException e ) {
-            throw new RuntimeException( e );
-        }
-
-        prefs.getBuildOrBuyConfigurations()
-             .put( segments[0], new BuildOrBuyConfiguration( typeId,
-                                                             BuildOrBuyConfiguration.BuildOrBuy.valueOf(
-                                                                     segments[1].toUpperCase() ) ) );
 
         preferencesRepository.save( prefs );
     }
