@@ -22,7 +22,10 @@ import java.util.regex.Pattern;
 public enum PreferencesCommands {
     BUILT_VS_BOUGHT( "bvb", "bvb +([a-zA-Z0-9]+[a-zA-Z0-9 -]+) (build|buy)",
                      "To tell me to build Particle Accelerator Unit and not buy:\n" +
-                             "> bvb *Particle Accelerator Unit* *build*!\n", 1, 2 ),
+                             "> bvb *Particle Accelerator Unit* *build*!\n" +
+                             "I also have one 'special' item called all." +
+                             "This will inform me to build or buy ALL THE THINGS." +
+                             "Individual item configurations take precedents though.", 1, 2 ),
     SKILLS( "skill", "skill +([a-zA-Z0-9]+[a-zA-Z0-9 -]+) ([1-5])",
             "Skills are handled as generically as possible.\n" +
                     "This really only affects invention because I take all the\n" +

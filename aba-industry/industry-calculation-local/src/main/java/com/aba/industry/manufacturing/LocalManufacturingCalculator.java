@@ -62,7 +62,7 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
             materialReduced.setCost( material.getCost() );
             materialReduced.setAdjustedCost( material.getAdjustedCost() );
             materialReduced.setName( material.getName() );
-            materialReduced.setQuantity( Math.round( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )
+            materialReduced.setQuantity( (long)Math.ceil( material.getQuantity() * ( 1 - ( meLevel.doubleValue() / 100 ) )
                                                      /* * facility.getFacilityMe()*/ ) );
             materialReduced.setSource( material.getSource() );
             materialReduced.setTypeId( material.getTypeId() );
@@ -80,7 +80,7 @@ public class LocalManufacturingCalculator implements ManufacturingCalculator {
 
         //buildTime=blueprintData.blueprintDetails.times[1]*(1-(te/100))*(1-((industry*4)/100))*(1-((aindustry*3)
         // /100))*facilityte[facility]*runs*dcmultiplier;
-        Long buildTime = Math.round( bpData.getBlueprintDetails()
+        Long buildTime = (long)Math.ceil( bpData.getBlueprintDetails()
                                            .getTimesInSeconds()
                                            .get( IndustryActivities.MANUFACTURING.getActivityId() ) *
                                              ( 1 - ( teLevel.doubleValue() / 100d ) ) *

@@ -10,9 +10,9 @@
 
 package com.aba.industry.overhead;
 
-import com.aba.industry.TradeHubs;
 import com.aba.industry.model.FreightDetails;
 import com.aba.industry.model.IndustryActivities;
+import com.aba.market.TradeHubs;
 import org.springframework.stereotype.Service;
 
 @Service

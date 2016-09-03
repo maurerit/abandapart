@@ -50,6 +50,9 @@ public class MapBackedBuildOrBuyConfigurationService implements BuildOrBuyConfig
         if ( configurations.containsKey( typeId ) ) {
             result = configurations.get( typeId );
         }
+        else if ( configurations.containsKey( -1 ) ) {
+            result = configurations.get( -1 );
+        }
 
         return result;
     }
