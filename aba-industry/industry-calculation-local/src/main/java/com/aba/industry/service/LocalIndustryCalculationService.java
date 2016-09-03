@@ -35,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.aba.market.TradeHubs.AMARR;
 import static com.aba.market.TradeHubs.JITA;
@@ -168,7 +170,8 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
         long theForgeId = regionRepository.findRegionId( "The Forge" );
 
-        putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData );
+        List<BuildCalculationResult> childResults = putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData,
+                                                                               request );
 
         InventionCalculationResult inventionCalculationResult =
                 getInventionCalculationResult( request.getInventionSkills(), request.getDecryptor(), taxMultiplier,
@@ -204,25 +207,31 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
                             request.getSuppressFreight() );
 
         result.setBuildSystem( request.getSystemName() );
+        result.setChildBuilds( childResults );
 
         return result;
     }
 
     //TODO: Refactor this into a cost provider or something?
-    private void putCostsIntoBlueprintData ( long regionId, long systemId, BlueprintData blueprintData )
+    private List<BuildCalculationResult> putCostsIntoBlueprintData ( long regionId, long systemId,
+                                                                     BlueprintData blueprintData,
+                                                                     BuildCalculationRequest request ) throws
+            IOException
     {
+        List<BuildCalculationResult> results = new ArrayList<>();
+
         if ( blueprintData.getActivityMaterials()
                           .get( IndustryActivities.INVENTION.getActivityId() ) != null )
         {
             for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
                                                              .get( IndustryActivities.INVENTION.getActivityId() ) ) {
-                putCostsIntoMaterialCost( regionId, systemId, am );
+                putCostsIntoMaterialCost( regionId, systemId, am, null );
             }
         }
 
         for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
                                                          .get( IndustryActivities.MANUFACTURING.getActivityId() ) ) {
-            putCostsIntoMaterialCost( regionId, systemId, am );
+            results.add( putCostsIntoMaterialCost( regionId, systemId, am, request ) );
         }
 
         if ( blueprintData.getBlueprintDetails()
@@ -233,6 +242,8 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             blueprintData.getBlueprintDetails()
                          .setPrecursorAdjustedPrice( marketPriceFetcher.getAdjustedPrice( precursorTypeId ) );
         }
+
+        return results;
     }
 
     private InventionCalculationResult getInventionCalculationResult (
@@ -334,14 +345,37 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         //endregion
     }
 
-    private void putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am )
+    private BuildCalculationResult putCostsIntoMaterialCost ( long regionId, long systemId, ActivityMaterialWithCost am,
+                                                              BuildCalculationRequest request ) throws IOException
     {
-        long itemId = am.getTypeId();
+        BuildCalculationResult result = null;
+
+        Integer itemId = am.getTypeId();
         long quantity = am.getQuantity();
 
-        Double cost = marketOrderSearcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
+        BuildOrBuyConfiguration configuration = buildOrBuyService.findByTypeId( -1 );
+
+        if ( configuration != null && configuration.getBuildOrBuy() == BuildOrBuyConfiguration.BuildOrBuy.BUILD ) {
+            BuildCalculationRequest newRequest = request.copy();
+            newRequest.setRequestedBuildTypeId( itemId );
+            newRequest.setRequestedBuildTypeName( am.getName() );
+
+            result = this.calculateBuild( newRequest );
+        }
+
+        Double cost = null;
+        CostSource source = null;
+
+        if ( result != null ) {
+            cost = result.getTotalCost();
+            source = CostSource.BUILT;
+        }
+        else {
+            cost = marketOrderSearcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
+            source = CostSource.LIVE_MARKET_SELL;
+        }
+
         Double adjustedCost = marketPriceFetcher.getAdjustedPrice( itemId );
-        CostSource source = CostSource.LIVE_MARKET_SELL;
 
         if ( adjustedCost == null || adjustedCost.equals( Double.NaN ) || adjustedCost.equals(
                 Double.NEGATIVE_INFINITY ) ||
@@ -366,5 +400,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         am.setSource( source );
         am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
                                       .getName() );
+
+        return result;
     }
 }
