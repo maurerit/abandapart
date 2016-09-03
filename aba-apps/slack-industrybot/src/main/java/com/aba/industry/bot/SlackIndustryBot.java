@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 /**
  * Created by maurerit on 8/7/16.
@@ -123,6 +124,17 @@ public class SlackIndustryBot implements Runnable {
         request.setSuppressSalary( prefs.getSuppressSalary() );
         request.setSuppressFreight( prefs.getSuppressFreight() );
         request.setSuppressInstallation( prefs.getSuppressInstallation() );
+
+        request.setBuildOrBuyConfigurationList( prefs.getBuildOrBuyConfigurations()
+                                                     .entrySet()
+                                                     .stream()
+                                                     .map( entry -> entry.getValue() )
+                                                     .collect(
+                                                             Collectors.toList() ) );
+        request.setUseBuildOrBuyConfigurations(
+                request.getBuildOrBuyConfigurationList() != null && request.getBuildOrBuyConfigurationList()
+                                                                           .size() > 0 );
+
         //FIXME: #29
         request.setMeLevel( 10 );
         request.setTeLevel( 20 );
@@ -172,11 +184,11 @@ public class SlackIndustryBot implements Runnable {
                           .append(
                                   "\nI understand the following commands.  Bolded segments are things that can vary " +
                                           "from request to request.\n" );
-                        sb.append("Calculation:\n");
+                        sb.append( "Calculation:\n" );
                         for ( CalculateCommands currentCommand : CalculateCommands.values() ) {
                             sb.append( currentCommand.getHelpText() );
                         }
-                        sb.append("\nPreferences:\n");
+                        sb.append( "\nPreferences:\n" );
                         for ( PreferencesCommands currentCommand : PreferencesCommands.values() ) {
                             sb.append( currentCommand.getHelpText() );
                         }
@@ -186,6 +198,20 @@ public class SlackIndustryBot implements Runnable {
                         StringBuilder sb = new StringBuilder();
                         sb.append( MessageUtils.formatUserForClicky( event.getSender() ) )
                           .append( " I :heart: you too!" );
+                        session.sendMessage( channel, sb.toString() );
+                    }
+                    else if ( ( message.contains( "bacon" ) || message.contains( "Bacon" ) || message.contains(
+                            "BACON" ) ) && event.getSender()
+                                                .getRealName()
+                                                .equals( "Argos Gelert" ) )
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append( "I'm sorry " )
+                          .append( MessageUtils.formatUserForClicky( event.getSender() ) )
+                          .append(
+                                  ", I've been instructed to not talk about Bacon around you :(.  It's for your own " +
+                                          "good you know.  But if you insist! https://media.giphy" +
+                                          ".com/media/c3RSmXUnz2l3O/giphy.gif" );
                         session.sendMessage( channel, sb.toString() );
                     }
                 }

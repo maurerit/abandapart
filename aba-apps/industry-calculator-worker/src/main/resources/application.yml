@@ -14,3 +14,4 @@ aba:
 logging:
   level:
     com.aba: DEBUG
+    net.sf.ehcache: INFO

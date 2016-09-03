@@ -5,7 +5,7 @@ ABA Industry bits and bobs
 ## Code Health ##
 `Develop`
 
-[![codebeat badge](https://codebeat.co/badges/bcebeddc-8710-44c8-b44a-8a602f4095a9)](https://codebeat.co/projects/github-com-maurerit-abandapart)
+[![codebeat badge](https://codebeat.co/badges/bcebeddc-8710-44c8-b44a-8a602f4095a9)](https://codebeat.co/projects/github-com-maurerit-abandapart) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5cae16dda20c4e739276a69064623ad9)](https://www.codacy.com/app/maurer-it/abandapart?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=maurerit/abandapart&amp;utm_campaign=Badge_Grade)
 
 ## Build Information ##
 `Develop`

@@ -52,4 +52,25 @@ public class BuildCalculationRequest {
     private Boolean suppressFreight      = false;
     @JsonProperty
     private Boolean suppressInstallation = false;
+
+    public BuildCalculationRequest copy ( ) {
+        BuildCalculationRequest result = new BuildCalculationRequest();
+
+        result.setSystemName( systemName );
+        result.setRequestedBuildTypeId( requestedBuildTypeId );
+        result.setRequestedBuildTypeName( requestedBuildTypeName );
+        result.setIndustrySkills( industrySkills );
+        result.setInventionSkills( inventionSkills );
+        result.setMeLevel( meLevel );
+        result.setTeLevel( teLevel );
+        result.setDecryptor( decryptor );
+        result.setFindPrices( findPrices );
+        result.setUseBuildOrBuyConfigurations( useBuildOrBuyConfigurations );
+        result.setBuildOrBuyConfigurationList( buildOrBuyConfigurationList );
+        result.setSuppressSalary( suppressSalary );
+        result.setSuppressFreight( suppressFreight );
+        result.setSuppressInstallation( suppressInstallation );
+
+        return result;
+    }
 }
