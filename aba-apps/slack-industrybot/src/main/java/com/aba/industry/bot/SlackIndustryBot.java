@@ -200,6 +200,20 @@ public class SlackIndustryBot implements Runnable {
                           .append( " I :heart: you too!" );
                         session.sendMessage( channel, sb.toString() );
                     }
+                    else if ( ( message.contains( "bacon" ) || message.contains( "Bacon" ) || message.contains(
+                            "BACON" ) ) && event.getSender()
+                                                .getRealName()
+                                                .equals( "Argos Gelert" ) )
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append( "I'm sorry " )
+                          .append( MessageUtils.formatUserForClicky( event.getSender() ) )
+                          .append(
+                                  ", I've been instructed to not talk about Bacon around you :(.  It's for your own " +
+                                          "good you know.  But if you insist! https://media.giphy" +
+                                          ".com/media/c3RSmXUnz2l3O/giphy.gif" );
+                        session.sendMessage( channel, sb.toString() );
+                    }
                 }
                 //endregion
 

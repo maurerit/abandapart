@@ -17,7 +17,7 @@ aba:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: mongodb
       port: 27017
 logging:
   level:

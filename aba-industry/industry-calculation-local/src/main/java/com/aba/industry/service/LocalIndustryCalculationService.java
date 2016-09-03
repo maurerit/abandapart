@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.aba.market.TradeHubs.AMARR;
 import static com.aba.market.TradeHubs.JITA;
@@ -165,6 +166,10 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         catch ( IOException e ) {
             logger.error( "Error while retrieving build requirements or cost indexes", e );
             throw new ApplicationException( e );
+        }
+        catch ( NoSuchElementException e ) {
+            logger.warn( "No Such Blueprint {}", request.getRequestedBuildTypeId() );
+            return null;
         }
 
         long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
@@ -353,14 +358,16 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         Integer itemId = am.getTypeId();
         long quantity = am.getQuantity();
 
-        BuildOrBuyConfiguration configuration = buildOrBuyService.findByTypeId( -1 );
+        if ( request != null ) {
+            BuildOrBuyConfiguration configuration = buildOrBuyService.findByTypeId( itemId );
 
-        if ( configuration != null && configuration.getBuildOrBuy() == BuildOrBuyConfiguration.BuildOrBuy.BUILD ) {
-            BuildCalculationRequest newRequest = request.copy();
-            newRequest.setRequestedBuildTypeId( itemId );
-            newRequest.setRequestedBuildTypeName( am.getName() );
+            if ( configuration != null && configuration.getBuildOrBuy() == BuildOrBuyConfiguration.BuildOrBuy.BUILD ) {
+                BuildCalculationRequest newRequest = request.copy();
+                newRequest.setRequestedBuildTypeId( itemId );
+                newRequest.setRequestedBuildTypeName( am.getName() );
 
-            result = this.calculateBuild( newRequest );
+                result = this.calculateBuild( newRequest );
+            }
         }
 
         Double cost = null;
