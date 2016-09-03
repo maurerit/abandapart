@@ -40,6 +40,7 @@ public abstract class CalculationResult {
 
     @JsonProperty
     public Double getTotalCost ( ) {
+
         Double result = 0d;
 
         //Installation fees and tax have the potential to be null as not all producers listen to the fact that
