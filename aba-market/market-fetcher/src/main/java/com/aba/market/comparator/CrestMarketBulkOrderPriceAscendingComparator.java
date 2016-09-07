@@ -8,19 +8,27 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.market.fetch;
+package com.aba.market.comparator;
 
 import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
-import org.springframework.cache.annotation.Cacheable;
 
-import java.util.List;
+import java.util.Comparator;
 
 /**
- * Created by maurerit on 7/25/16.
+ * Created by mm66053 on 8/3/2016.
  */
-public interface MarketOrderFetcher {
-    List<CrestMarketOrder> getMarketSellOrders ( long regionId, long itemId );
+public class CrestMarketBulkOrderPriceAscendingComparator implements Comparator<CrestMarketBulkOrder> {
+    @Override
+    public int compare ( CrestMarketBulkOrder o1, CrestMarketBulkOrder o2 )
+    {
+        if ( o1.getPrice() < o2.getPrice() ) {
+            return -1;
+        }
+        else if ( o1.getPrice() > o2.getPrice() ) {
+            return 1;
+        }
 
-    List<CrestMarketOrder> getMarketBuyOrders ( long regionId, long itemId );
+        return 0;
+    }
 }
