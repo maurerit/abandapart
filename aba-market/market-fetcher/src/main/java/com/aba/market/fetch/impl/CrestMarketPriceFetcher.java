@@ -10,19 +10,15 @@
 
 package com.aba.market.fetch.impl;
 
-import com.aba.market.TradeHubs;
-import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
-import org.devfleet.crest.model.CrestMarketOrder;
 import org.devfleet.crest.model.CrestMarketPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.OptionalDouble;
 
 /**
  * Created by maurerit on 7/29/16.
@@ -32,53 +28,6 @@ import java.util.OptionalDouble;
 public class CrestMarketPriceFetcher implements MarketPriceFetcher {
     @Autowired
     private CrestService crestService;
-
-    @Autowired
-    private MarketOrderFetcher marketOrderFetcher;
-
-    @Override
-    @Cacheable( "lowest-sell-price" )
-    public Double getLowestSellPrice ( long regionId, long systemId, long itemId )
-    {
-        Double result = null;
-
-        //Used in the below lambda, needs to be final
-        final Long hubIdToFind = TradeHubs.findBySystemId( systemId )
-                                          .getStationId();
-
-        List<CrestMarketOrder> sellOrders = marketOrderFetcher.getMarketSellOrders( regionId, itemId );
-
-        OptionalDouble price = sellOrders.stream()
-                                         .filter( order -> order.getLocationId() == hubIdToFind )
-                                         .mapToDouble( order -> order.getPrice() )
-                                         .findFirst();
-
-        if ( price.isPresent() ) {
-            result = price.getAsDouble();
-        }
-
-        return result;
-    }
-
-    @Override
-    @Cacheable( "adjusted-price" )
-    public Double getAdjustedPrice ( long typeId ) {
-        Double result = 0d;
-
-        List<CrestMarketPrice> prices = this.getAllMarketPrices();
-
-        OptionalDouble possibleResult = prices.stream()
-                                              .filter( cmp -> cmp.getType()
-                                                                 .getId() == typeId )
-                                              .mapToDouble( cmp -> cmp.getAdjustedPrice() )
-                                              .findFirst();
-
-        if ( possibleResult.isPresent() ) {
-            result = possibleResult.getAsDouble();
-        }
-
-        return result;
-    }
 
     @Override
     @Cacheable( "all-market-prices" )

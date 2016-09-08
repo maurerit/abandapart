@@ -35,14 +35,14 @@ import java.util.List;
  */
 @RunWith( MockitoJUnitRunner.class )
 public class CrestMarketPriceFetcherUnitTests {
-    private List<CrestMarketOrder>     sleipnirData;
-    private List<CrestMarketPrice>     prices;
+    private List<CrestMarketOrder>   sleipnirData;
+    private List<CrestMarketPrice>   prices;
     @InjectMocks
-    private CrestMarketPriceFetcher    marketPriceFetcher;
+    private CrestMarketPriceSearcher marketPriceSearcher;
     @Mock
-    private CrestService               crestService;
+    private CrestService             crestService;
     @Mock
-    private MarketOrderFetcher         marketOrderFetcher;
+    private MarketOrderFetcher       marketOrderFetcher;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
@@ -68,7 +68,7 @@ public class CrestMarketPriceFetcherUnitTests {
         Mockito.when( marketOrderFetcher.getMarketSellOrders( 0L, 22444 ) )
                .thenReturn( sleipnirData );
 
-        Double lowestPrice = marketPriceFetcher.getLowestSellPrice( 0l, 30002187L, 22444 );
+        Double lowestPrice = marketPriceSearcher.getLowestSellPrice( 0l, 30002187L, 22444 );
 
         Assert.assertNotNull( lowestPrice );
     }
@@ -79,7 +79,7 @@ public class CrestMarketPriceFetcherUnitTests {
         Mockito.when( crestService.getMarketOrders( 0l, "sell", 22444 ) )
                .thenReturn( sleipnirData );
 
-        Double lowestPrice = marketPriceFetcher.getLowestSellPrice( 0l, 10, 12345 );
+        Double lowestPrice = marketPriceSearcher.getLowestSellPrice( 0l, 10, 12345 );
 
         Assert.assertNull( lowestPrice );
     }
@@ -88,7 +88,7 @@ public class CrestMarketPriceFetcherUnitTests {
     public void testThatWeGetAValue ( ) {
         Mockito.when( crestService.getAllMarketPrices() )
                .thenReturn( prices );
-        Double sleipnirAdjustedPrice = marketPriceFetcher.getAdjustedPrice( 22444 );
+        Double sleipnirAdjustedPrice = marketPriceSearcher.getAdjustedPrice( 22444 );
 
         Assert.assertNotNull( sleipnirAdjustedPrice );
         Assert.assertNotEquals( 0d, sleipnirAdjustedPrice, 0.01 );

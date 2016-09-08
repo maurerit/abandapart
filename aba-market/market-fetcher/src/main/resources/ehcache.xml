@@ -64,12 +64,12 @@
     </cache>
 
     <cache name="all-market-prices"
-           maxEntriesLocalHeap="500"
-           maxEntriesLocalDisk="40000"
+           maxEntriesLocalHeap="4"
+           maxEntriesLocalDisk="20"
            eternal="false"
            diskSpoolBufferSizeMB="0"
-           timeToIdleSeconds="250"
-           timeToLiveSeconds="250"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
         <persistence strategy="localRestartable"/>
