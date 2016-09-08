@@ -11,8 +11,10 @@
 package com.aba.market.fetch.impl;
 
 import com.aba.market.fetch.MarketOrderFetcher;
+import lombok.Getter;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
+import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +29,11 @@ import java.util.List;
  */
 @Service
 @Setter
+@Getter
 public class CrestMarketOrderFetcher implements MarketOrderFetcher {
     private static final Logger logger = LoggerFactory.getLogger( CrestMarketOrderFetcher.class );
     @Autowired
-    private CrestService crestService;
+    protected CrestService crestService;
 
     @Override
     @Cacheable( "crest-sell-orders" )
@@ -46,17 +49,4 @@ public class CrestMarketOrderFetcher implements MarketOrderFetcher {
         logger.debug( "fetching buy prices in region: {}, for item: {}", regionId, itemId );
         return crestService.getMarketOrders( regionId, "buy", itemId );
     }
-
-    //TODO: Figure out how to properly uncomment and utilize the below commented out method.  Initial tests do not
-    // look good.
-    //The below comment is a potential to do as well if some things are figured out. These things are how to get this
-    // method
-    // to cache without putting it into a linked service/component and how to properly cache it.  Maybe this does
-    // belong into
-    //another service/component just because it'll be handy to have for mass build calculation checks on a backend?
-    //Candidate for inclusion into the implemented interface
-//    @Cacheable( "all-market-orders" )
-//    public List<CrestMarketBulkOrder> getAllMarketOrders ( long regionId ) {
-//        return crestService.getAllMarketOrders( regionId );
-//    }
 }
