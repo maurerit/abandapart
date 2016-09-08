@@ -10,14 +10,26 @@
 
 package com.aba;
 
+import com.aba.industry.AutoBuildChecker;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Created by maurerit on 8/27/16.
  */
 @SpringBootApplication
+@EnableAutoConfiguration( exclude = { HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class } )
+@EnableCaching
 public class AutoBuildCheckerApp {
     public static void main ( String[] args ) {
+        ApplicationContext context = SpringApplication.run( AutoBuildCheckerApp.class, args );
+        AutoBuildChecker checker = context.getBean( AutoBuildChecker.class );
 
+        checker.run();
     }
 }

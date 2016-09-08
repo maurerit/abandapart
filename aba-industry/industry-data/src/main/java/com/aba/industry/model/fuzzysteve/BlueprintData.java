@@ -22,8 +22,6 @@ import java.util.Map;
 
 @Data
 public class BlueprintData {
-    @JsonProperty( "requestedid" )
-    long                                         requestedId;
     /**
      * A map of {@link IndustryActivities#activityId} to a list of the {@link Skill} requirements.
      */
@@ -38,4 +36,6 @@ public class BlueprintData {
     Map<Integer, List<ActivityMaterialWithCost>> activityMaterials;
     @JsonProperty
     List<Decryptor>                              decryptors;
+    @JsonProperty( "requestedid" )
+    private Integer requestedId;
 }

@@ -133,6 +133,10 @@ public class LocalInventionCalculator implements InventionCalculator {
     private double getInventionChance ( BlueprintDetails bpDetails, InventionSkillConfiguration skillConfiguration,
                                         Double decryptorMultiplier )
     {
+        if ( bpDetails.getBaseProbability() == null ) {
+            bpDetails.setBaseProbability( .3 );
+        }
+
         return Math.min(
                 ( ( bpDetails.getBaseProbability() * 100d ) *
                         ( 1 +

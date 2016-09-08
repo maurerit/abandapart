@@ -46,5 +46,5 @@ public class BlueprintDetails {
     @JsonProperty
     private Integer            precursorTypeId;
     @JsonProperty( "probability" )
-    private Double             baseProbability;
+    private Double baseProbability = 0.3;
 }

@@ -1,0 +1,226 @@
+<!--
+  ~ Copyright 2016 maurerit
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  -->
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd" updateCheck="true"
+         monitoring="autodetect" dynamicConfig="true" name="industry-worker">
+
+    <!-- spring-eve-crest caches -->
+    <cache name="crest-inventory-items"
+           maxEntriesLocalHeap="3000"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="2592000"
+           timeToLiveSeconds="2592000"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <cache name="crest-region-id"
+           maxEntriesLocalHeap="3000"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <cache name="crest-regions"
+           maxEntriesLocalHeap="3000"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <cache name="solar-system-id"
+           maxEntriesLocalHeap="3000"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <!-- market-fetcher -->
+    <cache name="crest-sell-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <!-- market-fetcher -->
+    <cache name="crest-buy-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <cache name="lowest-sell-price"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <cache name="price-for-quantity"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <cache name="cost-indexes"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <cache name="adjusted-price"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=false, replicatePuts=true,
+                        replicatePutsViaCopy=true, replicateUpdates=true,
+                        replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"/>
+    </cache>
+
+    <cache name="all-market-prices"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="250"
+           timeToLiveSeconds="250"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <cache name="all-market-orders"
+           maxEntriesLocalHeap="500"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <!-- industry-fetcher -->
+    <cache name="typename-to-typeid"
+           maxEntriesLocalHeap="3000"
+           maxEntriesLocalDisk="40000"
+           eternal="false"
+           diskSpoolBufferSizeMB="0"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <!--
+    This configuration works from mac to pi but not pi to mac... must be something in the mac that isn't REALLY
+    listening to multicast... not sure
+    -->
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+                        multicastGroupPort=4446, timeToLive=32"/>
+    <!-- Tested and working KNOWN PEER replication -->
+    <!--<cacheManagerPeerProviderFactory-->
+    <!--class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"-->
+    <!--properties="peerDiscovery=manual, rmiUrls=//192.168.1.102:4000/crest-buy-orders|//192.168.1.102:4000/crest-sell-orders" />-->
+
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="port=4000, socketTimeoutMillis=2000"/>
+</ehcache>

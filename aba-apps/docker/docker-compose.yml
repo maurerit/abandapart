@@ -9,7 +9,7 @@ industry-router:
   container_name: industry-router
   image: industry-calculator-router
   ports:
-    - "42001:42001"
+    - "42003:42001"
 industry-worker:
   image: industry-calculator-worker
   links:
