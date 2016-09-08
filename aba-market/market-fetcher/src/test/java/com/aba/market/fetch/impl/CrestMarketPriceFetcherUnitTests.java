@@ -1,16 +1,20 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.market.fetch.impl;
 
 import com.aba.market.fetch.MarketOrderFetcher;
+import com.aba.market.fetch.MarketPriceFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -43,10 +47,13 @@ public class CrestMarketPriceFetcherUnitTests {
     private CrestService             crestService;
     @Mock
     private MarketOrderFetcher       marketOrderFetcher;
+    @Mock
+    private MarketPriceFetcher       marketPriceFetcher;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
-    public void setup ( ) throws IOException {
+    public void setup ( ) throws IOException
+    {
         InputStream sleipnirDataIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
                 "/CrestMarketWithDataForSleipnirs.json" );
         InputStream marketPricesIS = CrestMarketOrderFetcherUnitTests.class.getResourceAsStream(
@@ -85,8 +92,9 @@ public class CrestMarketPriceFetcherUnitTests {
     }
 
     @Test
-    public void testThatWeGetAValue ( ) {
-        Mockito.when( crestService.getAllMarketPrices() )
+    public void testThatWeGetAValue ( )
+    {
+        Mockito.when( marketPriceFetcher.getAllMarketPrices() )
                .thenReturn( prices );
         Double sleipnirAdjustedPrice = marketPriceSearcher.getAdjustedPrice( 22444 );
 
