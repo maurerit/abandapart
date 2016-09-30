@@ -25,9 +25,8 @@ import com.aba.industry.model.*;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
-import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketOrderSearcher;
-import com.aba.market.fetch.MarketPriceFetcher;
+import com.aba.market.fetch.MarketPriceSearcher;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,13 +69,10 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
     private OverheadCalculator overheadCalculator;
 
     @Autowired
-    private MarketOrderFetcher marketOrderFetcher;
-
-    @Autowired
     private MarketOrderSearcher marketOrderSearcher;
 
     @Autowired
-    private MarketPriceFetcher marketPriceFetcher;
+    private MarketPriceSearcher marketPriceSearcher;
 
     @Autowired
     private SolarSystemRepository solarSystemRepository;
@@ -173,7 +169,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         }
 
         long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
-        long theForgeId = regionRepository.findRegionId( "The Forge" );
+        long theForgeId = regionRepository.findRegionId( JITA.getRegionName() );
 
         List<BuildCalculationResult> childResults = putCostsIntoBlueprintData( theForgeId, jitaId, blueprintData,
                                                                                request );
@@ -192,8 +188,13 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
                                                             meLevelToUse, teLevelToUse,
                                                             request.getIndustrySkills(),
                                                             request.getSuppressInstallation() );
-        result.setProductName( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() )
-                                                 .getName() );
+        if ( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() ) != null ) {
+            result.setProductName( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() )
+                                                     .getName() );
+        }
+        else {
+            logger.warn( "Could not find typeId {}", request.getRequestedBuildTypeId() );
+        }
 
         if ( inventionCalculationResult != null ) {
             long baseInventionTime = blueprintData.getBlueprintDetails()
@@ -245,7 +246,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             int precursorTypeId = blueprintData.getBlueprintDetails()
                                                .getPrecursorTypeId();
             blueprintData.getBlueprintDetails()
-                         .setPrecursorAdjustedPrice( marketPriceFetcher.getAdjustedPrice( precursorTypeId ) );
+                         .setPrecursorAdjustedPrice( marketPriceSearcher.getAdjustedPrice( precursorTypeId ) );
         }
 
         return results;
@@ -283,13 +284,14 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             long jitaId = solarSystemRepository.getSolarSystemId( JITA.getSystemName() );
             long amarrId = solarSystemRepository.getSolarSystemId( AMARR.getSystemName() );
 
-            Double jitaLowestSell = marketPriceFetcher.getLowestSellPrice( regionRepository.findRegionId( "The Forge" ),
-                                                                           jitaId,
-                                                                           result.getProductId() );
+            Double jitaLowestSell = marketPriceSearcher.getLowestSellPrice(
+                    regionRepository.findRegionId( "The Forge" ),
+                    jitaId,
+                    result.getProductId() );
 
-            Double amarrLowestSell = marketPriceFetcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
-                                                                            amarrId,
-                                                                            result.getProductId() );
+            Double amarrLowestSell = marketPriceSearcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
+                                                                             amarrId,
+                                                                             result.getProductId() );
             //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
             result.getToBuildLocationFreight()
                   .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
@@ -382,7 +384,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             source = CostSource.LIVE_MARKET_SELL;
         }
 
-        Double adjustedCost = marketPriceFetcher.getAdjustedPrice( itemId );
+        Double adjustedCost = marketPriceSearcher.getAdjustedPrice( itemId );
 
         if ( adjustedCost == null || adjustedCost.equals( Double.NaN ) || adjustedCost.equals(
                 Double.NEGATIVE_INFINITY ) ||

@@ -31,7 +31,7 @@ import com.aba.industry.service.IndustryCalculationService;
 import com.aba.industry.service.LocalIndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketOrderSearcher;
-import com.aba.market.fetch.MarketPriceFetcher;
+import com.aba.market.fetch.MarketPriceSearcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -76,7 +76,7 @@ public class IndustryCalculationServiceImplUnitTests {
     @Mock
     private MarketOrderSearcher            marketOrderSearcher;
     @Mock
-    private MarketPriceFetcher             marketPriceFetcher;
+    private MarketPriceSearcher            marketPriceSearcher;
     @Mock
     private SolarSystemRepository          solarSystemRepository;
     @Mock
@@ -206,9 +206,9 @@ public class IndustryCalculationServiceImplUnitTests {
                .thenReturn( amarrFreightDetails );
         //endregion
         //region Market Fetcher mocks
-        Mockito.when( marketPriceFetcher.getLowestSellPrice( 20, 1L, 22444 ) )
+        Mockito.when( marketPriceSearcher.getLowestSellPrice( 20, 1L, 22444 ) )
                .thenReturn( 345000000d );
-        Mockito.when( marketPriceFetcher.getLowestSellPrice( 21, 2L, 22444 ) )
+        Mockito.when( marketPriceSearcher.getLowestSellPrice( 21, 2L, 22444 ) )
                .thenReturn( 355000000d );
         //endregion
         //region Crest Endpoint Mocks
