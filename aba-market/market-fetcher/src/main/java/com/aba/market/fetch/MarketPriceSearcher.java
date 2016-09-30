@@ -10,13 +10,11 @@
 
 package com.aba.market.fetch;
 
-import org.devfleet.crest.model.CrestMarketPrice;
-
-import java.util.List;
-
 /**
- * Created by maurerit on 7/29/16.
+ * Created by maurerit on 9/7/16.
  */
-public interface MarketPriceFetcher {
-    List<CrestMarketPrice> getAllMarketPrices ( );
+public interface MarketPriceSearcher {
+    Double getLowestSellPrice ( long regionId, long systemId, long itemId );
+
+    Double getAdjustedPrice ( long typeId );
 }

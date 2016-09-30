@@ -1,20 +1,26 @@
 /*
  * Copyright 2016 maurerit
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
  */
 
 package com.aba.market.fetch.impl;
 
 import com.aba.market.TradeHubs;
+import com.aba.market.comparator.CrestMarketBulkOrderPriceAscendingComparator;
 import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
+import com.aba.market.fetch.BulkMarketOrderFetcher;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketOrderSearcher;
 import lombok.Setter;
+import org.devfleet.crest.model.CrestMarketBulkOrder;
 import org.devfleet.crest.model.CrestMarketOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,15 +53,33 @@ public class CrestMarketOrderSearcher implements MarketOrderSearcher {
         final long hubIdToFind = TradeHubs.findBySystemId( systemId )
                                           .getStationId();
 
-        List<CrestMarketOrder> sellOrders = marketOrderFetcher.getMarketSellOrders( regionId, itemId );
+        List<? extends CrestMarketOrder> filteredSellOrders = null;
 
-        List<CrestMarketOrder> filteredSellOrders = sellOrders.stream()
-                                                              .filter(
-                                                                      order -> order.getLocationId() ==
-                                                                              hubIdToFind && order.getTypeId() ==
-                                                                              itemId )
-                                                              .sorted( new CrestMarketOrderPriceAscendingComparator() )
-                                                              .collect( Collectors.toList() );
+        if ( !( marketOrderFetcher instanceof BulkMarketOrderFetcher ) ) {
+            List<CrestMarketOrder> orders = marketOrderFetcher.getMarketSellOrders( regionId, itemId );
+
+            filteredSellOrders = orders.stream()
+                                       .filter(
+                                               order -> order.getLocationId() ==
+                                                       hubIdToFind && order.getTypeId() ==
+                                                       itemId )
+                                       .sorted( new CrestMarketOrderPriceAscendingComparator() )
+                                       .collect( Collectors.toList() );
+        }
+        else {
+            List<CrestMarketBulkOrder> orders = ( (BulkMarketOrderFetcher) marketOrderFetcher ).getAllMarketOrders(
+                    regionId );
+
+            filteredSellOrders = orders.stream()
+                                       .filter( order -> order.getStationId() ==
+                                               hubIdToFind && order.getType() ==
+                                               itemId && order.isBuyOrder() == false )
+                                       .sorted( new CrestMarketBulkOrderPriceAscendingComparator() )
+                                       .collect(
+
+                                               Collectors.toList() );
+        }
+
 
         int totalFound = 0;
         double totalPrice = 0d;
