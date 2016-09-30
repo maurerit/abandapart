@@ -21,9 +21,11 @@ import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.service.IndustryCalculationService;
 import com.aba.market.TradeHubs;
 import com.aba.market.fetch.BulkMarketOrderFetcher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -37,21 +39,20 @@ import java.util.stream.Collectors;
  */
 @Component
 public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
-    private static final Logger logger = LoggerFactory.getLogger( StreamBasedAutoBuildChecker.class );
+    private static final Logger       logger       = LoggerFactory.getLogger( StreamBasedAutoBuildChecker.class );
+    private final        ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private ApplicationContext context;
-
     @Autowired
     private BuildRequirementsProvider buildRequirementsProvider;
-
     @Autowired
     private IndustryCalculationService industryCalculationService;
-
     @Autowired
     private BulkMarketOrderFetcher bulkMarketOrderFetcher;
-
     @Autowired
     private RegionRepository regionRepository;
+    @Autowired
+    private RabbitTemplate queueTemplate;
 
     @Override
     public void run ( ) {
@@ -74,34 +75,35 @@ public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
         Profiler profiler = new Profiler( "Build Calcs" );
         profiler.setLogger( logger );
         profiler.start( "CALC ALL THE THINGS" );
-        List<BuildCalculationResult> results = bps.parallelStream()
-                                                  .map( bpData -> {
-                                                      logger.debug( "Requesting stuff for {}",
-                                                                    bpData.getRequestedId() );
-                                                      BuildCalculationRequest request = new BuildCalculationRequest();
-                                                      request.setRequestedBuildTypeId( bpData.getRequestedId() );
-                                                      request.setIndustrySkills( industrySkills );
-                                                      request.setInventionSkills( inventionSkills );
-                                                      request.setSystemName( "Atreen" );
-                                                      request.setMeLevel( 10 );
-                                                      request.setTeLevel( 20 );
+        bps.parallelStream()
+           .map( bpData -> {
+               logger.debug( "Requesting stuff for {}",
+                             bpData.getRequestedId() );
+               BuildCalculationRequest request = new BuildCalculationRequest();
+               request.setRequestedBuildTypeId( bpData.getRequestedId() );
+               request.setIndustrySkills( industrySkills );
+               request.setInventionSkills( inventionSkills );
+               request.setSystemName( "Atreen" );
+               request.setMeLevel( 10 );
+               request.setTeLevel( 20 );
 
-                                                      BuildCalculationResult result = null;
+               BuildCalculationResult result = null;
 
-                                                      try {
-                                                          result = industryCalculationService.calculateBuild( request );
-                                                          logger.debug( "Received stuff for {}",
-                                                                        bpData.getRequestedId() );
-                                                      }
-                                                      catch ( IOException e ) {
-                                                          logger.error(
-                                                                  "Caught IOException while calculating request {}",
-                                                                  request );
-                                                      }
+               try {
+                   result = industryCalculationService.calculateBuild( request );
+                   logger.debug( "Received stuff for {}",
+                                 bpData.getRequestedId() );
+                   queueTemplate.convertAndSend( "build-calc", "", objectMapper.writeValueAsString( result ) );
+               }
+               catch ( IOException e ) {
+                   logger.error(
+                           "Caught IOException while calculating request {}",
+                           request );
+               }
 
-                                                      return result;
-                                                  } )
-                                                  .collect( Collectors.toList() );
+               return result;
+           } )
+           .collect( Collectors.toList() );
         profiler.stop();
         profiler.print();
     }

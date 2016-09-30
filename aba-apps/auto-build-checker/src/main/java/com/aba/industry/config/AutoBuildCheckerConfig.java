@@ -20,6 +20,7 @@ import com.aba.industry.service.IndustryCalculationService;
 import com.aba.industry.service.LocalIndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.impl.CrestBulkMarketOrderFetcher;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -53,5 +54,10 @@ public class AutoBuildCheckerConfig {
     @Bean
     public ItemTypeRepository itemTypeRepository ( ) {
         return new NullItemTypeRepository();
+    }
+
+    @Bean
+    public FanoutExchange exchange ( ) {
+        return new FanoutExchange( "build-calc" );
     }
 }
