@@ -10,25 +10,21 @@
 
 package com.aba.industry.domain;
 
-import org.springframework.data.annotation.Id;
-
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.MappedSuperclass;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
- * Created by maurerit on 7/24/16.
+ * Created by maurerit on 9/30/16.
  */
-//@Entity
-//@MappedSuperclass
-//@Data
-public class WarehouseItem {
-    @Id
-    private Long   typeId;
-    private Long   quantity;
-    private Double cost;
-    private Long   regionId;
-    private Long   constelationId;
-    private Long   solarSystemId;
-    private Long   stationId;
+@Data
+@EqualsAndHashCode( exclude = "queueItem" )
+public class QueueItemAssignment {
+    private String    id;
+    @DBRef
+    private QueueItem queueItem;
+    @DBRef
+    private Producer  producer;
+
+    private Long quantity = 0L;
 }
