@@ -10,25 +10,27 @@
 
 package com.aba.industry.domain;
 
+import com.aba.data.domain.Corporation;
+import com.aba.industry.model.Skill;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.MappedSuperclass;
+import java.util.Set;
 
 /**
- * Created by maurerit on 7/24/16.
+ * Created by maurerit on 10/5/16.
  */
-//@Entity
-//@MappedSuperclass
-//@Data
-public class WarehouseItem {
+@Data
+public class Producer {
     @Id
-    private Long   typeId;
-    private Long   quantity;
-    private Double cost;
-    private Long   regionId;
-    private Long   constelationId;
-    private Long   solarSystemId;
-    private Long   stationId;
+    private String producerId;
+    private Long   characterId;
+
+    private Set<Skill> skills;
+
+    private Long basedAtStation;
+
+    @DBRef
+    private Corporation corporation;
 }

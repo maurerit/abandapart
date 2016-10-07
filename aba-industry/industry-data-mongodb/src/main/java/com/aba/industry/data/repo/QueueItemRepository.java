@@ -8,27 +8,18 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.domain;
+package com.aba.industry.data.repo;
 
-import org.springframework.data.annotation.Id;
+import com.aba.industry.domain.QueueItem;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.MappedSuperclass;
+import java.util.List;
 
 /**
- * Created by maurerit on 7/24/16.
+ * Created by maurerit on 9/30/16.
  */
-//@Entity
-//@MappedSuperclass
-//@Data
-public class WarehouseItem {
-    @Id
-    private Long   typeId;
-    private Long   quantity;
-    private Double cost;
-    private Long   regionId;
-    private Long   constelationId;
-    private Long   solarSystemId;
-    private Long   stationId;
+public interface QueueItemRepository extends MongoRepository<QueueItem, String> {
+    QueueItem findByTypeIdAndYearAndMonth ( Long typeId, Integer year, Integer month );
+
+    List<QueueItem> findByYearAndMonth ( Integer year, Integer month );
 }
