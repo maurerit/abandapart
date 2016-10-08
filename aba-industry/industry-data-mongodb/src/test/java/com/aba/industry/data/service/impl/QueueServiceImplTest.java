@@ -159,28 +159,66 @@ public class QueueServiceImplTest {
 
         List<QueueItemAssignment> assignments = queueService.getQueueItemAssignments( producer );
 
+        verify( queueItemAssignmentRepository, times( 1 ) ).findByProducer( producerCaptor.capture() );
         assertNotNull( assignments );
         assertEquals( queueItemAssignment, assignments.get( 0 ) );
     }
 
     @Test
     public void createQueueItem ( ) throws Exception {
-        fail( "Implement me" );
+        when( queueItemRepository.save( queueItemRepoCaptor.capture() ) ).thenReturn( queueItem );
+
+        QueueItem createdQueueItem = queueService.createQueueItem( 1L, 200L, 20000L );
+
+        verify( queueItemRepository, times( 1 ) ).save( queueItemRepoCaptor.capture() );
+        assertEquals( queueItem, createdQueueItem );
     }
 
     @Test
-    public void createQueueItem1 ( ) throws Exception {
-        fail( "Implement me" );
+    public void createQueueItemWithYearAndMonth ( ) throws Exception {
+        when( queueItemRepository.save( queueItemRepoCaptor.capture() ) ).thenReturn( queueItem );
+
+        QueueItem createdQueueItem = queueService.createQueueItem( 1L, 200L, 20000L, 2016, 9 );
+
+        verify( queueItemRepository, times( 1 ) ).save( queueItemRepoCaptor.capture() );
+        assertEquals( queueItem, createdQueueItem );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void createQueueItemThatAlreadyExists ( ) throws Exception {
+        when( queueItemRepository.findByTypeIdAndYearAndMonth( 1L, 2016, 9 ) ).thenReturn( queueItem );
+
+        QueueItem createdQueueItem = queueService.createQueueItem( 1L, 200L, 20000L, 2016, 9 );
     }
 
     @Test
     public void updateQueueItem ( ) throws Exception {
-        fail( "Implement me" );
+        queueItem.setId( "TEST" );
+        when( queueItemRepository.findOne( queueItem.getId() ) ).thenReturn( queueItem );
+        when( queueItemRepository.save( queueItem ) ).thenReturn( queueItem );
+
+        QueueItem updatedQueueItem = queueService.updateQueueItem( queueItem );
+
+        verify( queueItemRepository, times( 1 ) ).findOne( queueItem.getId() );
+        verify( queueItemRepository, times( 1 ) ).save( queueItemRepoCaptor.capture() );
+
+        assertEquals( queueItem, queueItemRepoCaptor.getValue() );
+        assertEquals( queueItem, updatedQueueItem );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void updateQueueItemNonExistent ( ) throws Exception {
+        queueItem.setId( "TEST" );
+        queueService.updateQueueItem( queueItem );
     }
 
     @Test
     public void getQueueItems ( ) throws Exception {
-        fail( "Implement me" );
+        when( queueItemRepository.findByYearAndMonth( 2016, 9 ) ).thenReturn( Arrays.asList( queueItem ) );
+
+        List<QueueItem> results = queueService.getQueueItems( 2016, 9 );
+
+        verify( queueItemRepository, times( 1 ) ).findByYearAndMonth( 2016, 9 );
     }
 
 }

@@ -18,6 +18,7 @@ import com.aba.industry.domain.QueueItem;
 import com.aba.industry.domain.QueueItemAssignment;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 
@@ -75,27 +76,61 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public List<QueueItemAssignment> getQueueItemAssignments ( Producer producer ) {
-        return null;
+        return queueItemAssignmentRepository.findByProducer( producer );
     }
 
     @Override
     public QueueItem createQueueItem ( Long typeId, Long quantity, Long buildTime ) {
-        return null;
+        LocalDate localDate = LocalDate.now();
+        Integer year = localDate.getYear();
+        Integer month = localDate.getMonthValue();
+
+        return createQueueItem( typeId, quantity, buildTime, year, month );
     }
 
     @Override
     public QueueItem createQueueItem ( Long typeId, Long quantity, Long buildTime, Integer year, Integer month ) {
-        return null;
+        QueueItem queueItem = queueItemRepository.findByTypeIdAndYearAndMonth( typeId, year, month );
+
+        if ( queueItem != null ) {
+            throw new IllegalArgumentException(
+                    "Queue Item for this year(" + year + "), month(" + month + "), and typeId(" + typeId + ") already" +
+                            " exists.  Use updateQueueItem instead." );
+        }
+
+        queueItem = new QueueItem();
+        queueItem.setTypeId( typeId );
+        queueItem.setYear( year );
+        queueItem.setMonth( month );
+        queueItem.setQuantity( quantity );
+
+        return queueItemRepository.save( queueItem );
     }
 
     @Override
     public QueueItem updateQueueItem ( QueueItem queueItem ) {
-        return null;
+        if ( queueItem == null || queueItem.getId() == null || "".equalsIgnoreCase( queueItem.getId() ) ) {
+            throw new IllegalArgumentException( "Invalid Queue Item passed to udpated service method." );
+        }
+
+        QueueItem existingQueueItem = queueItemRepository.findOne( queueItem.getId() );
+
+        if ( existingQueueItem == null ) {
+            throw new IllegalArgumentException( "No existing Queue Item to edit, call createQueueItem instead." );
+        }
+
+        existingQueueItem.setTypeId( queueItem.getTypeId() );
+        existingQueueItem.setYear( queueItem.getYear() );
+        existingQueueItem.setMonth( queueItem.getMonth() );
+        existingQueueItem.setQuantity( queueItem.getQuantity() );
+        existingQueueItem.setBuildTime( queueItem.getBuildTime() );
+
+        return queueItemRepository.save( queueItem );
     }
 
     @Override
     public List<QueueItem> getQueueItems ( Integer year, Integer month ) {
-        return null;
+        return queueItemRepository.findByYearAndMonth( year, month );
     }
 
     private void addQueueItemAssignmentToQueueItem ( QueueItemAssignment queueItemAssignment, QueueItem queueItem ) {
