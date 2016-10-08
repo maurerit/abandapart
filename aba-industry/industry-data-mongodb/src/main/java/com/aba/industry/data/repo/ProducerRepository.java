@@ -8,28 +8,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.industry.domain;
+package com.aba.industry.data.repo;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.MappedSuperclass;
+import com.aba.industry.domain.Producer;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * Created by maurerit on 7/24/16.
+ * Created by maurerit on 10/6/16.
  */
-//@Entity
-//@MappedSuperclass
-@Data
-public class WarehouseItem {
-    @Id
-    private Long   typeId;
-    private Long   quantity;
-    private Double cost;
-    private Long   regionId;
-    private Long   constelationId;
-    private Long   solarSystemId;
-    private Long   stationId;
+public interface ProducerRepository extends MongoRepository<Producer, String> {
+    Producer findByCharacterId ( Long characterId );
 }
