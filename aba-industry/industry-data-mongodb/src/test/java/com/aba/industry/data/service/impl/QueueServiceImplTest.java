@@ -219,6 +219,9 @@ public class QueueServiceImplTest {
         List<QueueItem> results = queueService.getQueueItems( 2016, 9 );
 
         verify( queueItemRepository, times( 1 ) ).findByYearAndMonth( 2016, 9 );
+        assertNotNull( results );
+        assertTrue( results.size() == 1 );
+        assertEquals( queueItem, results.get( 0 ) );
     }
 
 }

@@ -10,9 +10,12 @@
 
 package com.aba.data.domain;
 
+import lombok.Data;
+
 /**
  * Created by maurerit on 10/6/16.
  */
+@Data
 public class Corporation {
     private String id;
     private Long   corporationId;

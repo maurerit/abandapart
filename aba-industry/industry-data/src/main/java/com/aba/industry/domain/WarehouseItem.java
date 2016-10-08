@@ -10,6 +10,7 @@
 
 package com.aba.industry.domain;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 //import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import org.springframework.data.annotation.Id;
  */
 //@Entity
 //@MappedSuperclass
-//@Data
+@Data
 public class WarehouseItem {
     @Id
     private Long   typeId;
