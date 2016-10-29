@@ -28,6 +28,7 @@ import org.slf4j.profiler.Profiler;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
     private RabbitTemplate queueTemplate;
 
     @Override
+    @Scheduled( fixedRate = 14400000, initialDelay = 2000 )
     public void run ( ) {
         List<BlueprintData> bps = buildRequirementsProvider.getAllBlueprints();
 
