@@ -14,11 +14,11 @@ aba:
           location: industry-router
           protocol: tcp
           port: 42001
-spring:
-  data:
-    mongodb:
-      host: mongodb
-      port: 27017
+#spring:
+#  data:
+#    mongodb:
+#      host: mongodb
+#      port: 27017
 logging:
   level:
     com.aba: DEBUG
