@@ -113,6 +113,8 @@ public class PreferencesServiceImpl implements PreferencesService {
             globalPrefs.getInventionSkillConfiguration()
                        .setDatacoreTwoSkillLevel( datacoreSkillTwoLevel );
 
+            globalPrefs.setBuildOrBuyConfigurations( new HashMap<>() );
+
             globalPrefs.setSuppressSalary( suppressSalary );
             globalPrefs.setSuppressFreight( suppressFreight );
             globalPrefs.setSuppressInstallation( suppressInstallation );
