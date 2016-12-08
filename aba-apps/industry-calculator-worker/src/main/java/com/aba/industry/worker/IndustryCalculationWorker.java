@@ -19,6 +19,7 @@ import com.aba.industry.model.BuildCalculationResult;
 import com.aba.industry.service.IndustryCalculationService;
 import com.aba.market.TradeHubs;
 import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
+import com.aba.market.comparator.CrestMarketOrderPriceDescendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.devfleet.crest.model.CrestMarketOrder;
@@ -183,7 +184,7 @@ public class IndustryCalculationWorker implements Runnable {
 
             orderOptional = buyOrders.stream()
                                      .filter( order -> order.getLocationId() == info.getStationId() )
-                                     .sorted( new CrestMarketOrderPriceAscendingComparator() )
+                                     .sorted( new CrestMarketOrderPriceDescendingComparator() )
                                      .findFirst();
 
             if ( orderOptional.isPresent() ) {
