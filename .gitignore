@@ -19,3 +19,4 @@ mongodb
 .env
 key
 tmp
+aba-apps/character-skills/src/main/resources/application.yml
