@@ -24,6 +24,7 @@
         <module>spring-eve-crest</module>
         <module>aba-market</module>
         <module>aba-apps</module>
+        <module>aba-api-parent</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

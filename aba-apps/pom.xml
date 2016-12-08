@@ -30,6 +30,7 @@
         <module>historical-accumulator</module>
         <module>slack-industrybot</module>
         <module>auto-build-checker</module>
+        <module>character-skills</module>
     </modules>
 
     <dependencies>
