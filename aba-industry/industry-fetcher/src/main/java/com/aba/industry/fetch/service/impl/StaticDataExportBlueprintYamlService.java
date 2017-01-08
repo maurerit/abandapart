@@ -11,10 +11,7 @@
 package com.aba.industry.fetch.service.impl;
 
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
-import com.aba.industry.fetch.model.Blueprint;
-import com.aba.industry.fetch.model.BlueprintActivities;
-import com.aba.industry.fetch.model.BlueprintMaterial;
-import com.aba.industry.fetch.model.Blueprints;
+import com.aba.industry.fetch.model.*;
 import com.aba.industry.model.ActivityMaterialWithCost;
 import com.aba.industry.model.Decryptor;
 import com.aba.industry.model.TechLevel;
@@ -51,7 +48,6 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
     public BlueprintData getBlueprintData ( final Integer typeId )
     {
         BlueprintData result;
-
 
         result = mapBlueprints( typeId );
 
@@ -253,6 +249,22 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
                                                                                      .get( BlueprintActivities
                                                                                                    .invention )
                                                                                      .getTime() );
+            Optional<BlueprintOutput> inventionOutput = inventionBp.getActivities()
+                                                                   .get( BlueprintActivities.invention )
+                                                                   .getProducts()
+                                                                   .stream()
+                                                                   .filter(
+                                                                           products ->
+                                                                                   products.getTypeID()
+                                                                                           .equals(
+                                                                                                   manuBpTypeId ) )
+                                                                   .findFirst();
+
+            if ( inventionOutput.isPresent() ) {
+                bpDetails.setInventionResultingRuns( inventionOutput.get()
+                                                                    .getQuantity() );
+            }
+
             bpDetails.setTechLevel( TechLevel.ADVANCED.getNumerical() );
             if ( inventionBp.getActivities().get( BlueprintActivities.manufacturing ) != null ) {
                 bpDetails.setPrecursorTypeId( inventionBp.getActivities()

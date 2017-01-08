@@ -47,6 +47,8 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
                                    .longValue(), 300000l );
         Assert.assertNotNull( bpData.getActivityMaterials()
                                     .get( IndustryActivities.INVENTION.getActivityId() ) );
+        Assert.assertEquals( new Integer( 1 ), bpData.getBlueprintDetails()
+                                                     .getInventionResultingRuns() );
     }
 
     @Test
@@ -70,10 +72,12 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
         Assert.assertNotNull( bpData.getBlueprintDetails() );
         Assert.assertNull( bpData.getBlueprintDetails()
                                  .getPrecursorTypeId() );
+        Assert.assertEquals( null, bpData.getBlueprintDetails()
+                                         .getInventionResultingRuns() );
     }
 
     @Test
-    public void testGetGetProteus ( ) throws JsonProcessingException {
+    public void testGetProteus ( ) throws JsonProcessingException {
         BlueprintData bpData = staticDataExportBlueprintYamlService.getBlueprintData( 29988 );
 
         ObjectMapper mapper = new ObjectMapper(  );
@@ -86,5 +90,7 @@ public class StaticDataExportBlueprintYamlServiceUnitTests {
         Assert.assertNotNull( bpData.getBlueprintDetails() );
         Assert.assertNotNull( bpData.getBlueprintDetails()
                                     .getBaseProbability() );
+        Assert.assertEquals( new Integer( 20 ), bpData.getBlueprintDetails()
+                                                      .getInventionResultingRuns() );
     }
 }

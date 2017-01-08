@@ -120,12 +120,12 @@ public class LocalInventionCalculator implements InventionCalculator {
         if ( decryptor == null ) {
             result.setResultingME( 2 );
             result.setResultingTE( 4 );
-            result.setResultingRuns( bpDetails.getMaxProductionLimit() );
+            result.setResultingRuns( (long) bpDetails.getInventionResultingRuns() );
         }
         else {
             result.setResultingME( 2 + decryptor.getMe() );
             result.setResultingTE( 4 + decryptor.getTe() );
-            result.setResultingRuns( bpDetails.getMaxProductionLimit() + decryptor.getRuns() );
+            result.setResultingRuns( (long) ( bpDetails.getInventionResultingRuns() + decryptor.getRuns() ) );
         }
         return result;
     }

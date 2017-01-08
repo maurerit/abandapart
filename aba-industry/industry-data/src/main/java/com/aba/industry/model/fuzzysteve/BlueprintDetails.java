@@ -20,6 +20,8 @@ import java.util.Map;
 public class BlueprintDetails {
     @JsonProperty
     private Long               maxProductionLimit;
+    @JsonProperty
+    private Integer            inventionResultingRuns;
     @JsonProperty( "productTypeID" )
     private Integer            productTypeId;
     @JsonProperty( "productTypeName" )
