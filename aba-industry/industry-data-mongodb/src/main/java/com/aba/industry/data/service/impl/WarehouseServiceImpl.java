@@ -10,8 +10,11 @@
 
 package com.aba.industry.data.service.impl;
 
-import com.aba.industry.data.service.WarehouseService;
 import com.aba.industry.domain.WarehouseItem;
+import com.aba.industry.data.service.WarehouseService;
+import com.aba.industry.model.WarehouseResponse;
+import com.aba.market.fetch.MarketOrderSearcher;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -19,6 +22,9 @@ import java.util.List;
  * Created by maurerit on 10/2/16.
  */
 public class WarehouseServiceImpl implements WarehouseService {
+    @Autowired
+    private MarketOrderSearcher marketOrderSearcher;
+
     @Override
     public void updateWarehouseItem ( Long typeId, Long quantityToAdd ) {
 
@@ -51,6 +57,11 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<WarehouseItem> getWarehouseItems ( ) {
+        return null;
+    }
+
+    @Override
+    public WarehouseResponse getPriceForQuantity(Long entityId, long regionId, long systemId, long itemId, long quantity) {
         return null;
     }
 }

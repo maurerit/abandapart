@@ -11,12 +11,11 @@
 package com.aba.industry.data.service;
 
 import com.aba.industry.domain.WarehouseItem;
+import com.aba.industry.model.WarehouseResponse;
+import com.aba.market.fetch.MarketOrderSearcher;
 
 import java.util.List;
 
-/**
- * Created by maurerit on 9/30/16.
- */
 public interface WarehouseService {
     /**
      * Administrative update method.  Consumption and purchases should instead flow through
@@ -44,7 +43,21 @@ public interface WarehouseService {
 
     void purchasedWarehouseItem ( Long typeId, Long quantity, Double price );
 
-    WarehouseItem getWarehouseItem ( Long typeId );
+    WarehouseItem getWarehouseItem (Long typeId );
 
     List<WarehouseItem> getWarehouseItems ( );
+
+    /**
+     * This method is similar to the {@link MarketOrderSearcher#getPriceForQuantity(long, long, long, long)}
+     * except that it requires some entity id to be passed in so the implementation understand who's warehouse
+     * it's looking at before filling the remainder of the order from the market.
+     *
+     * @param entityId Either a corporation id or a character id
+     * @param regionId
+     * @param systemId
+     * @param itemId
+     * @param quantity
+     * @return
+     */
+    WarehouseResponse getPriceForQuantity(Long entityId, long regionId, long systemId, long itemId, long quantity);
 }

@@ -17,6 +17,7 @@ import com.aba.eveonline.repo.RegionRepository;
 import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.config.OverheadConfigurationService;
+import com.aba.industry.data.service.WarehouseService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
 import com.aba.industry.invention.InventionCalculator;
@@ -25,7 +26,6 @@ import com.aba.industry.model.*;
 import com.aba.industry.model.fuzzysteve.BlueprintData;
 import com.aba.industry.model.fuzzysteve.SystemCostIndexes;
 import com.aba.industry.overhead.OverheadCalculator;
-import com.aba.market.fetch.MarketOrderSearcher;
 import com.aba.market.fetch.MarketPriceSearcher;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -69,7 +69,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
     private OverheadCalculator overheadCalculator;
 
     @Autowired
-    private MarketOrderSearcher marketOrderSearcher;
+    private WarehouseService warehouseService;
 
     @Autowired
     private MarketPriceSearcher marketPriceSearcher;
@@ -84,6 +84,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
     private ItemTypeRepository itemTypeRepository;
 
     @Override
+    @Deprecated
     public BuildCalculationResult calculateBuildCosts ( String systemName, Integer outputTypeId )
     {
         IndustrySkillConfiguration industrySkills = new IndustrySkillConfiguration();
@@ -110,6 +111,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
     // decryptor
     //however, version one of this will be for speculation and will assume defaults
     //TODO: Refactor these inputs to be contained inside a BuildCalculationConfiguration or some such
+    @Deprecated
     public BuildCalculationResult calculateBuildCosts (
             String systemName,
             Integer outputTypeId,
@@ -380,8 +382,9 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             source = CostSource.BUILT;
         }
         else {
-            cost = marketOrderSearcher.getPriceForQuantity( regionId, systemId, itemId, quantity );
-            source = CostSource.LIVE_MARKET_SELL;
+            WarehouseResponse warehouseResponse = warehouseService.getPriceForQuantity( request.getEntityId(), regionId, systemId, itemId, quantity );
+            cost = warehouseResponse.calcPricePerEach();
+            source = CostSource.WAREHOUSE;
         }
 
         Double adjustedCost = marketPriceSearcher.getAdjustedPrice( itemId );

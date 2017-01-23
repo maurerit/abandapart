@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.abandapart</groupId>
-            <artifactId>market-common</artifactId>
+            <artifactId>market-fetcher</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

@@ -52,6 +52,8 @@ public class BuildCalculationRequest {
     private Boolean suppressFreight      = false;
     @JsonProperty
     private Boolean suppressInstallation = false;
+    @JsonProperty
+    private Long entityId;
 
     public BuildCalculationRequest copy ( ) {
         BuildCalculationRequest result = new BuildCalculationRequest();
@@ -70,6 +72,7 @@ public class BuildCalculationRequest {
         result.setSuppressSalary( suppressSalary );
         result.setSuppressFreight( suppressFreight );
         result.setSuppressInstallation( suppressInstallation );
+        result.setEntityId(entityId);
 
         return result;
     }
