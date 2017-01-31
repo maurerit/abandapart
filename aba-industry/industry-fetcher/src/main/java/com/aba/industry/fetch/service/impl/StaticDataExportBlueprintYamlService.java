@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -20,6 +20,8 @@ import com.aba.industry.model.fuzzysteve.BlueprintDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
  * Created by maurerit on 7/30/16.
  */
 public class StaticDataExportBlueprintYamlService implements BuildRequirementsProvider {
+    private static final Logger logger = LoggerFactory.getLogger( StaticDataExportBlueprintYamlService.class );
     private Blueprints blueprints;
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -267,11 +270,18 @@ public class StaticDataExportBlueprintYamlService implements BuildRequirementsPr
 
             bpDetails.setTechLevel( TechLevel.ADVANCED.getNumerical() );
             if ( inventionBp.getActivities().get( BlueprintActivities.manufacturing ) != null ) {
-                bpDetails.setPrecursorTypeId( inventionBp.getActivities()
-                                                         .get( BlueprintActivities.manufacturing )
-                                                         .getProducts()
-                                                         .get( 0 )
-                                                         .getTypeID() );
+                logger.debug( inventionBp.toString() );
+                //effing stupid... now I have to check if the products of a bp is null...
+                if ( inventionBp.getActivities()
+                                .get( BlueprintActivities.manufacturing )
+                                .getProducts() != null )
+                {
+                    bpDetails.setPrecursorTypeId( inventionBp.getActivities()
+                                                             .get( BlueprintActivities.manufacturing )
+                                                             .getProducts()
+                                                             .get( 0 )
+                                                             .getTypeID() );
+                }
             }
             else {
                 //TODO: I don't know if this is correct but it will at least give us SOMETHING with a cost later.
