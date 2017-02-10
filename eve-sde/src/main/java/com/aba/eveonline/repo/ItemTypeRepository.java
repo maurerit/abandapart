@@ -10,14 +10,18 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
  * the specific language governing permissions and limitations under the License.
  */
-
 package com.aba.eveonline.repo;
 
+import com.aba.eveonline.model.Type;
 import org.devfleet.crest.model.CrestType;
 
 /**
  * Created by maurerit on 7/24/16.
  */
 public interface ItemTypeRepository {
-    CrestType getItemDetails ( int itemId );
+    CrestType fetchItemDetails ( long typeId );
+
+    Type findByTypeId ( long typeId );
+
+    Type findByName ( String name );
 }

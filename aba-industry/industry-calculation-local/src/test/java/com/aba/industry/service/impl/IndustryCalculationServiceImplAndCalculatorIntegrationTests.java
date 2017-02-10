@@ -241,7 +241,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 141.87 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 3812 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 3812 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 3812 ) )
                .thenReturn( materialItem );
         /*
   "3814": {
@@ -255,7 +255,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 34.3 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 3814 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 3814 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 3814 ) )
                .thenReturn( materialItem );
         /*
   "3828": {
@@ -269,7 +269,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 21568d );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 3828 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 3828 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 3828 ) )
                .thenReturn( materialItem );
         /*
   "9836": {
@@ -283,7 +283,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 15519.89 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 9836 ) )
                .thenReturn( 4000.75 );
-        Mockito.when( itemTypeRepository.getItemDetails( 9836 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 9836 ) )
                .thenReturn( materialItem );
         /*
   "11399": {
@@ -297,7 +297,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 12558.04 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11399 ) )
                .thenReturn( 4045.75 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11399 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11399 ) )
                .thenReturn( materialItem );
         /*
   "11461": {
@@ -311,7 +311,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 389.56 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11461 ) )
                .thenReturn( 1315.61 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11461 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11461 ) )
                .thenReturn( materialItem );
         /*
   "11478": {
@@ -325,7 +325,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 596.8 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11478 ) )
                .thenReturn( 258.71 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11478 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11478 ) )
                .thenReturn( materialItem );
         /*
   "11530": {
@@ -339,7 +339,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 59498.00 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11530 ) )
                .thenReturn( 13173.3 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11530 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11530 ) )
                .thenReturn( materialItem );
         /*
   "11536": {
@@ -353,7 +353,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 28796.99 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11536 ) )
                .thenReturn( 11086.65 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11536 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11536 ) )
                .thenReturn( materialItem );
         /*
   "11538": {
@@ -367,7 +367,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 39490.16 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11538 ) )
                .thenReturn( 26546.29 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11538 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11538 ) )
                .thenReturn( materialItem );
         /*
   "11542": {
@@ -381,7 +381,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 9004.98 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11542 ) )
                .thenReturn( 4022d );
-        Mockito.when( itemTypeRepository.getItemDetails( 11542 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11542 ) )
                .thenReturn( materialItem );
         /*
   "11548": {
@@ -395,7 +395,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 117999.52 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11548 ) )
                .thenReturn( 19212.66 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11548 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11548 ) )
                .thenReturn( materialItem );
         /*
   "11551": {
@@ -409,7 +409,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 37498.86 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 11551 ) )
                .thenReturn( 32909d );
-        Mockito.when( itemTypeRepository.getItemDetails( 11551 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11551 ) )
                .thenReturn( materialItem );
         /*
   "11555": {
@@ -423,7 +423,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 35300.00 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 35300 ) )
                .thenReturn( 9706.05 );
-        Mockito.when( itemTypeRepository.getItemDetails( 11555 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11555 ) )
                .thenReturn( materialItem );
         /*
   "20172": {
@@ -437,7 +437,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 99998.93 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 20172 ) )
                .thenReturn( 77837.65 );
-        Mockito.when( itemTypeRepository.getItemDetails( 20172 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 20172 ) )
                .thenReturn( materialItem );
         /*
   "20424": {
@@ -451,7 +451,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 43609.7 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 20424 ) )
                .thenReturn( 61198.27 );
-        Mockito.when( itemTypeRepository.getItemDetails( 20424 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 20424 ) )
                .thenReturn( materialItem );
         /*
   "24702": {
@@ -465,7 +465,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 51178568.63 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 24702 ) )
                .thenReturn( 34529995.28 );
-        Mockito.when( itemTypeRepository.getItemDetails( 24702 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 24702 ) )
                .thenReturn( materialItem );
         /*
   "34201": {
@@ -479,7 +479,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 388669.78 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34201 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34201 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34201 ) )
                .thenReturn( materialItem );
         /*
   "34202": {
@@ -493,7 +493,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 2789999.98 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34202 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34202 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34202 ) )
                .thenReturn( materialItem );
         /*
   "34203": {
@@ -507,7 +507,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 818745.39 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34203 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34203 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34203 ) )
                .thenReturn( materialItem );
         /*
   "34204": {
@@ -521,7 +521,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 969103d );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34204 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34204 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34204 ) )
                .thenReturn( materialItem );
         /*
   "34205": {
@@ -535,7 +535,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 440005d );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34205 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34205 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34205 ) )
                .thenReturn( materialItem );
         /*
   "34206": {
@@ -549,7 +549,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 269251.17 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34206 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34206 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34206 ) )
                .thenReturn( materialItem );
         /*
   "34207": {
@@ -563,7 +563,7 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 3998918.7 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34207 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34207 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34207 ) )
                .thenReturn( materialItem );
         /*
   "34208": {
@@ -577,14 +577,14 @@ public class IndustryCalculationServiceImplAndCalculatorIntegrationTests {
                .thenReturn( 4710999.92 );
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 34208 ) )
                .thenReturn( 0d );
-        Mockito.when( itemTypeRepository.getItemDetails( 34208 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 34208 ) )
                .thenReturn( materialItem );
         /*
 }
          */
         Mockito.when( marketPriceSearcher.getAdjustedPrice( 24703 ) )
                .thenReturn( 34958392.2 );
-        Mockito.when( itemTypeRepository.getItemDetails( 22444 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 22444 ) )
                .thenReturn( sleipnir );
         //endregion
         BuildCalculationResult result = industryCalculationService.calculateBuildCosts( "Atreen", 22444,
