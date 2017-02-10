@@ -188,8 +188,8 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
                                                             meLevelToUse, teLevelToUse,
                                                             request.getIndustrySkills(),
                                                             request.getSuppressInstallation() );
-        if ( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() ) != null ) {
-            result.setProductName( itemTypeRepository.getItemDetails( request.getRequestedBuildTypeId() )
+        if ( itemTypeRepository.fetchItemDetails( request.getRequestedBuildTypeId() ) != null ) {
+            result.setProductName( itemTypeRepository.fetchItemDetails( request.getRequestedBuildTypeId() )
                                                      .getName() );
         }
         else {
@@ -407,7 +407,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         am.setCost( cost );
         am.setAdjustedCost( adjustedCost );
         am.setSource( source );
-        am.setName( itemTypeRepository.getItemDetails( am.getTypeId() )
+        am.setName( itemTypeRepository.fetchItemDetails( am.getTypeId() )
                                       .getName() );
 
         return result;

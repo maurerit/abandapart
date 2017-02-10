@@ -10,12 +10,13 @@
 
 package com.aba.eveonline.repo;
 
+import com.aba.eveonline.repo.impl.BaseItemTypeRepository;
 import org.devfleet.crest.model.CrestType;
 
 /**
  * Created by maurerit on 9/7/16.
  */
-public class NullItemTypeRepository implements ItemTypeRepository {
+public class NullItemTypeRepository extends BaseItemTypeRepository {
     private static final CrestType NULL_TYPE = new CrestType();
 
     static {
@@ -26,7 +27,7 @@ public class NullItemTypeRepository implements ItemTypeRepository {
     }
 
     @Override
-    public CrestType getItemDetails ( int itemId ) {
+    public CrestType fetchItemDetails(long itemId ) {
         return NULL_TYPE;
     }
 }
