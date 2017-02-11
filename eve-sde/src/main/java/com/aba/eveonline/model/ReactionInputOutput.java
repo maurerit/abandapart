@@ -12,15 +12,11 @@ package com.aba.eveonline.model;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by maurerit on 2/10/17.
  */
 @Data
-public class Reaction {
-    private Type reaction;
-    private List<ReactionInputOutput> inputs = new ArrayList<>();
-    private List<ReactionInputOutput> output = new ArrayList<>();
+public class ReactionInputOutput {
+    private Type    type;
+    private Integer quantity;
 }

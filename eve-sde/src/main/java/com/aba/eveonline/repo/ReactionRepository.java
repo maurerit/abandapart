@@ -8,19 +8,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.eveonline.model;
+package com.aba.eveonline.repo;
 
-import lombok.Data;
+import com.aba.eveonline.model.Reaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by maurerit on 2/10/17.
  */
-@Data
-public class Reaction {
-    private Type reaction;
-    private List<ReactionInputOutput> inputs = new ArrayList<>();
-    private List<ReactionInputOutput> output = new ArrayList<>();
+public interface ReactionRepository {
+    List<Reaction> findAll ( );
+
+    Reaction findByReactionName ( String reactionName );
+
+    Reaction findByReactionTypeId ( Long reactionTypeId );
+
+    List<Reaction> findAllByInput ( String inputName );
 }
