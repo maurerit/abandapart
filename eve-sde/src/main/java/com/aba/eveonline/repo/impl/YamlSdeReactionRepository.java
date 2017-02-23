@@ -81,9 +81,11 @@ public class YamlSdeReactionRepository implements ReactionRepository {
                 io.setType( outputType );
                 io.setQuantity( record.getQuantity() );
 
-                reaction.getOutput()
+                reaction.getOutputs()
                         .add( io );
             }
+
+            reaction.setReaction(itemTypeRepository.findByTypeId(reactionTypeId));
 
             this.reactions.add( reaction );
         }
@@ -99,13 +101,13 @@ public class YamlSdeReactionRepository implements ReactionRepository {
         Reaction foundReaction = null;
 
         Optional<Reaction> possibleReaction = this.reactions.stream()
-                                                            .filter( reaction -> reaction.getOutput()
+                                                            .filter( reaction -> reaction.getOutputs()
                                                                                          .stream()
                                                                                          .anyMatch(
                                                                                                  output -> output
                                                                                                          .getType()
                                                                                                          .getName()
-                                                                                                         .equals(
+                                                                                                         .equalsIgnoreCase(
                                                                                                                  reactionName ) )
                                                             )
                                                             .findFirst();
@@ -119,11 +121,31 @@ public class YamlSdeReactionRepository implements ReactionRepository {
 
     @Override
     public Reaction findByReactionTypeId ( Long reactionTypeId ) {
-        return null;
+        Reaction foundReaction = null;
+
+        Optional<Reaction> possibleReaction = this.reactions.stream().filter(reaction -> reactionTypeId.equals(reaction.getReaction().getTypeId())).findFirst();
+
+        if ( possibleReaction.isPresent() ) {
+            foundReaction = possibleReaction.get();
+        }
+
+        return foundReaction;
     }
 
     @Override
     public List<Reaction> findAllByInput ( String inputName ) {
-        return null;
+        List<Reaction> foundReactions = reactions.stream()
+                                                 .filter( reaction -> reaction.getInputs()
+                                                                              .stream()
+                                                                              .filter(
+                                                                                      input -> input
+                                                                                              .getType()
+                                                                                              .getName()
+                                                                                              .equalsIgnoreCase(inputName))
+                                                                                              .count() > 0
+                                                 )
+                                                 .collect(Collectors.toList());
+
+        return foundReactions;
     }
 }

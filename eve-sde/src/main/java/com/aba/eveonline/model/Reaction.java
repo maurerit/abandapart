@@ -22,5 +22,5 @@ import java.util.List;
 public class Reaction {
     private Type reaction;
     private List<ReactionInputOutput> inputs = new ArrayList<>();
-    private List<ReactionInputOutput> output = new ArrayList<>();
+    private List<ReactionInputOutput> outputs = new ArrayList<>();
 }
