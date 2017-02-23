@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -26,10 +28,39 @@ public class YamlSdeReactionRepositoryTests {
             new YamlSdeItemTypeRepository() );
 
     @Test
-    public void testGetHypersynapticFibersReaction ( ) {
-        Reaction hperSynFibers = reactionRepository.findByReactionName( "Hypersynaptic Fibers" );
+    public void testGetHypersynapticFibersReactionByOutputName ( ) {
+        Reaction hyperSynFibers = reactionRepository.findByReactionName( "Hypersynaptic Fibers" );
 
-        assertEquals( 1, hperSynFibers.getOutput()
+        assertEquals( 1, hyperSynFibers.getOutputs()
                                       .size() );
+    }
+
+    @Test
+    public void testGetHyperSynapticFibersReactionByReactionTypeId ( ) {
+        Reaction hyperSynFibers = reactionRepository.findByReactionTypeId(17970l);
+
+        assertEquals("Hypersynaptic Fibers Reaction",hyperSynFibers.getReaction().getName().getEn());
+    }
+
+    @Test
+    public void testGetAllReactionsWithSoleriumAsInput ( ) {
+        List<Reaction> reactions = reactionRepository.findAllByInput("Solerium");
+
+        assertEquals(1, reactions.size());
+        assertEquals("Hypersynaptic Fibers Reaction", reactions.get(0).getReaction().getName().getEn());
+    }
+
+    @Test
+    public void testGetAllReactionsWithCadmiumAsInput ( ) {
+        List<Reaction> reactions = reactionRepository.findAllByInput("Cadmium");
+
+        assertEquals(7, reactions.size());
+    }
+
+    @Test
+    public void findAll ( ) {
+        List<Reaction> reactions = reactionRepository.findAll();
+
+        assertEquals(103, reactions.size());
     }
 }

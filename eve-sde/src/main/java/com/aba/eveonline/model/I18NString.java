@@ -25,7 +25,7 @@ public class I18NString {
     private String ru;
     private String zh;
 
-    public boolean equals ( String value ) {
+    public boolean equalsIgnoreCase(String value ) {
         if ( value == null ) {
             return false;
         }

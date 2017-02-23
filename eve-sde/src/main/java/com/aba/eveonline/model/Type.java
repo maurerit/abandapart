@@ -19,6 +19,7 @@ import java.util.Map;
 
 @Data
 public class Type {
+    private Long typeId;
     private I18NString description;
     private Integer graphicID;
     private Integer groupID;

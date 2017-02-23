@@ -20,6 +20,7 @@ public class YamlSdeItemTypeRepository extends BaseItemTypeRepository {
         InputStream typeIS = YamlSdeItemTypeRepository.class.getResourceAsStream("/typeIDs.yaml");
         types = yaml.loadAs(typeIS, Types.class);
         types.setTypes(new ConcurrentHashMap<>(types.getTypes()));
+        types.getTypes().entrySet().forEach(typeEntry -> typeEntry.getValue().setTypeId(typeEntry.getKey()));
     }
 
     @Override
@@ -34,7 +35,7 @@ public class YamlSdeItemTypeRepository extends BaseItemTypeRepository {
         Optional<Map.Entry<Long, Type>> optional = types.getTypes().entrySet()
                 .stream()
                 .filter(
-                        integerTypeEntry -> integerTypeEntry.getValue().getName().equals(name))
+                        integerTypeEntry -> integerTypeEntry.getValue().getName().equalsIgnoreCase(name))
                 .findAny();
 
         if ( optional.isPresent() ) {
