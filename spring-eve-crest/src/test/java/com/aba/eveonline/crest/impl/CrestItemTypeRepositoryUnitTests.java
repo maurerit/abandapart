@@ -40,7 +40,7 @@ public class CrestItemTypeRepositoryUnitTests {
 
     @Test
     public void testFindSliepnirName ( ) {
-        CrestItem item = crestItemTypeRepository.getItemDetails( 22444 );
+        CrestItem item = crestItemTypeRepository.fetchItemDetails( 22444 );
 
         Assert.assertEquals( item.getName(), "Sleipnir" );
     }

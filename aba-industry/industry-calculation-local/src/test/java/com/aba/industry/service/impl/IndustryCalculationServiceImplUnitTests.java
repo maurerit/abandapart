@@ -234,7 +234,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11530,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11530 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11530 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -246,7 +246,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11399,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11399 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11399 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -258,7 +258,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11542,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11542 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11542 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -270,7 +270,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11536,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11536 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11536 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -282,7 +282,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11538,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11538 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11538 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -294,7 +294,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11555,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11555 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11555 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -306,7 +306,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 3828,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 3828 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 3828 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -318,7 +318,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11478,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11478 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11478 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -330,7 +330,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11548,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11548 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11548 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -342,7 +342,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 24702,
       "maketype": null
     },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 24702 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 24702 ) )
                .thenReturn( materialItem );
         /*
     {
@@ -354,7 +354,7 @@ public class IndustryCalculationServiceImplUnitTests {
       "typeid": 11551,
       "maketype": null
     }*/
-        Mockito.when( itemTypeRepository.getItemDetails( 11551 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 11551 ) )
                .thenReturn( materialItem );
         /*
         {
@@ -366,7 +366,7 @@ public class IndustryCalculationServiceImplUnitTests {
         "typeid": 20424,
         "maketype": null
       },*/
-        Mockito.when( itemTypeRepository.getItemDetails( 20424 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 20424 ) )
                .thenReturn( materialItem );
         /*
       {
@@ -378,9 +378,9 @@ public class IndustryCalculationServiceImplUnitTests {
         "typeid": 20172,
         "maketype": null
       }*/
-        Mockito.when( itemTypeRepository.getItemDetails( 20172 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 20172 ) )
                .thenReturn( materialItem );
-        Mockito.when( itemTypeRepository.getItemDetails( 22444 ) )
+        Mockito.when( itemTypeRepository.fetchItemDetails( 22444 ) )
                .thenReturn( sleipnir );
         //endregion
 

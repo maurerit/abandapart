@@ -14,6 +14,7 @@
 package com.aba.eveonline.crest.repo;
 
 import com.aba.eveonline.repo.ItemTypeRepository;
+import com.aba.eveonline.repo.impl.BaseItemTypeRepository;
 import lombok.Setter;
 import org.devfleet.crest.CrestService;
 import org.devfleet.crest.model.CrestType;
@@ -26,13 +27,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Setter
-public class CrestItemTypeRepository implements ItemTypeRepository {
+public class CrestItemTypeRepository extends BaseItemTypeRepository {
     @Autowired
     private CrestService crestService;
 
     @Override
     @Cacheable( "crest-inventory-items" )
-    public CrestType getItemDetails ( int itemId ) {
-        return crestService.getInventoryType( itemId );
+    public CrestType fetchItemDetails ( long itemId ) {
+        return crestService.getInventoryType( (int)itemId );
     }
 }
