@@ -21,6 +21,10 @@ import com.aba.industry.service.LocalIndustryCalculationService;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.impl.CrestBulkMarketOrderFetcher;
 import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -59,5 +63,17 @@ public class AutoBuildCheckerConfig {
     @Bean
     public FanoutExchange exchange ( ) {
         return new FanoutExchange( "build-calc" );
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate ( ConnectionFactory factory, MessageConverter messageConverter ) {
+        RabbitTemplate template = new RabbitTemplate( factory );
+        template.setMessageConverter( messageConverter );
+        return template;
+    }
+
+    @Bean
+    public MessageConverter messageConverter ( ) {
+        return new JsonMessageConverter();
     }
 }

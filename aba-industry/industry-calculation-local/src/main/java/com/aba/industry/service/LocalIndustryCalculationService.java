@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -124,6 +124,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
             boolean useBuildOrBuyConfigurations )
     {
         BuildCalculationRequest request = new BuildCalculationRequest();
+        request.setEntityId(0l);
         request.setSystemName( systemName );
         request.setRequestedBuildTypeId( outputTypeId );
         request.setIndustrySkills( industrySkills );
@@ -233,7 +234,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         {
             for ( ActivityMaterialWithCost am : blueprintData.getActivityMaterials()
                                                              .get( IndustryActivities.INVENTION.getActivityId() ) ) {
-                putCostsIntoMaterialCost( regionId, systemId, am, null );
+                putCostsIntoMaterialCost( regionId, systemId, am, request );
             }
         }
 
@@ -280,6 +281,7 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
     {
         SalaryConfiguration salaryConfiguration = this.overheadService.getSalaryConfiguration();
         FreightConfiguration freightConfiguration = this.overheadService.getFreightConfiguration();
+        logger.debug( "Recieved: {} as item to build.", result.getProductName() );
 
         //region Freight Calculations
         if ( !suppressFreight ) {
@@ -290,51 +292,65 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
                     regionRepository.findRegionId( "The Forge" ),
                     jitaId,
                     result.getProductId() );
+            logger.debug( "Jita Lowest Sell: {}", jitaLowestSell );
 
             Double amarrLowestSell = marketPriceSearcher.getLowestSellPrice( regionRepository.findRegionId( "Domain" ),
                                                                              amarrId,
                                                                              result.getProductId() );
+            logger.debug( "Amarr Lowest Sell: {}", amarrLowestSell );
             //TODO: Maybe I need to start dealing in BigDecimals instead of rounding error prone floating point values?
+            FreightDetails toJitaFreight = overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
+                                                                                 (double) Math.round(
+                                                                                         result.getMaterialCost()
+                                                                                 ) );
             result.getToBuildLocationFreight()
-                  .put( JITA.getSystemName(), overheadCalculator.getFreightDetails( JITA.getSystemName(), systemName,
-                                                                                    (double) Math.round(
-                                                                                            result.getMaterialCost()
-                                                                                    ) ) );
+                  .put( JITA.getSystemName(), toJitaFreight );
+            logger.debug( "To Jita Freight: {}", toJitaFreight );
+
+            FreightDetails toAmarrFreight = overheadCalculator.getFreightDetails( AMARR.getSystemName(), systemName,
+                                                                                  (double) Math.round(
+                                                                                          result.getMaterialCost()
+                                                                                  ) );
             result.getToBuildLocationFreight()
-                  .put( AMARR.getSystemName(), overheadCalculator.getFreightDetails( AMARR.getSystemName(), systemName,
-                                                                                     (double) Math.round(
-                                                                                             result.getMaterialCost()
-                                                                                     ) ) );
+                  .put( AMARR.getSystemName(), toAmarrFreight );
+            logger.debug( "To Amarry Freight: {}", toAmarrFreight );
 
 
             //TODO: Situations where there is no item listed make a configurable desirable profit ratio
             if ( jitaLowestSell == null || jitaLowestSell < 1 ) {
+                FreightDetails fromJitaFreight = overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
+                                                                                       (double) Math.round(
+                                                                                               result.getMaterialCost()
+                                                                                       ) );
                 result.getFromBuildLocationFreight()
-                      .put( JITA.getSystemName(),
-                            overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
-                                                                  (double) Math.round(
-                                                                          result.getMaterialCost()
-                                                                  ) ) );
+                      .put( JITA.getSystemName(), fromJitaFreight );
+                logger.debug( "From Jita Freight (material costs): {}", fromJitaFreight );
             }
             else {
+                FreightDetails fromJitaFreight = overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(),
+                                                                                       jitaLowestSell );
                 result.getFromBuildLocationFreight()
-                      .put( JITA.getSystemName(),
-                            overheadCalculator.getFreightDetails( systemName, JITA.getSystemName(), jitaLowestSell ) );
+                      .put( JITA.getSystemName(), fromJitaFreight );
+                logger.debug( "From Jita Freight (lowest price): {}", fromJitaFreight );
             }
 
             if ( amarrLowestSell == null || amarrLowestSell < 1 ) {
+                FreightDetails fromAmarrFreight = overheadCalculator.getFreightDetails( systemName,
+                                                                                        AMARR.getSystemName(),
+                                                                                        (double) Math.round(
+                                                                                                result.getMaterialCost()
+                                                                                        ) );
                 result.getFromBuildLocationFreight()
-                      .put( AMARR.getSystemName(),
-                            overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
-                                                                  (double) Math.round(
-                                                                          result.getMaterialCost()
-                                                                  ) ) );
+                      .put( AMARR.getSystemName(), fromAmarrFreight );
+                logger.debug( "From Amarr Freight (material costs): {}", fromAmarrFreight );
             }
             else {
+                FreightDetails fromAmarrFreight = overheadCalculator.getFreightDetails( systemName,
+                                                                                        AMARR.getSystemName(),
+                                                                                        amarrLowestSell );
                 result.getFromBuildLocationFreight()
-                      .put( AMARR.getSystemName(),
-                            overheadCalculator.getFreightDetails( systemName, AMARR.getSystemName(),
-                                                                  amarrLowestSell ) );
+                      .put( AMARR.getSystemName(), fromAmarrFreight );
+                logger.debug( "From Amarr Freight (lowest price): {}", fromAmarrFreight );
             }
         }
         //endregion
@@ -383,8 +399,14 @@ public class LocalIndustryCalculationService implements IndustryCalculationServi
         }
         else {
             WarehouseResponse warehouseResponse = warehouseService.getPriceForQuantity( request.getEntityId(), regionId, systemId, itemId, quantity );
-            cost = warehouseResponse.calcPricePerEach();
-            source = CostSource.WAREHOUSE;
+            if ( warehouseResponse != null ) {
+                cost = warehouseResponse.calcPricePerEach();
+                source = CostSource.WAREHOUSE;
+            }
+            else{
+                cost = 0d;
+                source = CostSource.NO_PRICE;
+            }
         }
 
         Double adjustedCost = marketPriceSearcher.getAdjustedPrice( itemId );

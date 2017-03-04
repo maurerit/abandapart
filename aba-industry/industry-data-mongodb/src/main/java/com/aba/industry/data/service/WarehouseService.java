@@ -37,6 +37,8 @@ public interface WarehouseService {
      */
     void updateWarehouseItem ( Long typeId, Long quantityToAdd, Double costOfNewItems );
 
+    boolean hasWarehouse ( Long entityId );
+
     void removeWarehouseItem ( Long typeId );
 
     void consumedWarehouseItem ( Long typeId, Long quantity );

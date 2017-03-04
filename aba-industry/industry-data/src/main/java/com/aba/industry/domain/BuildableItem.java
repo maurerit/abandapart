@@ -8,12 +8,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
+package com.aba.industry.domain;
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+import com.aba.industry.model.BuildCalculationResult;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import java.util.Date;
+
+/**
+ * Created by maurerit on 1/27/17.
+ */
+@Data
+public class BuildableItem {
+    @Id
+    private String                 id;
+    private Date                   dateCalculated;
+    private BuildCalculationResult buildCalculationResult;
+}

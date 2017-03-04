@@ -100,14 +100,14 @@ my-app/
     App.js
     App.test.js
     index.css
-    Producers.reducers.js
+    index.js
     logo.svg
 ```
 
 For the project to build, **these files must exist with exact filenames**:
 
 * `public/index.html` is the page template;
-* `src/Producers.reducers.js` is the JavaScript entry point.
+* `src/index.js` is the JavaScript entry point.
 
 You can delete or rename the other files.
 
@@ -283,7 +283,7 @@ class Button extends Component {
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
-If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/Producers.reducers.js`, but you could always remove that import if you later migrate to a different build tool.
+If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
 
 ## Post-Processing CSS
 
@@ -427,7 +427,7 @@ npm install react-bootstrap --save
 npm install bootstrap@3 --save
 ```
 
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```src/Producers.reducers.js``` file:
+Import Bootstrap CSS and optionally Bootstrap theme CSS in the ```src/index.js``` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';

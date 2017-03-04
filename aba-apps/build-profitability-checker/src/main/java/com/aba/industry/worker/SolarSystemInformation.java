@@ -8,12 +8,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
+package com.aba.industry.worker;
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+import lombok.Data;
+
+/**
+ * Created by maurerit on 8/13/16.
+ */
+@Data
+public class SolarSystemInformation {
+    private String systemName;
+    private String regionName;
+    private String stationName;
+    private Long   systemId;
+    private Long   regionId;
+    private Long   stationId;
+}

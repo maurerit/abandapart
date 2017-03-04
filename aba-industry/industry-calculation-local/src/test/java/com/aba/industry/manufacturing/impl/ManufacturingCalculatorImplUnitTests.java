@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -75,7 +75,7 @@ public class ManufacturingCalculatorImplUnitTests {
         Assert.assertEquals( 312429715.96, result.getMaterialCost(), 0.01 );
         Assert.assertEquals( 20036519.59, result.getInstallationFees(), 0.01 );
         Assert.assertEquals( 2003651.95, result.getInstallationTax(), 0.01 );
-        Assert.assertEquals( result.getProductId(), 22444l );
+        Assert.assertEquals( result.getProductId(), new Integer( 22444 ) );
     }
 
 }

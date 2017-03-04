@@ -89,6 +89,7 @@
   },
   "blueprintDetails": {
     "maxProductionLimit": 1,
+    "inventionResultingRuns": 1,
     "productTypeID": 22444,
     "productTypeName": "Sleipnir",
     "productQuantity": 1,
