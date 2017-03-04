@@ -5,7 +5,7 @@ class TopNav extends Component {
     render() {
         return (
             <div>
-                <AppBar title="ABA Industry" />
+                <AppBar title="ABA Industry" style={{position: 'fixed'}}/>
             </div>
         )
     }
