@@ -13,7 +13,8 @@ package com.aba.eveonline.repo.impl;
 import com.aba.eveonline.model.Reaction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.springframework.test.annotation.IfProfileValue;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
@@ -22,12 +23,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by maurerit on 2/11/17.
  */
-@RunWith( JUnit4.class )
+@RunWith( SpringJUnit4ClassRunner.class )
 public class YamlSdeReactionRepositoryTests {
     private YamlSdeReactionRepository reactionRepository = new YamlSdeReactionRepository(
             new YamlSdeItemTypeRepository() );
 
     @Test
+    @IfProfileValue( name = "test-profile", value = "BigMemory" )
     public void testGetHypersynapticFibersReactionByOutputName ( ) {
         Reaction hyperSynFibers = reactionRepository.findByReactionName( "Hypersynaptic Fibers" );
 
@@ -36,6 +38,7 @@ public class YamlSdeReactionRepositoryTests {
     }
 
     @Test
+    @IfProfileValue( name = "test-profile", value = "BigMemory" )
     public void testGetHyperSynapticFibersReactionByReactionTypeId ( ) {
         Reaction hyperSynFibers = reactionRepository.findByReactionTypeId(17970l);
 
@@ -43,6 +46,7 @@ public class YamlSdeReactionRepositoryTests {
     }
 
     @Test
+    @IfProfileValue( name = "test-profile", value = "BigMemory" )
     public void testGetAllReactionsWithSoleriumAsInput ( ) {
         List<Reaction> reactions = reactionRepository.findAllByInput("Solerium");
 
@@ -51,6 +55,7 @@ public class YamlSdeReactionRepositoryTests {
     }
 
     @Test
+    @IfProfileValue( name = "test-profile", value = "BigMemory" )
     public void testGetAllReactionsWithCadmiumAsInput ( ) {
         List<Reaction> reactions = reactionRepository.findAllByInput("Cadmium");
 
@@ -58,6 +63,7 @@ public class YamlSdeReactionRepositoryTests {
     }
 
     @Test
+    @IfProfileValue( name = "test-profile", value = "BigMemory" )
     public void findAll ( ) {
         List<Reaction> reactions = reactionRepository.findAll();
 

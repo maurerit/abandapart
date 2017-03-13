@@ -1,0 +1,403 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Shopping Cart Service with Spring REST and Swagger",
+    "version": "1.0",
+    "title": "Simple Shopping Cart Service",
+    "contact": {
+      "name": "Matt Maurer",
+      "url": "https://github.com/maurerit",
+      "email": "maurer.it@gmail.com"
+    },
+    "license": {
+      "name": "Apache License Version 2.0"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "shopping-cart-service",
+      "description": "Operations with Shopping Carts"
+    }
+  ],
+  "paths": {
+    "/cart": {
+      "post": {
+        "tags": [
+          "Shopping Cart"
+        ],
+        "summary": "Current shopping cart",
+        "description": "Gets the current shopping cart for a given customer, if none exists then one is created",
+        "operationId": "getShoppingCart",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "customerId",
+            "description": "ID of the customer for the current cart",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nice!",
+            "schema": {
+              "$ref": "#/definitions/ShoppingCart"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/cart/{cartId}": {
+      "get": {
+        "tags": [
+          "Shopping Cart"
+        ],
+        "summary": "Find by cart id",
+        "description": "Returns a shopping cart",
+        "operationId": "getByCartId",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "ID of the cart that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nice!",
+            "schema": {
+              "$ref": "#/definitions/ShoppingCart"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Shopping Cart Not Found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Shopping Cart"
+        ],
+        "summary": "Add item to cart",
+        "description": "Adds an item to the cart",
+        "operationId": "addItemToCard",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "ID of the cart that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "item",
+            "description": "Cart Item to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShoppingCartItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nice!",
+            "schema": {
+              "$ref": "#/definitions/ShoppingCart"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Shopping Cart Not Found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "409": {
+            "description": "Item already exists, modify quantity instead",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Shopping Cart"
+        ],
+        "summary": "Checkout with the carts contents",
+        "description": "Checks the shopping cart out (submits it to be fulfilled)",
+        "operationId": "checkout",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "ID of the cart that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nice!",
+            "schema": {
+              "$ref": "#/definitions/ShoppingCart"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Shopping Cart Not Found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/cart/{cartId}/{itemId}": {
+      "patch": {
+        "tags": [
+          "Shopping Cart"
+        ],
+        "summary": "Quantity Update",
+        "description": "Update the quantity of an item in a cart",
+        "operationId": "updateItemQuantity",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "ID of the cart for the item needing updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "Item ID in the cart to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "item",
+            "description": "item",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShoppingCartItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Nice!",
+            "schema": {
+              "$ref": "#/definitions/ShoppingCart"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Cart/Item not found",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ShoppingCart": {
+      "type": "object",
+      "required": [
+        "customerId",
+        "status"
+      ],
+      "properties": {
+        "customerId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The id of the customer"
+        },
+        "items": {
+          "type": "array",
+          "description": "All of the items in this shopping cart",
+          "items": {
+            "$ref": "#/definitions/ShoppingCartItem"
+          }
+        },
+        "shoppingCartId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The id of the shopping cart"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the shopping cart",
+          "enum": [
+            "SHOPPING",
+            "ORDERED",
+            "IN_PROGRESS",
+            "GATHERING_MATERIALS",
+            "SHIPPING",
+            "COMPLETE"
+          ]
+        }
+      }
+    },
+    "ShoppingCartItem": {
+      "type": "object",
+      "required": [
+        "itemId",
+        "price",
+        "quantity"
+      ],
+      "properties": {
+        "itemId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The id of the item"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": "The price of the item when added to the cart"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Quantity being ordered"
+        },
+        "shoppingCartId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The id of the shopping cart"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "SHOPPING",
+            "ORDERED",
+            "IN_PROGRESS",
+            "GATHERING_MATERIALS",
+            "SHIPPING",
+            "COMPLETE"
+          ]
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

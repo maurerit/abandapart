@@ -20,3 +20,4 @@ mongodb
 key
 tmp
 aba-apps/character-skills/src/main/resources/application.yml
+aba-apps/shopping-cart/src/main/resources/application.yml

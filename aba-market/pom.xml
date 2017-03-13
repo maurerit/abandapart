@@ -31,5 +31,7 @@
     <modules>
         <module>market-common</module>
         <module>market-fetcher</module>
+        <module>shopping-cart-jdbc-dao</module>
+        <module>shopping-cart-model</module>
     </modules>
 </project>
