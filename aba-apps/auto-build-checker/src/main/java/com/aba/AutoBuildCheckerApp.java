@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by maurerit on 8/27/16.
@@ -25,11 +26,14 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 @EnableAutoConfiguration( exclude = { HibernateJpaAutoConfiguration.class, DataSourceAutoConfiguration.class } )
 @EnableCaching
+@EnableScheduling
 public class AutoBuildCheckerApp {
-    public static void main ( String[] args ) {
+    public static void main ( String[] args ) throws InterruptedException {
         ApplicationContext context = SpringApplication.run( AutoBuildCheckerApp.class, args );
         AutoBuildChecker checker = context.getBean( AutoBuildChecker.class );
 
-        checker.run();
+        while ( true ) {
+            Thread.sleep( 10000 );
+        }
     }
 }

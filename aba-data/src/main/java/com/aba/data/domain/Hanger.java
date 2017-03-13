@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
@@ -11,17 +11,20 @@
  * the specific language governing permissions and limitations under the License.
  */
 
-package com.aba.eveonline.repo;
+package com.aba.data.domain;
 
-import org.devfleet.crest.model.CrestItem;
+import com.aba.data.domain.api.Asset;
+import lombok.Data;
 
 import java.util.List;
 
 /**
- * Created by maurerit on 7/25/16.
+ * Created by maurerit on 1/8/17.
  */
-public interface RegionRepository {
-    List<CrestItem> getRegions ( );
-
-    Long findRegionId ( String regionName );
+@Data
+public class Hanger {
+    private String      id;
+    private Integer     hangerId;
+    private String      hangerName;
+    private List<Asset> assets;
 }

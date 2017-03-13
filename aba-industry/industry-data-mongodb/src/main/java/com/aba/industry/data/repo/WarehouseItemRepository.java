@@ -17,5 +17,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Created by maurerit on 9/30/16.
  */
 public interface WarehouseItemRepository extends MongoRepository<WarehouseItem, String> {
-    WarehouseItem findByTypeId ( Long typeId );
+    WarehouseItem findByTypeIdAndEntityId ( Long typeId, Long entityId );
 }

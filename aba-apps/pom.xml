@@ -33,6 +33,7 @@
         <module>character-skills</module>
         <module>discovery-server</module>
         <module>shopping-cart</module>
+        <module>build-profitability-checker</module>
     </modules>
 
     <dependencies>

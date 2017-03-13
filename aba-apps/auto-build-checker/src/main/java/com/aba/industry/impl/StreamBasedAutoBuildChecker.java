@@ -28,6 +28,7 @@ import org.slf4j.profiler.Profiler;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -40,7 +41,6 @@ import java.util.stream.Collectors;
 @Component
 public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
     private static final Logger       logger       = LoggerFactory.getLogger( StreamBasedAutoBuildChecker.class );
-    private final        ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private ApplicationContext context;
     @Autowired
@@ -55,6 +55,8 @@ public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
     private RabbitTemplate queueTemplate;
 
     @Override
+    //@Scheduled( fixedRate = 14400000, initialDelay = 2000 )
+    @Scheduled( fixedRate = 600000, initialDelay = 2000 )
     public void run ( ) {
         List<BlueprintData> bps = buildRequirementsProvider.getAllBlueprints();
 
@@ -93,7 +95,7 @@ public class StreamBasedAutoBuildChecker implements AutoBuildChecker {
                    result = industryCalculationService.calculateBuild( request );
                    logger.debug( "Received stuff for {}",
                                  bpData.getRequestedId() );
-                   queueTemplate.convertAndSend( "build-calc", "", objectMapper.writeValueAsString( result ) );
+                   queueTemplate.convertAndSend( "build-calc", "", result );
                }
                catch ( IOException e ) {
                    logger.error(

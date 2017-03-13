@@ -19,6 +19,7 @@ import com.aba.eveonline.repo.SolarSystemRepository;
 import com.aba.industry.ItemCost;
 import com.aba.industry.config.BuildOrBuyConfigurationService;
 import com.aba.industry.config.OverheadConfigurationService;
+import com.aba.industry.data.service.WarehouseService;
 import com.aba.industry.fetch.client.BuildRequirementsProvider;
 import com.aba.industry.fetch.client.CostIndexProvider;
 import com.aba.industry.invention.InventionCalculator;
@@ -75,6 +76,8 @@ public class IndustryCalculationServiceImplUnitTests {
     private MarketOrderFetcher             marketOrderFetcher;
     @Mock
     private MarketOrderSearcher            marketOrderSearcher;
+    @Mock
+    private WarehouseService               warehouseService;
     @Mock
     private MarketPriceSearcher            marketPriceSearcher;
     @Mock

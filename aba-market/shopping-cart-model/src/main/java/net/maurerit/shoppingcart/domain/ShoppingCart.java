@@ -94,26 +94,6 @@ public class ShoppingCart implements Serializable {
         return status == that.status;
     }
 
-    @Override
-    public boolean equals ( Object o ) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-
-        ShoppingCart that = (ShoppingCart) o;
-
-        if ( shoppingCartId != that.shoppingCartId ) {
-            return false;
-        }
-        if ( customerId != that.customerId ) {
-            return false;
-        }
-        return status == that.status;
-    }
-
     @OneToMany( mappedBy = "cart", fetch = FetchType.EAGER )
     public List<ShoppingCartItem> getItems ( ) {
         return items;

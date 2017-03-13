@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -35,11 +35,11 @@ public class BuildCalculationResult extends CalculationResult {
     private IndustrySkillConfiguration skillConfiguration;
 
     @JsonProperty
-    private long   productId;
+    private Integer productId;
     @JsonProperty
-    private String productName;
+    private String  productName;
     @JsonProperty
-    private String buildSystem;
+    private String  buildSystem;
     @JsonProperty
     private Double materialCost = 0d;
     /**

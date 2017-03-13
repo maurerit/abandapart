@@ -63,5 +63,10 @@
             <artifactId>spring-eve-crest</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.abandapart</groupId>
+            <artifactId>industry-data-mongodb</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>

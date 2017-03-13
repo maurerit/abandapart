@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 maurerit
+ * Copyright 2017 maurerit
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -11,6 +11,7 @@
 package com.aba.market.fetch.impl;
 
 import com.aba.market.TradeHubs;
+import com.aba.market.comparator.CrestMarketOrderPriceAscendingComparator;
 import com.aba.market.fetch.MarketOrderFetcher;
 import com.aba.market.fetch.MarketPriceFetcher;
 import com.aba.market.fetch.MarketPriceSearcher;
@@ -46,15 +47,20 @@ public class CrestMarketPriceSearcher implements MarketPriceSearcher {
         final Long hubIdToFind = TradeHubs.findBySystemId( systemId )
                                           .getStationId();
 
-        List<CrestMarketOrder> sellOrders = marketOrderFetcher.getMarketSellOrders( regionId, itemId );
+        List<CrestMarketOrder> sellOrders = marketOrderFetcher.getMarketSellOrders( regionId,
+                                                                                    itemId );
 
-        OptionalDouble price = sellOrders.stream()
-                                         .filter( order -> order.getLocationId() == hubIdToFind )
-                                         .mapToDouble( order -> order.getPrice() )
-                                         .findFirst();
+        OptionalDouble priceOpt = sellOrders.stream()
+                                            .filter(
+                                                    order -> order.getLocationId() == hubIdToFind )
+                                            .sorted(
+                                                    new CrestMarketOrderPriceAscendingComparator
+                                                            () )
+                                            .mapToDouble( order -> order.getPrice() )
+                                            .findFirst();
 
-        if ( price.isPresent() ) {
-            result = price.getAsDouble();
+        if ( priceOpt.isPresent() ) {
+            result = priceOpt.getAsDouble();
         }
 
         return result;

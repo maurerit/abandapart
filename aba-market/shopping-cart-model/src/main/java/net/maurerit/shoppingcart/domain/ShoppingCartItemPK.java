@@ -62,21 +62,4 @@ public class ShoppingCartItemPK implements Serializable {
         }
         return itemId == that.itemId;
     }
-
-    @Override
-    public boolean equals ( Object o ) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-
-        ShoppingCartItemPK that = (ShoppingCartItemPK) o;
-
-        if ( shoppingCartId != that.shoppingCartId ) {
-            return false;
-        }
-        return itemId == that.itemId;
-    }
 }
